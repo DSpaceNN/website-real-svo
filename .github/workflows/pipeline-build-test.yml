@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -23,7 +23,10 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-            
+
+      - name: Set up Environment
+        run: echo "::set-env name=PATH::$(cat .env)"    
+      
       - name: Setup Node.js environment
         uses: actions/setup-node@v1.4.2
         with:
