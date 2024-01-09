@@ -23,9 +23,6 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-
-      - name: Set up Environment
-        run: echo "::set-env name=PATH::$(cat .env)"    
       
       - name: Setup Node.js environment
         uses: actions/setup-node@v1.4.2
