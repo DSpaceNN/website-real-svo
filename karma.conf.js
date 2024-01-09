@@ -3,7 +3,8 @@ config.set({
   customLaunchers: {
     ChromeHeadlessCustom: {
       base: 'ChromeHeadless',
-      flags: ['--no-sandbox', '--disable-gpu']
+      flags: ['--no-sandbox', '--disable-gpu', '--headless']
     }
   },
+  singleRun: true,
 });
