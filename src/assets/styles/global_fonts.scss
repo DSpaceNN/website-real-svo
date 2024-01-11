@@ -1,17 +1,19 @@
-//bold akony!!
+// bold akony
 @font-face {
   font-family: 'Akony';
-  src: url('./assets/fonts/akony/akony.woff');
+  src: url('../fonts/akony/akony.woff');
+  font-weight: 700;
 }
-//medium onest
+
+// medium onest
 @font-face {
   font-family: 'OnestMedium';
-  src: url('./assets/fonts/onest/OnestMedium1602-hint.woff');
-
+  src: url('../fonts/onest/OnestMedium1602-hint.woff');
+  font-weight: 500;
 }
-//regular onest
+// regular onest
 @font-face {
-  font-family: 'OnestMedium';
-  src: url('./assets/fonts/onest/OnestRegular1602-hint.woff');
-
+  font-family: 'OnestRegular';
+  src: url('../fonts/onest/OnestRegular1602-hint.woff');
+  font-weight: 400;
 }
