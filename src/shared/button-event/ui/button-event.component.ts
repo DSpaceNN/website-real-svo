@@ -9,7 +9,8 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'text-red-600'
-  }
+  },
+
 })
 export class ButtonEventComponent {
 @Output() event = new EventEmitter<void>()

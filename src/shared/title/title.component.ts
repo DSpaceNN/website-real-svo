@@ -1,13 +1,13 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 
 @Component({
-  selector: 'app-logo-swo',
+  selector: 'app-title',
   standalone: true,
   imports: [],
-  templateUrl: './logo-swo.component.html',
+  templateUrl: './title.component.html',
+  styleUrl: './title.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
-
 })
-export class LogoSwoComponent {
+export class TitleComponent {
 
 }

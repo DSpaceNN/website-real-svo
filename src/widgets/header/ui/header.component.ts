@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {LogoSwoComponent} from "../../../shared/logo-swo/logo-swo.component";
 
 @Component({
@@ -8,6 +8,7 @@ import {LogoSwoComponent} from "../../../shared/logo-swo/logo-swo.component";
     LogoSwoComponent
   ],
   templateUrl: './header.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
 

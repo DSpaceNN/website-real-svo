@@ -1,7 +1,12 @@
 .event_btn {
+  z-index: 2;
+  position: relative;
+  cursor: pointer;
   width: 100%;
-  height: auto;
+  height: 100%;
   border: 2px solid var(---, #FFF);
   background: rgba(255, 255, 255, 0.10);
   backdrop-filter: blur(5.5px);
+  color: #FFFFFF;
+
 }
