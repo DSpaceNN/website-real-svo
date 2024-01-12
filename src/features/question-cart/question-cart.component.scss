@@ -1,0 +1,15 @@
+@import "../../assets/styles/variables_font_size";
+@import "../../assets/styles/global_fonts";
+.question_or_cart__container {
+  .question_or_cart__main_section {
+    display: flex;
+    gap: 20px;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 20px;
+    .question_or_cart__number {
+      color: var(--60, rgba(255, 255, 255, 0.60));
+    }
+  }
+}
+
