@@ -1,7 +1,15 @@
 <section class="question_or_cart__container">
 <div class="question_or_cart__main_section">
   <app-questions-count></app-questions-count>
-  <app-unique-number-cart></app-unique-number-cart>
+
+  <app-container-number-card class="question_or_cart_number__container">
+    <ng-template #numberCard >
+      <div class="flex justify-center items-center h-full gap-[8px] p-[8px] ">
+        <h1 class="cart_title">Карточка</h1>
+        <app-title class="text-[12px]">{{uniqueCode()}}</app-title></div>
+    </ng-template>
+  </app-container-number-card>
+
 </div>
   <app-line-white></app-line-white>
 </section>

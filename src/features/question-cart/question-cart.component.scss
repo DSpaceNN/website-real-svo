@@ -4,12 +4,20 @@
   .question_or_cart__main_section {
     display: flex;
     gap: 20px;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    .question_or_cart_number__container {
+      font-size: $font-size-small;
+      .cart_title {
+        font-size: $font-size-small;
+        font-family: OnestRegular, serif;
+        color: white;
+        line-height: 115%;
+      }
+    }
     .question_or_cart__number {
       color: var(--60, rgba(255, 255, 255, 0.60));
     }
   }
 }
-

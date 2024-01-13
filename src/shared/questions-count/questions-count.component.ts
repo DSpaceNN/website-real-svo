@@ -8,15 +8,7 @@ import {TitleComponent} from "../title/title.component";
     TitleComponent
   ],
   templateUrl: './questions-count.component.html',
-  styles: [
-    `
-      .max_question_item {
-        color:  rgba(255, 255, 255, 0.60);
-
-      }
-    `
-  ]
+  styleUrl: './questions-count.component.scss'
 })
 export class QuestionsCountComponent {
-
 }
