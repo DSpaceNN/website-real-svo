@@ -1,9 +1,9 @@
 import {Component, Signal} from '@angular/core';
-import {TitleComponent} from "../../shared/title/title.component";
-import {ContainerNumberCardComponent} from "../../shared/container-number-card/container-number-card.component";
-import {LineWhiteComponent} from "../../shared/line/ui/line-white/line-white.component";
-import {QuestionsCountComponent} from "../../shared/questions-count/questions-count.component";
-import {UniqueCodeService} from "./model/unique-code.service";
+import {ContainerNumberCardComponent} from "../../shared/ui/container-number-card/container-number-card.component";
+import {LineWhiteComponent} from "../../shared/ui/line-white/line-white.component";
+import {UniqueCodeService} from "../../shared/model/unique-code.service";
+import {TitleComponent} from "../../shared/ui/title/title.component";
+import {QuestionsCountComponent} from "../../shared/ui/questions-count/questions-count.component";
 
 @Component({
   selector: 'app-question-cart',

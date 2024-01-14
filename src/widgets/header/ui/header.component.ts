@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {LogoSwoComponent} from "../../../shared/logo-swo/logo-swo.component";
+import {LogoSwoComponent} from "../../../shared/ui/logo-swo/logo-swo.component";
 
 @Component({
   selector: 'app-header',

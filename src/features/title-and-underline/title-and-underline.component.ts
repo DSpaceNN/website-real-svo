@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {TitleComponent} from "../../shared/title/title.component";
-import {LineWhiteComponent} from "../../shared/line/ui/line-white/line-white.component";
+import {LineWhiteComponent} from "../../shared/ui/line-white/line-white.component";
+import {TitleComponent} from "../../shared/ui/title/title.component";
 
 @Component({
   selector: 'app-title-and-underline',

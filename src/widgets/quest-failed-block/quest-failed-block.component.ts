@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, Signal} from '@angular/core';
-import {TitleComponent} from "../../shared/title/title.component";
-import {DescriptionComponent} from "../../shared/description/description.component";
-import {ContainerNumberCardComponent} from "../../shared/container-number-card/container-number-card.component";
-import {UniqueCodeService} from "../../features/question-cart/model/unique-code.service";
+import {DescriptionComponent} from "../../shared/ui/description/description.component";
+import {ContainerNumberCardComponent} from "../../shared/ui/container-number-card/container-number-card.component";
+import {UniqueCodeService} from "../../shared/model/unique-code.service";
+import {TitleComponent} from "../../shared/ui/title/title.component";
 
 @Component({
   selector: 'app-quest-failed-block',

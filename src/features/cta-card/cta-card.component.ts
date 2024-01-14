@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Inject, Input} from '@angular/core';
-import {ButtonEventComponent} from "../../shared/button-event/ui/button-event.component";
+import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.component";
 import {Router, RouterLink} from "@angular/router";
 import {RedBackgroundComponent} from "../../shared/red-background/red-background.component";
 import {NgClass} from "@angular/common";

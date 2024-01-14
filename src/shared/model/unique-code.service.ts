@@ -4,7 +4,7 @@ import {computed, Injectable, signal} from '@angular/core';
   providedIn: 'root'
 })
 export class UniqueCodeService {
- #numberCart = signal<number>(0)
+ #numberCart = signal<number>(32)
   public numberCart = computed(this.#numberCart)
   constructor() { }
 set (value:number) {
