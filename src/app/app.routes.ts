@@ -11,4 +11,7 @@ export const routes: Route[] = [
     loadComponent: () => import('../widgets/sub-header/sub-header.component').then((c) => c.SubHeaderComponent),
     pathMatch: 'full'
   },
+  {
+    path: '**', loadComponent: () => import("../pages/quest-failed/ui/quest-failed.component").then((c) => c.QuestFailedComponent)
+  }
 ];

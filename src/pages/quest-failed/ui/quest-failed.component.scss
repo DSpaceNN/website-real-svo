@@ -1,0 +1,64 @@
+@import "../../../assets/styles/global_fonts";
+@import "../../../assets/styles/mixin_media";
+
+.quest_failed {
+  .quest_failed__absolute {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 16px;
+    bottom: 16px;
+    text-align: center;
+  }
+
+  .quest_failed__block_description {
+    width: 100%;
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 16px;
+
+    .quest_failed__description {
+      font-family: OnestRegular, serif;
+      font-size: 16px;
+    }
+  }
+
+  .eclipse_small {
+ @include for-phone-only {
+   position: fixed;
+   bottom: 7rem;
+   left: 0;
+ }
+    @include for-tablet {
+      display: none;
+    }
+  }
+
+  .eclipse_major {
+ @include for-phone-only {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   position: fixed;
+   left: 2rem;
+   right: 0;
+   text-align: center;
+   bottom: 11rem;
+ }
+    @include for-tablet {
+      display: none;
+    }
+  }
+  .eclipse_minor {
+  @include  for-phone-only {
+    position: fixed;
+    top: 4rem;
+    right: 0;
+  }
+    @include for-tablet {
+      display: none;
+    }
+  }
+}
