@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, Inject, Input} from '@angular/core';
 import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.component";
 import {Router, RouterLink} from "@angular/router";
-import {RedBackgroundComponent} from "../../shared/red-background/red-background.component";
 import {NgClass} from "@angular/common";
+import {RedBackgroundComponent} from "../../shared/ui/red-background/red-background.component";
 
 @Component({
   selector: 'app-cta-card',
