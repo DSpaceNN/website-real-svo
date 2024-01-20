@@ -24,8 +24,4 @@ export class CtaCardComponent {
 @Input()backUrl: string = '';
 @Input()forwardUrl: string = ''
  private _router:Router = Inject(Router)
-  goBackHandler() {
-  this.backUrl = '111111'
-    console.log(this.backUrl)
-  }
 }
