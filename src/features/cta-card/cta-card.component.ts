@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, input, Input} from '@angular/core';
 import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.component";
 import {Router, RouterLink} from "@angular/router";
 import {NgClass} from "@angular/common";
@@ -21,7 +21,7 @@ import {RedBackgroundComponent} from "../../shared/ui/red-background/red-backgro
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CtaCardComponent {
-@Input()backUrl: string = '';
-@Input()forwardUrl: string = ''
+  backUrl = input.required<string>()
+  forwardUrl = input.required<string>()
  private _router:Router = Inject(Router)
 }
