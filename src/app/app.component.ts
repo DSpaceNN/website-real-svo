@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Injector} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterOutlet} from '@angular/router';
 import {HeaderComponent} from "../widgets/header/ui/header.component";
@@ -13,4 +13,9 @@ import SubHeaderComponent from "../widgets/sub-header/sub-header.component";
 })
 export class AppComponent {
   title = 'website-real-svo';
+  static injector: Injector;
+  constructor(injector: Injector) {
+    console.log(injector, 'injector')
+    AppComponent.injector = injector;
+  }
 }

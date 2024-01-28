@@ -4,7 +4,7 @@
      <div class="py-[32px] px-[16px] gap-5 max-w-[320px]  flex flex-col justify-center text-white " >
       <div class="flex gap-1  ">
         <app-title class="text-[16px]">Запомнили <br> уникаль-ный код?</app-title>
-      <app-close-icon  (closed)="closeModal()" class="z-[2]"></app-close-icon>
+      <app-close-icon [mat-dialog-close]="false"  class="z-[2]"></app-close-icon>
       </div>
       <div class="mb-[40px] gap-5 flex flex-col">
         <app-description>Не забудьте запомнить уникальный код или сделать скриншот</app-description>
@@ -19,7 +19,7 @@
            </ng-template>
          </app-container-number-card>
        <div>
-         <app-button-event >
+         <app-button-event class="w-full"  [mat-dialog-close]="true" >
            <div class="flex gap-1 justify-center items-center py-[10px]">
              <app-description>Я запомнил</app-description>
              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
