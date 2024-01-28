@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import SubHeaderComponent from "./sub-header.component";
 
-import { SubHeaderComponent } from './sub-header.component';
 
 describe('SubHeaderComponent', () => {
   let component: SubHeaderComponent;
@@ -11,7 +11,7 @@ describe('SubHeaderComponent', () => {
       imports: [SubHeaderComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(SubHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

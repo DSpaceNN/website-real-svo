@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import WinQuestComponent from "./win-quest.component";
 
-import { WinQuestComponent } from './win-quest.component';
 
 describe('WinQuestComponent', () => {
   let component: WinQuestComponent;
@@ -11,7 +11,7 @@ describe('WinQuestComponent', () => {
       imports: [WinQuestComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(WinQuestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import QuestFailedComponent from "./quest-failed.component";
 
-import { QuestFailedComponent } from './quest-failed.component';
 
 describe('QuestFailedComponent', () => {
   let component: QuestFailedComponent;
@@ -11,7 +11,7 @@ describe('QuestFailedComponent', () => {
       imports: [QuestFailedComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(QuestFailedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
