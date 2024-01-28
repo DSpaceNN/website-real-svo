@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Signal} from '@angular/core';
 import {DescriptionComponent} from "../../shared/ui/description/description.component";
 import {ContainerNumberCardComponent} from "../../shared/ui/container-number-card/container-number-card.component";
-import {UniqueCodeService} from "../../shared/model/unique-code.service";
+import {UniqueCodeService} from "../../shared/model/services/unique-code.service";
 import {TitleComponent} from "../../shared/ui/title/title.component";
 
 @Component({

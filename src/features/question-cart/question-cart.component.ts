@@ -1,7 +1,7 @@
 import {Component, Signal} from '@angular/core';
 import {ContainerNumberCardComponent} from "../../shared/ui/container-number-card/container-number-card.component";
 import {LineWhiteComponent} from "../../shared/ui/line-white/line-white.component";
-import {UniqueCodeService} from "../../shared/model/unique-code.service";
+import {UniqueCodeService} from "../../shared/model/services/unique-code.service";
 import {TitleComponent} from "../../shared/ui/title/title.component";
 import {QuestionsCountComponent} from "../../shared/ui/questions-count/questions-count.component";
 
