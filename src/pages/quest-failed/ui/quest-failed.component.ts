@@ -17,7 +17,7 @@ import {RedBackgroundComponent} from "../../../shared/ui/red-background/red-back
   styleUrl: './quest-failed.component.scss',
   changeDetection:ChangeDetectionStrategy.OnPush
 })
-export class QuestFailedComponent {
+export default class QuestFailedComponent {
 
 
 }

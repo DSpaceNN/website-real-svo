@@ -3,15 +3,21 @@ import {Route, Routes} from "@angular/router";
 export const routes: Route[] = [
   {
     path: '',
-    pathMatch: 'full',
     redirectTo: 'questions',
+    pathMatch: 'full',
+
   },
   {
     path: 'questions',
-    loadComponent: () => import('../widgets/sub-header/sub-header.component').then((c) => c.SubHeaderComponent),
-    pathMatch: 'full'
+    loadComponent: () => import('../widgets/sub-header/sub-header.component')
   },
+
   {
-    path: '**', loadComponent: () => import("../pages/quest-failed/ui/quest-failed.component").then((c) => c.QuestFailedComponent)
+    path: 'questions/win',
+    loadComponent: () => import('../widgets/win-quest/win-quest.component')
+  },
+
+  {
+    path: '**', loadComponent: () => import("../pages/quest-failed/ui/quest-failed.component")
   }
 ];

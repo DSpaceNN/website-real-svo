@@ -11,6 +11,6 @@ import {QuestionCartComponent} from "../../features/question-cart/question-cart.
   ],
   templateUrl: './sub-header.component.html',
 })
-export class SubHeaderComponent {
+export default class SubHeaderComponent {
 
 }
