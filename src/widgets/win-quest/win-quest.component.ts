@@ -19,7 +19,9 @@ import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.co
       position: absolute;
       top: 0;
       left: 0;
+      right: 0;
       z-index: -1;
+      width: 100%;
     }
     .firework_container:after {
       content: "";
@@ -29,6 +31,10 @@ import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.co
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.4);
+    }
+    .firework {
+      height: 100vh;
+      width: 100%;
     }
   `
   ],
@@ -52,7 +58,7 @@ import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.co
               <app-description class="text-white">Просто назовите уникальный код на экране администратору</app-description>
             </div>
           <div class="firework_container">
-            <img src="../../assets/video/firework.gif" alt="Описание гифки">
+            <img class="firework" src="../../assets/video/firework.gif" alt="Описание гифки">
           </div>
           <div class="absolute left-0 right-0 bottom-4 mx-4 text-center">
             <app-button-event>
