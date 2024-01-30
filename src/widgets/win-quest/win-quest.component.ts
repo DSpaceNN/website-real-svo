@@ -13,6 +13,25 @@ import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.co
     ContainerNumberCardComponent,
     ButtonEventComponent
   ],
+  styles: [
+    `
+    .firework_container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+    .firework_container:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+  `
+  ],
   template: `
         <section class="mt-[36px] ">
         <div class="mb-5">
@@ -32,9 +51,9 @@ import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.co
               </app-container-number-card>
               <app-description class="text-white">Просто назовите уникальный код на экране администратору</app-description>
             </div>
-                <div class="w-full flex justify-center">
-                    <img src="../../assets/images/salute.png" alt="">
-                </div>
+          <div class="firework_container">
+            <img src="../../assets/video/firework.gif" alt="Описание гифки">
+          </div>
           <div class="absolute left-0 right-0 bottom-4 mx-4 text-center">
             <app-button-event>
               <div class="flex gap-1 justify-center items-center my-[10px]">
@@ -52,7 +71,6 @@ import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.co
           </div>
         </section>
   `,
-  styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class WinQuestComponent  {}
