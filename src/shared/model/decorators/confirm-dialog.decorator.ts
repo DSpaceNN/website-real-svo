@@ -24,7 +24,7 @@ export function ConfirmDialog(dialogComponent: Type<unknown>, dialogConfig?: Mat
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result === true) {
-          return originalMethod.apply(target, args);
+          return originalMethod.apply(this, args);
         }
       });
     };

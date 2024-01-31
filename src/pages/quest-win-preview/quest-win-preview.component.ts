@@ -69,7 +69,7 @@ export default class QuestWinPreviewComponent {
     minWidth: '280px'
   })
   openRememberDialog() {
-  this._router.navigate(['/asdasfasf'])
+  this._router.navigate(['questions/result'])
   }
 
 }
