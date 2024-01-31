@@ -1,6 +1,6 @@
 <section class="quest_failed">
   <app-quest-failed-block></app-quest-failed-block>
-  <app-button-event class="quest_failed__absolute">
+  <app-button-event (event)="redirectToResultPage()" class="quest_failed__absolute">
     <div class="quest_failed__block_description">
       <p class="quest_failed__description">Посмотреть результаты квеста</p>
       <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">

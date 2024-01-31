@@ -21,7 +21,12 @@ import {RedBackgroundComponent} from "../../shared/ui/red-background/red-backgro
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CtaCardComponent {
-  backUrl = input.required<string>()
-  forwardUrl = input.required<string>()
+  back = input.required<string>({
+    alias: 'backUrl'
+  })
+  forward = input.required<string>({
+    alias: 'forwardUrl'
+
+  })
  private _router:Router = Inject(Router)
 }
