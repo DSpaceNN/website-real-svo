@@ -3,7 +3,16 @@
 @tailwind utilities;
 //import global font-family
 @import './assets/styles/global_fonts.scss';
-
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}
 html {
   height: 100vh;
 }

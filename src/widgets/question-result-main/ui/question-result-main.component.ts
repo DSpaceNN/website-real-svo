@@ -16,16 +16,16 @@ import {LineWhiteComponent} from "../../../shared/ui/line-white/line-white.compo
     LineWhiteComponent
   ],
   template: `
-    <section>
-      @for (quesiton of questResult(); track quesiton?.id){
+    <section class="h-[70vh] overflow-y-scroll no-scrollbar">
+      @for (questions of questResult(); track questions?.id){
     <div class="flex gap-2 flex-col my-4">
       <app-red-circle>
-        <app-title number-question class="text-[18px]">{{quesiton?.title}}</app-title>
+        <app-title number-question class="text-[18px]">{{questions?.title}}</app-title>
       </app-red-circle>
       <app-description class="text-white">
-        {{quesiton?.description}}
+        {{questions?.description}}
       </app-description>
-      <app-correctness-answer [correctAnswer]="quesiton?.id < 7"></app-correctness-answer>
+      <app-correctness-answer [correctAnswer]="questions?.id < 7"></app-correctness-answer>
 
     </div>
         @if(!$last) {
