@@ -20,8 +20,11 @@ export const routes: Route[] = [
     path: 'questions/result',
     loadComponent: () => import('../pages/question-result/question-result.component')
   },
-
   {
-    path: '**', loadComponent: () => import("../pages/quest-failed/ui/quest-failed.component")
+    path: 'questions/failed',
+    loadComponent: () => import("../pages/quest-failed/ui/quest-failed.component")
+  },
+  {
+    path: '**', loadComponent: () => import("../pages/not-found/not-found.component")
   }
 ];
