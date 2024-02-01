@@ -6,6 +6,8 @@ import {DescriptionComponent} from "../../shared/ui/description/description.comp
 import {LineWhiteComponent} from "../../shared/ui/line-white/line-white.component";
 import {CtaCardWrapperComponent} from "../../features/cta-card-wrapper/cta-card-wrapper.component";
 import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.component";
+import {QuestionAnswerOptionComponent} from "../../widgets/question-answer-option/question-answer-option.component";
+import {RadioButtonComponent} from "../../shared/ui/radio-button/radio-button.component";
 
 @Component({
   selector: 'app-question',
@@ -17,7 +19,9 @@ import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.co
     DescriptionComponent,
     LineWhiteComponent,
     CtaCardWrapperComponent,
-    ButtonEventComponent
+    ButtonEventComponent,
+    QuestionAnswerOptionComponent,
+    RadioButtonComponent
   ],
   template: `
     <section class="">
@@ -31,6 +35,15 @@ import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.co
       </div>
         <app-line-white class="w-full"></app-line-white>
       </div>
+            <app-question-answer-option  [answers]="[{id:1, value:'hello124', text:'helloBrot1'},{id:2, value:'hell4o', text:'helloBrot'}]">
+              <ng-template #questionAnswerOption let-answer>
+                <app-radio-button (valueChange)="onChange($event)" [radioButtonValue]="answer.value">
+                  <app-title radio-value>{{answer.text}}</app-title>
+                </app-radio-button>
+              </ng-template>
+            </app-question-answer-option>
+
+<!--      absolute block-->
       <app-cta-card-wrapper class="absolute w-full left-0 right-0 bottom-0">
         <ng-template #ctaCard>
           <app-button-event (event)="click1()" class="buttonEvent">
@@ -52,6 +65,9 @@ import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.co
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class QuestionComponent {
+  onChange(event:any) {
+    console.log(event)
+  }
 click1() {
   console.log(1)
 }
