@@ -25,6 +25,11 @@ export const routes: Route[] = [
     loadComponent: () => import("../pages/quest-failed/ui/quest-failed.component")
   },
   {
+    path: 'login',
+    loadComponent: () => import("../pages/login-modal/login-modal.component")
+  },
+
+  {
     path: '**', loadComponent: () => import("../pages/not-found/not-found.component")
   }
 ];
