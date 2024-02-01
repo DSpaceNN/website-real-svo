@@ -20,3 +20,21 @@ body {
   background-image: url("./assets/images/BG 1.jpg");
   background-size: cover;
 }
+mat-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle {
+  border-color: white !important;
+}
+.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle {
+  border-color: white !important;
+}
+.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle {
+  border-color: white !important;
+}
+.mat-mdc-radio-button.mat-mdc-radio-checked .mdc-radio__background::before {
+  background: none !important;
+}
+.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__inner-circle {
+  transform: scale(.43) !important;
+}
+.mat-mdc-radio-button.mat-mdc-radio-checked .mat-ripple-element {
+  background: none !important;
+}

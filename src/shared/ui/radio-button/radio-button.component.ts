@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, DoCheck, EventEmitter, input, Output, signal} from '@angular/core';
 import {MatRadioButton, MatRadioChange, MatRadioGroup} from "@angular/material/radio";
 
 @Component({
@@ -9,11 +9,14 @@ import {MatRadioButton, MatRadioChange, MatRadioGroup} from "@angular/material/r
     MatRadioGroup
   ],
   template: `
-      <mat-radio-button (change)="onChange($event)" [value]="radioButtonValue()">
-        <ng-content select="[radio-value]"></ng-content>
-      </mat-radio-button>
+       <mat-radio-button (change)="onChange($event)" [value]="radioButtonValue()">
+         <ng-content select="[radio-value]"></ng-content>
+       </mat-radio-button>
   `,
   styles: ``,
+  host: {
+    class: 'relative'
+  },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RadioButtonComponent {

@@ -9,24 +9,24 @@ import {
 } from '@angular/core';
 import {MatRadioButton, MatRadioChange, MatRadioGroup} from "@angular/material/radio";
 import {NgTemplateOutlet} from "@angular/common";
+import {TitleComponent} from "../../shared/ui/title/title.component";
 
 @Component({
   selector: 'app-question-answer-option',
   standalone: true,
   imports: [
     MatRadioGroup,
-    NgTemplateOutlet
+    NgTemplateOutlet,
+    TitleComponent
   ],
   template: `
-<section>
   <mat-radio-group>
     @for(answer of answers(); track answer?.id) {
     <ng-template [ngTemplateOutlet]="answerOption" [ngTemplateOutletContext]="{$implicit:answer}"></ng-template>
     } @empty {
-      <h1>Данные не найдены</h1>
+      <app-title class="text-[16px]">Данные не найдены</app-title>
     }
   </mat-radio-group>
-</section>
   `,
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush
