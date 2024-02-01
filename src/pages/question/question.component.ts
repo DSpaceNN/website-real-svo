@@ -29,7 +29,7 @@ import {LineLightGrayComponent} from "../../shared/ui/line-light-gray/line-light
     <section class="">
       <app-sub-header></app-sub-header>
       <div class="mb-4">
-      <div class="flex  gap-2 mb-4">
+        <div class="flex  gap-2 mb-4 justify-start  items-start md:items-center">
         <app-red-circle>
           <app-title number-question>1.</app-title>
         </app-red-circle>
