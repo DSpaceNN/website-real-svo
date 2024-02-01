@@ -9,7 +9,7 @@ export const routes: Route[] = [
   },
   {
     path: 'questions',
-    loadComponent: () => import('../widgets/sub-header/sub-header.component')
+    loadComponent: () => import('../pages/question/question.component')
   },
 
   {

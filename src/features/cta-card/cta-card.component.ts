@@ -3,6 +3,7 @@ import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.co
 import {Router, RouterLink} from "@angular/router";
 import {NgClass} from "@angular/common";
 import {RedBackgroundComponent} from "../../shared/ui/red-background/red-background.component";
+import {CtaCardWrapperComponent} from "../cta-card-wrapper/cta-card-wrapper.component";
 
 @Component({
   selector: 'app-cta-card',
@@ -12,6 +13,7 @@ import {RedBackgroundComponent} from "../../shared/ui/red-background/red-backgro
     RouterLink,
     RedBackgroundComponent,
     NgClass,
+    CtaCardWrapperComponent,
   ],
   templateUrl: './cta-card.component.html',
   styleUrl: './cta-card.component.scss',

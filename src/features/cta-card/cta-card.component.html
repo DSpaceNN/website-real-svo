@@ -1,11 +1,11 @@
-<section class="cta_card__container">
-  <div class="flex gap-4">
-    <app-button-event class="event_btn ">
-      <ng-content select="[back]"></ng-content>
-  </app-button-event>
-    <app-button-event  class="event_btn">
-      <ng-content select="[forward]"></ng-content>
-    </app-button-event></div>
- <app-red-background class="cta_card__circle">
- </app-red-background>
-</section>
+<app-cta-card-wrapper>
+ <ng-template #ctaCard>
+   <div  class="flex gap-4">
+     <app-button-event class="event_btn ">
+       <ng-content select="[back]"></ng-content>
+     </app-button-event>
+     <app-button-event  class="event_btn">
+       <ng-content select="[forward]"></ng-content>
+     </app-button-event></div>
+ </ng-template>
+</app-cta-card-wrapper>
