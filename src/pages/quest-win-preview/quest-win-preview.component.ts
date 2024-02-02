@@ -48,14 +48,8 @@ import {Router} from "@angular/router";
      <app-button-event  (event)="openRememberDialog()" >
        <div class="flex gap-1 justify-center items-center my-[10px]">
          <app-description class=" [&>p]:!text-[16px]">Вернуться на главную</app-description>
-         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-           <mask id="mask0_2938_27960" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
-             <rect width="24" height="24" fill="#D9D9D9"/>
-           </mask>
-           <g mask="url(#mask0_2938_27960)">
-             <path d="M6.16567 17.9L4.99902 16.7333L15.0657 6.66665H5.89902V5H17.899V17H16.2324V7.83333L6.16567 17.9Z" fill="white"/>
-           </g>
-         </svg>
+         <img src="../../assets/images/arrow_outward.svg" alt="arrow">
+
        </div>
      </app-button-event>
    </div>
