@@ -3,6 +3,7 @@ import {TitleComponent} from "../../shared/ui/title/title.component";
 import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.component";
 import {DescriptionComponent} from "../../shared/ui/description/description.component";
 import {RouterLink} from "@angular/router";
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-not-found',
@@ -11,14 +12,17 @@ import {RouterLink} from "@angular/router";
     TitleComponent,
     ButtonEventComponent,
     DescriptionComponent,
-    RouterLink
+    RouterLink,
   ],
   template: `
-    <app-title class="text-center md:text-left md:text-[22px]">Страница не найдена</app-title>
+    <app-title class=" text-[24px] md:text-left md:text-[26px] text-left"> Страница не найдена</app-title>
 <div class="absolute left-0 right-0 bottom-4 mx-4 text-center">
-  <app-button-event routerLink="/" >
-    <div class="my-3">
-      <app-description class="block">Вернуться на главную</app-description>
+  <app-button-event  routerLink="/" >
+    <div class="my-3 flex flex- gap-1 justify-center items-center">
+      <app-description class="block">Вернуться на главную
+      </app-description>
+      <img src="../../assets/images/arrow_outward.svg" alt="arrow">
+
     </div>
   </app-button-event>
 </div>
