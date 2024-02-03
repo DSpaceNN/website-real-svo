@@ -15,7 +15,7 @@ import {NgOptimizedImage} from "@angular/common";
     RouterLink,
   ],
   template: `
-    <app-title class=" text-[24px] md:text-left md:text-[26px] text-left"> Страница не найдена...</app-title>
+    <app-title class=" text-[24px] md:text-[26px] text-left mx-auto md:mx-0"> Страница <br class="md:hidden"> не <br class="md:hidden"> найдена...</app-title>
 <div class="absolute left-0 right-0 bottom-4 mx-4 text-center">
   <app-button-event  routerLink="/" >
     <div class="my-3 flex flex- gap-1 justify-center items-center">
