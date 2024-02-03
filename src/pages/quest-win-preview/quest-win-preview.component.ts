@@ -60,7 +60,8 @@ import {Router} from "@angular/router";
 export default class QuestWinPreviewComponent {
     private  readonly _router = inject(Router)
   @ConfirmDialog(ModalRememberComponent, {
-    minWidth: '280px'
+    minWidth: '280px',
+    hasBackdrop: false
   })
   openRememberDialog() {
   this._router.navigate(['questions/result'])
