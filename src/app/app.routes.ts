@@ -14,7 +14,8 @@ export const routes: Route[] = [
 
   {
     path: 'questions/win',
-    loadComponent: () => import('../pages/quest-win-preview/quest-win-preview.component')
+    loadComponent: () => import('../pages/quest-win-preview/quest-win-preview.component'),
+
   },
   {
     path: 'questions/result',

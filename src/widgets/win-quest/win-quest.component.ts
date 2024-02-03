@@ -18,7 +18,7 @@ import {ContainerNumberCardComponent} from "../../shared/ui/container-number-car
         </div>
             <div class="mb-5 flex-col flex gap-4">
               <app-description class="text-white">
-                Вы успешно прошли Квест Музея СВО и можете получить сувенир при выходе
+                Вы успешно прошли Квест Музея СВО и можете получить приз при выходе
               </app-description>
               <app-container-number-card >
                 <ng-template #numberCard>
