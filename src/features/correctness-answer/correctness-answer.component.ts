@@ -11,7 +11,7 @@ import {TitleComponent} from "../../shared/ui/title/title.component";
   template: `
         <div class="w-full flex justify-center relative" >
           <div class="w-full h-full absolute rounded-[305px]" [class]="bgColor()"></div>
-            <app-title class=" my-5 z-10">{{title}}</app-title>
+            <app-title class=" my-5 z-10 text-[14px]">{{title}}</app-title>
         </div>
   `,
   styles: `
