@@ -37,28 +37,13 @@ import {LineLightGrayComponent} from "../../shared/ui/line-light-gray/line-light
       </div>
         <app-line-white class="w-full"></app-line-white>
       </div>
-            <app-question-answer-option  [answers]="[{id:1, value:'hello124', text:'helloBrot1'},{id:2, value:'hell4o', text:'helloBrot'}]">
+            <app-question-answer-option   [answers]="answers">
               <ng-template #questionAnswerOption let-answer>
                   <app-radio-button (valueChange)="onChange($event)" [radioButtonValue]="answer.value">
                   <app-title  radio-value>{{answer.value}}</app-title>
                     @if (answer.value === selectedAnswer()) {
                       <div radio-value class="absolute -left-2 -top-4 -z-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="58" height="60" viewBox="0 0 58 60" fill="none">
-                          <g filter="url(#filter0_f_2938_27858)">
-                            <circle cx="28" cy="30" r="26" fill="url(#paint0_radial_2938_27858)" fill-opacity="0.7"/>
-                          </g>
-                          <defs>
-                            <filter id="filter0_f_2938_27858" x="-1.03333" y="0.966667" width="58.0667" height="58.0667" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                              <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-                              <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-                              <feGaussianBlur stdDeviation="1.51667" result="effect1_foregroundBlur_2938_27858"/>
-                            </filter>
-                            <radialGradient id="paint0_radial_2938_27858" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(28 30) rotate(90) scale(26)">
-                              <stop stop-color="#FF2222"/>
-                              <stop offset="1" stop-color="#FF2222" stop-opacity="0"/>
-                            </radialGradient>
-                          </defs>
-                        </svg>
+                       <img src="../../assets/images/eclipse_questions.svg" alt="eclipse">
                       </div>
                     }
                 </app-radio-button>
@@ -68,7 +53,7 @@ import {LineLightGrayComponent} from "../../shared/ui/line-light-gray/line-light
             </app-question-answer-option>
 
 <!--      absolute block-->
-      <app-cta-card-wrapper class="absolute w-full left-0 right-0 bottom-0">
+      <app-cta-card-wrapper class="fixed w-full left-0 right-0 bottom-0">
         <ng-template #ctaCard>
           <app-button-event (event)="click1()" class="buttonEvent">
             Назад
@@ -94,6 +79,7 @@ export default class QuestionComponent {
     console.log(event)
     this.selectedAnswer.set(event)
   }
+  answers =   [{id:1, value:'hello124', text:'helloBrot1'},{id:2, value:'hell4o4', text:'helloBrot'},{id:3, value:'he2ll4o', text:'helloBrot3'},{id:12, value:'h4ell4o', text:'helloBrot'},{id:62, value:'hellf14o', text:'helloBrot'},{id:555, value:'hellf4o', text:'helloBrot'},{id:124, value:'hellas4o', text:'helloBrot'},]
 click1() {
   console.log(1)
 }
