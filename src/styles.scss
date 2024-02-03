@@ -12,6 +12,11 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }
+  @layer components {
+    .fixed-bottom-container {
+      @apply absolute left-0 right-0 bottom-4 mx-4 text-center
+    }
+  }
 }
 html {
   height: 100vh;
