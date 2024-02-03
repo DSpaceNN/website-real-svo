@@ -1,4 +1,5 @@
 import {Route, Routes} from "@angular/router";
+import QuestWinPreviewComponent from "../pages/quest-win-preview/quest-win-preview.component";
 
 export const routes: Route[] = [
   {
@@ -14,8 +15,7 @@ export const routes: Route[] = [
 
   {
     path: 'questions/win',
-    loadComponent: () => import('../pages/quest-win-preview/quest-win-preview.component'),
-
+   component: QuestWinPreviewComponent
   },
   {
     path: 'questions/result',
