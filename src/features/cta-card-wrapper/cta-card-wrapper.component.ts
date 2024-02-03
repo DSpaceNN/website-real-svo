@@ -21,7 +21,7 @@ import {RedBackgroundComponent} from "../../shared/ui/red-background/red-backgro
       width: 100%;
       position: relative;
       display: flex;
-      justify-content: center;
+      justify-content: space-around;
       gap: 12px;
       background: rgba(36, 38, 46, 0.10);
       backdrop-filter: blur(6.5px);
