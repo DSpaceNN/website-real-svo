@@ -1,16 +1,6 @@
 @import "../../../assets/styles/global_fonts";
 @import "../../../assets/styles/mixin_media";
-
 .quest_failed {
-  .quest_failed__absolute {
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: 0 16px;
-    bottom: 16px;
-    text-align: center;
-  }
-
   .quest_failed__block_description {
     width: 100%;
     display: flex;
@@ -24,5 +14,4 @@
       font-size: 16px;
     }
   }
-
 }

@@ -16,7 +16,7 @@ import {NgOptimizedImage} from "@angular/common";
   ],
   template: `
     <app-title class=" text-[24px] md:text-[26px] text-left mx-auto md:mx-0"> Страница <br class="md:hidden"> не <br class="md:hidden"> найдена...</app-title>
-<div class="absolute left-0 right-0 bottom-4 mx-4 text-center">
+<div class="fixed-bottom-container">
   <app-button-event  routerLink="/" >
     <div class="my-3 flex flex- gap-1 justify-center items-center">
       <app-description class="block">Вернуться на главную
