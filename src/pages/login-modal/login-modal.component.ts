@@ -3,6 +3,7 @@ import {TitleComponent} from "../../shared/ui/title/title.component";
 import {DescriptionComponent} from "../../shared/ui/description/description.component";
 import {LineLightGrayComponent} from "../../shared/ui/line-light-gray/line-light-gray.component";
 import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.component";
+import {CircleAnimationComponent} from "../../shared/ui/circle-animation/circle-animation.component";
 
 @Component({
   selector: 'app-login-modal',
@@ -11,7 +12,8 @@ import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.co
     TitleComponent,
     DescriptionComponent,
     LineLightGrayComponent,
-    ButtonEventComponent
+    ButtonEventComponent,
+    CircleAnimationComponent
   ],
   template: `
     <div class="container mx-auto">
@@ -48,6 +50,7 @@ import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.co
           </form>
         </div>
       </div>
+<app-circle-animation></app-circle-animation>
     </div>
 
   `,
