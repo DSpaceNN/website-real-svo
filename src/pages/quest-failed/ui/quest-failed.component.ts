@@ -4,6 +4,7 @@ import {ButtonEventComponent} from "../../../shared/ui/button-event/button-event
 import {DescriptionComponent} from "../../../shared/ui/description/description.component";
 import {RedBackgroundComponent} from "../../../shared/ui/red-background/red-background.component";
 import {Router} from "@angular/router";
+import {CircleAnimationComponent} from "../../../shared/ui/circle-animation/circle-animation.component";
 
 @Component({
   selector: 'app-quest-failed',
@@ -12,7 +13,8 @@ import {Router} from "@angular/router";
     QuestFailedBlockComponent,
     ButtonEventComponent,
     DescriptionComponent,
-    RedBackgroundComponent
+    RedBackgroundComponent,
+    CircleAnimationComponent
   ],
   templateUrl: './quest-failed.component.html',
   styleUrl: './quest-failed.component.scss',

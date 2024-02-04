@@ -25,40 +25,4 @@
     }
   }
 
-  .eclipse_small {
- @include for-phone-only {
-   position: fixed;
-   bottom: 7rem;
-   left: 0;
- }
-    @include for-tablet {
-      display: none;
-    }
-  }
-
-  .eclipse_major {
- @include for-phone-only {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   position: fixed;
-   left: 2rem;
-   right: 0;
-   text-align: center;
-   bottom: 14rem;
- }
-    @include for-tablet {
-      display: none;
-    }
-  }
-  .eclipse_minor {
-  @include  for-phone-only {
-    position: fixed;
-    top: 4rem;
-    right: 0;
-  }
-    @include for-tablet {
-      display: none;
-    }
-  }
 }
