@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
- <div>
+ <div class="overflow-hidden">
    <!--  ECLIPSE SMALL-->
    <div class="eclipse_small">
      <svg xmlns="http://www.w3.org/2000/svg" width="66" height="69" viewBox="0 0 66 69" fill="none">

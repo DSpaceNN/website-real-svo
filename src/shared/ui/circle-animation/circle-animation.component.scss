@@ -1,21 +1,34 @@
 @import "../../../assets/styles/mixin_media";
-@keyframes move_eclipse {
-  0% { transform: translate(0, 0); }
-  10% { transform: translate(70px, 30px); }
-  20% { transform: translate(70px, 50px); }
-  30% { transform: translate(50px, -20px); }
-  40% { transform: translate(-50px, 40px); }
-  50% { transform: translate(-100px, -20px); }
-  60% { transform: translate(50px, -70px); }
-  70% { transform: translate(30px, 40px); }
-  80% { transform: translate(-100px, -50px); }
-  90% { transform: translate(-40px, 40px); }
-  100% { transform: translate(0, 0); }
+
+@keyframes move_eclipse  {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(40px, 40px) scale(1.2);
+    opacity: 0.7;
+  }
+  35% {
+    transform: translate(30px, 30px) scale(1.2);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: translate(-20px, 40px) scale(1);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translate(20px, -20px) scale(1.2);
+    opacity: 0.7;
+  }
+
 }
 
 
+
 .eclipse_small {
-  animation: move_eclipse 14s linear infinite;
+  animation: move_eclipse 4s linear infinite;
   @include for-phone-only {
     position: fixed;
     bottom: 7rem;
@@ -27,7 +40,7 @@
 }
 
 .eclipse_major {
-  animation: move_eclipse 13s linear infinite reverse;
+  animation: move_eclipse 5s linear infinite;
   @include for-phone-only {
     display: flex;
     justify-content: center;
@@ -43,11 +56,11 @@
   }
 }
 .eclipse_minor {
-  animation: move_eclipse 12s linear infinite alternate;
+  animation: move_eclipse 7s linear infinite ;
   @include  for-phone-only {
     position: fixed;
     top: 4rem;
-    right: 0;
+    right: 3rem;
   }
   @include for-tablet {
     display: none;
