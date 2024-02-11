@@ -31,7 +31,13 @@ export const routes: Route[] = [
   },
   {
     path: 'admin-panel',
-    loadComponent: () => import("../pages/admin-panel/admin-panel.component")
+    loadComponent: () => import("../pages/admin-panel/admin-panel.component"),
+    children: [
+      {
+        path: 'create-survey',
+        loadComponent: () => import('../widgets/create-survey/create-survey.component')
+      }
+    ]
   },
   {
     path: '**', loadComponent: () => import("../pages/not-found/not-found.component")
