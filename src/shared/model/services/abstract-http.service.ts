@@ -1,12 +1,12 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {APIEndpoint} from "../types/api.endpoints";
 import {environment} from "../../../environments/environment";
+import {APIEndpoint} from "../types/variables";
 
 @Injectable({
   providedIn: 'root'
 })
-export abstract class AbstractService<TRead> {
+export  class AbstractApiService<TRead> {
   private readonly http = inject(HttpClient);
 
   request(

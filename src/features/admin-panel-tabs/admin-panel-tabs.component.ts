@@ -14,14 +14,11 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
   template: `
 <div class="w-full flex justify-between gap-4">
   @for (tab of tabs(); track tab) {
-    <app-button-event [routerLink]="[tab.tabUrl]" [routerLinkActive]="['is-active']" class="w-full">{{tab.description}}</app-button-event>
+    <app-button-event [routerLink]="[tab.tabUrl]" [routerLinkActive]="['opacity-40']" class="w-full ">{{tab.description}}</app-button-event>
   }
 </div>
   `,
-  styles: `
-  .is-active {
-    color: red;
-  }`,
+  styles: `    `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdminPanelTabsComponent {

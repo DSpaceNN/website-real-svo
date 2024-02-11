@@ -4,3 +4,4 @@ export enum RequestMethods {
   POST = 'POST',
   PUT = 'PUT',
 }
+export type APIEndpoint = { url: string; method: RequestMethods };

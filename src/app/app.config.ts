@@ -3,7 +3,8 @@ import {provideRouter, withComponentInputBinding, withViewTransitions} from '@an
 
 import { routes } from './app.routes';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {provideHttpClient} from "@angular/common/http";
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes,withComponentInputBinding(),withViewTransitions()),importProvidersFrom([BrowserAnimationsModule])]
+  providers: [provideRouter(routes,withComponentInputBinding(),withViewTransitions()),provideHttpClient()]
 };
