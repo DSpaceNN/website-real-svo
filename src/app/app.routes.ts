@@ -29,7 +29,10 @@ export const routes: Route[] = [
     path: 'login',
     loadComponent: () => import("../pages/login-modal/login-modal.component")
   },
-
+  {
+    path: 'admin-panel',
+    loadComponent: () => import("../pages/admin-panel/admin-panel.component")
+  },
   {
     path: '**', loadComponent: () => import("../pages/not-found/not-found.component")
   }
