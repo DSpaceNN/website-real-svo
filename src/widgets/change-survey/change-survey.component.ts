@@ -1,7 +1,10 @@
-import {ChangeDetectionStrategy, Component} from "@angular/core";
+import {ChangeDetectionStrategy, Component, inject, OnInit} from "@angular/core";
 import {TitleComponent} from "../../shared/ui/title/title.component";
 import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.component";
 import {CardComponent} from "../../shared/ui/card/card.component";
+import {ConfirmDialog} from "../../shared/model/decorators/confirm-dialog.decorator";
+import {ModalChangeComponent} from "../../features/modal-change/modal-change.component";
+import {SurveyService} from "../create-survey/model/service/survey.service";
 interface Test {
   id:number,
   title:string,
@@ -18,17 +21,17 @@ interface Test {
   template: `
 <div>
         <div class="flex justify-start gap-4 flex-wrap">
-          @for (item of data; track item.id) {
+          @for (item of surveys(); track item?.id) {
             <app-card>
               <div text>
-                <app-title>Имя: #25</app-title>
-                <app-title>Номер: 2123</app-title>
+                <app-title>Имя: {{item.name}}</app-title>
+                <app-title>Номер: {{item.slug}}</app-title>
               </div>
               <ng-container btn-container>
                 <app-button-event (event)="deleted(item.id)" class="min-w-[150px]">
                   Удалить
                 </app-button-event>
-                <app-button-event class="min-w-[150px]">
+                <app-button-event (event)="openModal()" class="min-w-[150px]">
                   Редактировать
                 </app-button-event>
               </ng-container>
@@ -41,45 +44,21 @@ interface Test {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export default class ChangeSurveyComponent {
-  deleted (id:number) {
-    this.data = this.data.filter((i) => i.id !== id )
-  }
-  private _data: Test[] = [
-    {
-      id: 1,
-      title: '24',
-      slug: '№25'
-
-    }, {
-      id: 2,
-      title: '25',
-      slug: '№25'
-
-    }, {
-      id: 3,
-      title: '26',
-      slug: '№25'
-
-    },{
-      id: 4,
-      title: '27',
-      slug: '№25'
-
-    },{
-      id: 5,
-      title: '28',
-      slug: '№25'
-
-    },
-  ]
-
-
-  get data(): Test[] {
-    return this._data;
+export default class ChangeSurveyComponent implements OnInit{
+  private surveyService = inject(SurveyService)
+  public readonly surveys = this.surveyService.surveys
+  ngOnInit(): void {
+    this.surveyService.getSurvey()
   }
 
-  set data(value: Test[]) {
-    this._data = value;
+  deleted (id:string) {
+    console.log(id)
   }
+  @ConfirmDialog(ModalChangeComponent, {
+    minWidth: '480px',
+  })
+  openModal() {
+  }
+
 }
+

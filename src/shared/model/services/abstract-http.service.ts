@@ -2,18 +2,19 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {APIEndpoint} from "../types/variables";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export  class AbstractApiService<TRead> {
+export  class AbstractApiService<T> {
   private readonly http = inject(HttpClient);
 
-  request(
+  request<T>(
     endpoint: APIEndpoint,
     body: unknown = undefined,
     params?: { urlParams?: string; queryParams?: string }
-  ) {
+  ):Observable<T> {
     const requestOptions = {
       withCredentials: true,
       origin: environment.apiURL,
@@ -27,15 +28,15 @@ export  class AbstractApiService<TRead> {
     }
     switch (endpoint.method) {
       case 'POST':
-        return this.http.post(url, body, requestOptions);
+        return this.http.post<T>(url, body, requestOptions);
       case 'GET':
-        return this.http.get(url, requestOptions);
+        return this.http.get<T>(url, requestOptions);
       case 'DELETE':
-        return this.http.delete(url, requestOptions);
+        return this.http.delete<T>(url, requestOptions);
       case 'PUT':
-        return this.http.put(url, body, requestOptions);
+        return this.http.put<T>(url, body, requestOptions);
       default:
-        return this.http.get(url, requestOptions);
+        return this.http.get<T>(url, requestOptions);
     }
   }
 

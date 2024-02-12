@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import ChangeSurveyComponent from "./change-survey.component";
 
+import { ModalChangeComponent } from './modal-change.component';
 
-xdescribe('ChangeSurveyComponent', () => {
-  let component: ChangeSurveyComponent;
-  let fixture: ComponentFixture<ChangeSurveyComponent>;
+describe('ModalChangeComponent', () => {
+  let component: ModalChangeComponent;
+  let fixture: ComponentFixture<ModalChangeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChangeSurveyComponent]
+      imports: [ModalChangeComponent]
     })
     .compileComponents();
-
-    fixture = TestBed.createComponent(ChangeSurveyComponent);
+    
+    fixture = TestBed.createComponent(ModalChangeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
