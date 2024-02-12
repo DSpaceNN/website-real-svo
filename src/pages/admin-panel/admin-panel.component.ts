@@ -15,7 +15,7 @@ import {ADMIN_PAGE_ROUTING} from "./model";
     <div class="my-5">
       <app-admin-panel-tabs [tabs]="ADMIN_PAGE_ROUTING"></app-admin-panel-tabs>
     </div>
-    <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
    </section>
   `,
   styles: ``,
