@@ -12,5 +12,8 @@ redirectToPageNotThisTime () {
 redirectToWinPage () {
     this._router.navigate(['/questions/win'])
 }
+redirectToCartNotFoundPage () {
+    this._router.navigate(["/cart-not-found"])
+}
   constructor() { }
 }

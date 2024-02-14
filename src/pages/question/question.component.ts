@@ -22,6 +22,7 @@ import {LineLightGrayComponent} from "../../shared/ui/line-light-gray/line-light
 import {SlugService} from "../../shared/model/services/slug.service";
 import {QuestionService} from "./model/services/question.service";
 import {options,} from "../../shared/model/types/surveys";
+import {RedirectToPageService} from "../../shared/model/services/redirect-to-page.service";
 
 @Component({
   selector: 'app-question',
@@ -42,16 +43,16 @@ import {options,} from "../../shared/model/types/surveys";
     <section>
       <app-sub-header></app-sub-header>
       <div class="mb-4">
-        <div class="flex  gap-2 mb-4 justify-start items-center items-start md:items-center">
+        <div class="flex  gap-2 mb-4 justify-start items-center  md:items-center">
           <app-red-circle>
-            <app-title number-question>1.</app-title>
+            <app-title number-question>{{currentPage()}}</app-title>
           </app-red-circle>
           <app-description class="text-white">{{ questions()?.questionText }}</app-description>
         </div>
         <app-line-white class="w-full"></app-line-white>
       </div>
       <div class="h-scroll-y overflow-y-scroll  no-scrollbar">
-        <app-question-answer-option [answers]="questions().options">
+        <app-question-answer-option [answers]="questions()?.options || []">
           <ng-template #questionAnswerOption let-answer>
             <app-radio-button (valueChange)="onChange($event)"
                               [radioButtonValue]="answer">
@@ -93,21 +94,27 @@ import {options,} from "../../shared/model/types/surveys";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class QuestionComponent implements OnInit{
-
   private _slugService = inject(SlugService)
   private _questionService = inject(QuestionService)
+  private _redirectToPageService = inject(RedirectToPageService)
+  // _______________________________________________________________________________________________
+  slug = input<string>('')
+  public readonly currentPage = this._questionService.currentQuestionPage
   public readonly currentQuestionIndex = this._questionService.currentQuestionIndex;
   public readonly totalQuestionCount = this._questionService.totalCount;
-  slug = input<string>('')
   public readonly selectedAnswer:WritableSignal<options> = signal({} as options)
   public readonly questions = this._questionService.currentQuestion
   isAnswerSelected(): boolean {
-    const selectedOption = this.questions().options.find(option => option.isSelected);
+    const selectedOption = this.questions()?.options.find(option => option.isSelected);
     return !selectedOption;
   }
   ngOnInit(): void {
+  if(this.slug()) {
     this._slugService.set(this.slug())
     this._questionService.getSurveySlug(this.slug())
+    return
+  }
+   this._redirectToPageService.redirectToCartNotFoundPage()
   }
   onChange(event:any) {
     this._questionService.selectOption(event.id)

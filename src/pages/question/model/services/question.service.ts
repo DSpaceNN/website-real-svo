@@ -81,12 +81,14 @@ sendResultQuestion (postData:SendResultSurvey) {
     }
   }
   previous() {
-
     const currentQuestionIndex = this.#currentQuestionIndex();
     this.#currentQuestionPage.update((v) => v = v - 1)
     if (currentQuestionIndex > 0) {
       this.#currentQuestionIndex.set(currentQuestionIndex - 1);
     } else {
     }
+  }
+  resetCurrentPage() {
+    this.#currentQuestionPage.set(1)
   }
 }

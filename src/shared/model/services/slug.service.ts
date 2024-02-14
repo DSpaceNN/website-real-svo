@@ -4,7 +4,7 @@ import {computed, Injectable, signal} from "@angular/core";
   providedIn: 'root',
 })
 export class SlugService {
- readonly #actualSlug = signal<string>('Не определено ')
+ readonly #actualSlug = signal<string>( '')
 public  readonly actualSlug = computed(() => this.#actualSlug())
   set (slug:string) {
    this.#actualSlug.set(slug)

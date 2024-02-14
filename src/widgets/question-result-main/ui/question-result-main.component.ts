@@ -20,7 +20,7 @@ import {LineWhiteComponent} from "../../../shared/ui/line-white/line-white.compo
       @for (questions of questResult(); track questions?.id){
     <div class="flex gap-2 flex-col my-4">
       <app-red-circle>
-        <app-title number-question class="text-[18px]">1</app-title>
+        <app-title number-question class="text-[18px]">{{$index + 1}}</app-title>
       </app-red-circle>
       <app-description class="text-white">
         {{questions.questionText}}
@@ -38,18 +38,9 @@ import {LineWhiteComponent} from "../../../shared/ui/line-white/line-white.compo
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class QuestionResultMainComponent<T> implements OnInit{
+export class QuestionResultMainComponent<T>  {
 questResult = input.required<any[]>({
   alias: 'questionsAnswers'
 })
-
-  ngOnInit(): void {
-  setTimeout(() => {
-    this.questResult()
-  },1000)
-}
-
-
-
 
 }

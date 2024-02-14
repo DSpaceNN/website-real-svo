@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import CartNotFoundComponent from "./cart-not-found.component";
 
-import { CtaCardComponent } from './cta-card.component';
 
-xdescribe('CtaCardComponent', () => {
-  let component: CtaCardComponent;
-  let fixture: ComponentFixture<CtaCardComponent>;
+xdescribe('CartNotFoundComponent', () => {
+  let component: CartNotFoundComponent;
+  let fixture: ComponentFixture<CartNotFoundComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CtaCardComponent]
+      imports: [CartNotFoundComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CtaCardComponent);
+    fixture = TestBed.createComponent(CartNotFoundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

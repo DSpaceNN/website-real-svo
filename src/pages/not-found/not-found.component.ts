@@ -5,6 +5,7 @@ import {DescriptionComponent} from "../../shared/ui/description/description.comp
 import {RouterLink} from "@angular/router";
 import {NgOptimizedImage} from "@angular/common";
 import {CircleAnimationComponent} from "../../shared/ui/circle-animation/circle-animation.component";
+import {ButtonGoMainPageComponent} from "../../features/button-go-main-page/button-go-main-page.component";
 
 @Component({
   selector: 'app-not-found',
@@ -15,19 +16,11 @@ import {CircleAnimationComponent} from "../../shared/ui/circle-animation/circle-
     DescriptionComponent,
     RouterLink,
     CircleAnimationComponent,
+    ButtonGoMainPageComponent,
   ],
   template: `
     <app-title class=" text-[24px] md:text-[26px] text-left mx-auto md:mx-0"> Страница <br class="md:hidden"> не <br class="md:hidden"> найдена...</app-title>
-<div class="fixed-bottom-container">
-  <app-button-event  routerLink="/" >
-    <div class="my-3 flex flex- gap-1 justify-center items-center">
-      <app-description class="block">Вернуться на главную
-      </app-description>
-      <img src="../../assets/images/arrow_outward.svg" alt="arrow">
-    </div>
-  </app-button-event>
-  <app-circle-animation></app-circle-animation>
-</div>
+<app-button-go-main-page></app-button-go-main-page>
 
   `,
 host: {

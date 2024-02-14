@@ -5,6 +5,7 @@ import {NgClass} from "@angular/common";
 import {RedBackgroundComponent} from "../../shared/ui/red-background/red-background.component";
 import {CtaCardWrapperComponent} from "../cta-card-wrapper/cta-card-wrapper.component";
 import {SlugService} from "../../shared/model/services/slug.service";
+import {QuestionService} from "../../pages/question/model/services/question.service";
 
 @Component({
   selector: 'app-cta-card',
@@ -25,8 +26,10 @@ import {SlugService} from "../../shared/model/services/slug.service";
 })
 export class CtaCardComponent {
   private _router = inject(Router)
+  private _questionsService = inject(QuestionService)
   private _slugService = inject(SlugService)
   goToRepeatPassingQuest() {
+    this._questionsService.resetCurrentPage()
     this._router.navigate(['/questions'], {
       queryParams: {
         slug: this._slugService.actualSlug()
