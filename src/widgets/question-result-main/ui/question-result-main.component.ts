@@ -20,12 +20,12 @@ import {LineWhiteComponent} from "../../../shared/ui/line-white/line-white.compo
       @for (questions of questResult(); track questions?.id){
     <div class="flex gap-2 flex-col my-4">
       <app-red-circle>
-        <app-title number-question class="text-[18px]">{{questions?.title}}</app-title>
+        <app-title number-question class="text-[18px]">1</app-title>
       </app-red-circle>
       <app-description class="text-white">
-        {{questions?.description}}
+        {{questions.questionText}}
       </app-description>
-      <app-correctness-answer [correctAnswer]="questions?.id < 7"></app-correctness-answer>
+      <app-correctness-answer [correctAnswer]="questions.isCorrect"></app-correctness-answer>
 
     </div>
         @if(!$last) {
@@ -38,10 +38,17 @@ import {LineWhiteComponent} from "../../../shared/ui/line-white/line-white.compo
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class QuestionResultMainComponent<T> {
+export class QuestionResultMainComponent<T> implements OnInit{
 questResult = input.required<any[]>({
   alias: 'questionsAnswers'
 })
+
+  ngOnInit(): void {
+  setTimeout(() => {
+    this.questResult()
+  },1000)
+}
+
 
 
 

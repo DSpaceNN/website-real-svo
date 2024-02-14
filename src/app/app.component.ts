@@ -15,7 +15,6 @@ export class AppComponent {
   title = 'website-real-svo';
   static injector: Injector;
   constructor(injector: Injector) {
-    console.log(injector, 'injector')
     AppComponent.injector = injector;
   }
 }

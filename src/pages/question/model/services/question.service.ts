@@ -8,12 +8,18 @@ import {
   SendResultSurvey,
   SendResultSurveyDto
 } from '../../../../shared/model/types/surveys';
+import {LoseOrWinQuestionsService} from "../../../../shared/model/services/lose-or-win-questions.service";
+import {HttpClient} from "@angular/common/http";
+import {RedirectToPageService} from "../../../../shared/model/services/redirect-to-page.service";
 
 @Injectable({
   providedIn: 'root',
 })
 export class QuestionService {
   private readonly apiService = inject(AbstractApiService)
+  private _loseOrWinQuestionsService = inject(LoseOrWinQuestionsService)
+  private _redirectService = inject(RedirectToPageService)
+  // ______________________________________________________________________________________________________
   readonly #questions = signal<question[]>([]);
   readonly #currentQuestionIndex = signal<number>(0);
   public readonly  currentQuestionIndex = computed(() => this.#currentQuestionIndex())
@@ -26,14 +32,16 @@ export class QuestionService {
     this.apiService
       .request<ISurveySlugDto>(API.GET_SURVEY_BY_SLUG, undefined, { urlParams: slug })
       .subscribe((response) => {
-        this.#questions.set(response.result.questions);
-        this.#activeSlugId.set(response.result.id)
+        this.#questions.set(response.result?.questions);
+        this.#activeSlugId.set(response.result?.id)
         this.#currentQuestionIndex.set(0);
       });
   }
 sendResultQuestion (postData:SendResultSurvey) {
       this.apiService.request<SendResultSurveyDto>(API.CREATE_SEND_RESULT, postData).subscribe((r) => {
-        console.log(r)
+        this._loseOrWinQuestionsService.setIdCompletedQuestions(r.result.id)
+        this._loseOrWinQuestionsService.setUniqueCode(r.result.code)
+        r.result.isSuccess ? this._redirectService.redirectToWinPage() : this._redirectService.redirectToPageNotThisTime()
       })
 }
   selectOption(selectedOptionId: string) {
@@ -55,7 +63,6 @@ sendResultQuestion (postData:SendResultSurvey) {
     })
     const currentQuestionIndex = this.#currentQuestionIndex();
     const questions = this.#questions();
-    console.log(questions)
     if (currentQuestionIndex < questions.length - 1) {
       this.#currentQuestionIndex.set(currentQuestionIndex + 1);
     } else {
@@ -70,21 +77,16 @@ sendResultQuestion (postData:SendResultSurvey) {
         surveyId: this.#activeSlugId(),
         answers: postData
       };
-
       this.sendResultQuestion(finalPostData);
-      console.log(finalPostData)
     }
   }
   previous() {
-    console.log(this.#questions().map((i) => {
-      console.log(i, 'h')
-    }))
+
     const currentQuestionIndex = this.#currentQuestionIndex();
     this.#currentQuestionPage.update((v) => v = v - 1)
     if (currentQuestionIndex > 0) {
       this.#currentQuestionIndex.set(currentQuestionIndex - 1);
     } else {
-      console.log("This is the first question.")
     }
   }
 }

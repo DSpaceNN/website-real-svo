@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {TitleComponent} from "../../shared/ui/title/title.component";
 import {DescriptionComponent} from "../../shared/ui/description/description.component";
 import {ContainerNumberCardComponent} from "../../shared/ui/container-number-card/container-number-card.component";
+import {LoseOrWinQuestionsService} from "../../shared/model/services/lose-or-win-questions.service";
 
 @Component({
   selector: 'app-win-quest',
@@ -24,7 +25,7 @@ import {ContainerNumberCardComponent} from "../../shared/ui/container-number-car
                 <ng-template #numberCard>
                   <div class="flex flex-col justify-center text-center gap-1 py-[12px] " >
                     <app-description class="text-white">Уникальный код</app-description>
-                    <app-title class="text-[14px]">28</app-title>
+                    <app-title class="text-[14px]">{{uniqueCode()}}</app-title>
                   </div>
                 </ng-template>
               </app-container-number-card>
@@ -34,4 +35,7 @@ import {ContainerNumberCardComponent} from "../../shared/ui/container-number-car
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class WinQuestComponent  {}
+export default class WinQuestComponent  {
+  private _loseOrWinQuestions = inject(LoseOrWinQuestionsService)
+  public readonly uniqueCode = this._loseOrWinQuestions.uniqueCode
+}

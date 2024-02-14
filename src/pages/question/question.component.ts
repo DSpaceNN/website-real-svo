@@ -21,7 +21,7 @@ import {RadioButtonComponent} from "../../shared/ui/radio-button/radio-button.co
 import {LineLightGrayComponent} from "../../shared/ui/line-light-gray/line-light-gray.component";
 import {SlugService} from "../../shared/model/services/slug.service";
 import {QuestionService} from "./model/services/question.service";
-import {options, question} from "../../shared/model/types/surveys";
+import {options,} from "../../shared/model/types/surveys";
 
 @Component({
   selector: 'app-question',
@@ -42,7 +42,7 @@ import {options, question} from "../../shared/model/types/surveys";
     <section>
       <app-sub-header></app-sub-header>
       <div class="mb-4">
-        <div class="flex  gap-2 mb-4 justify-start  items-start md:items-center">
+        <div class="flex  gap-2 mb-4 justify-start items-center items-start md:items-center">
           <app-red-circle>
             <app-title number-question>1.</app-title>
           </app-red-circle>
@@ -106,17 +106,12 @@ export default class QuestionComponent implements OnInit{
     return !selectedOption;
   }
   ngOnInit(): void {
-
-    setTimeout(() => {
-      console.log(this.selectedAnswer(), 'selected questions')
-    },3000)
     this._slugService.set(this.slug())
     this._questionService.getSurveySlug(this.slug())
   }
   onChange(event:any) {
-    console.log(event, 'this event')
     this._questionService.selectOption(event.id)
-  this.selectedAnswer.set(event)
+    this.selectedAnswer.set(event)
     }
   previous() {
   this._questionService.previous()

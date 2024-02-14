@@ -1,9 +1,10 @@
-import {ChangeDetectionStrategy, Component, Inject, input, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, Inject, input, Input} from '@angular/core';
 import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.component";
 import {Router, RouterLink} from "@angular/router";
 import {NgClass} from "@angular/common";
 import {RedBackgroundComponent} from "../../shared/ui/red-background/red-background.component";
 import {CtaCardWrapperComponent} from "../cta-card-wrapper/cta-card-wrapper.component";
+import {SlugService} from "../../shared/model/services/slug.service";
 
 @Component({
   selector: 'app-cta-card',
@@ -23,12 +24,13 @@ import {CtaCardWrapperComponent} from "../cta-card-wrapper/cta-card-wrapper.comp
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CtaCardComponent {
-  back = input.required<string>({
-    alias: 'backUrl'
-  })
-  forward = input.required<string>({
-    alias: 'forwardUrl'
-
-  })
- private _router:Router = Inject(Router)
+  private _router = inject(Router)
+  private _slugService = inject(SlugService)
+  goToRepeatPassingQuest() {
+    this._router.navigate(['/questions'], {
+      queryParams: {
+        slug: this._slugService.actualSlug()
+      }
+    })
+  }
 }

@@ -1,8 +1,9 @@
-import {ChangeDetectionStrategy, Component, Signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, Signal} from '@angular/core';
 import {DescriptionComponent} from "../../shared/ui/description/description.component";
 import {ContainerNumberCardComponent} from "../../shared/ui/container-number-card/container-number-card.component";
-import {UniqueCodeService} from "../../shared/model/services/unique-code.service";
 import {TitleComponent} from "../../shared/ui/title/title.component";
+import {LoseOrWinQuestionsService} from "../../shared/model/services/lose-or-win-questions.service";
+import {SlugService} from "../../shared/model/services/slug.service";
 
 @Component({
   selector: 'app-quest-failed-block',
@@ -17,7 +18,6 @@ import {TitleComponent} from "../../shared/ui/title/title.component";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuestFailedBlockComponent {
-  public uniqueCode:Signal<number> = this._uniqueCodeService.numberCart
-  constructor(private _uniqueCodeService:UniqueCodeService) {
-  }
+  private _slugService = inject(SlugService)
+  public readonly slug = this._slugService.actualSlug
 }

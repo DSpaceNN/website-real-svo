@@ -58,7 +58,6 @@ private _surveyService = inject(SurveyService)
   });
 
 submit() {
-  console.log(this.createSurvey.value)
   this._surveyService.setSurvey(this.createSurvey.value)
   this.createSurvey.reset()
 

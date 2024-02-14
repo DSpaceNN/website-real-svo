@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {TitleAndUnderlineComponent} from "../../features/title-and-underline/title-and-underline.component";
 import {ContainerNumberCardComponent} from "../../shared/ui/container-number-card/container-number-card.component";
 import {DescriptionComponent} from "../../shared/ui/description/description.component";
 import {TitleComponent} from "../../shared/ui/title/title.component";
 import {LineWhiteComponent} from "../../shared/ui/line-white/line-white.component";
+import {SlugService} from "../../shared/model/services/slug.service";
 
 @Component({
   selector: 'app-question-result-header',
@@ -22,7 +23,7 @@ import {LineWhiteComponent} from "../../shared/ui/line-white/line-white.componen
         <ng-template #numberCard >
           <div class="flex justify-center items-center h-full gap-[8px] p-[8px] ">
             <app-description class="text-white">Карточка</app-description>
-            <app-title class="text-[12px]">55</app-title></div>
+            <app-title class="text-[12px]">{{slug()}}</app-title></div>
         </ng-template>
       </app-container-number-card>
       <app-line-white></app-line-white>
@@ -32,5 +33,7 @@ import {LineWhiteComponent} from "../../shared/ui/line-white/line-white.componen
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuestionResultHeaderComponent {
+  private _slugService = inject(SlugService)
+  public readonly slug = this._slugService.actualSlug
 
 }
