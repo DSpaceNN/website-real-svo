@@ -13,18 +13,34 @@ errors:null | any
 export type options = {
   optionText:string,
   id:string
+  isSelected:boolean
+
 }
 export type question  = {
   questionText: string,
   sequence:number,
   questionType:number
-  options:options[]
+  options:options[],
+  id:string
+}
+export interface SendResultSurvey  {
+  surveyId: string,
+  answers:sendResultAnswer[]
+}
+export interface SendResultSurveyDto {
+  isSuccess:boolean,
+  code:string,
+  id:string
+}
+export type sendResultAnswer = {
+  questionId:string,
+  selectedOptions: string[]
 }
 export interface ISurveySlugDto {
   result: {
     slug:string,
-    questions:question[]
+    id:string,
+    questions:question[],
   },
-  id:string,
   errors:any
 }

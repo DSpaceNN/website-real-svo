@@ -13,5 +13,6 @@ import {QuestionService} from "../../../pages/question/model/services/question.s
 })
 export class QuestionsCountComponent {
   private _questionService = inject(QuestionService)
+  public readonly currentPage = this._questionService.currentQuestionPage
   public readonly questionCount = this._questionService.totalCount
 }

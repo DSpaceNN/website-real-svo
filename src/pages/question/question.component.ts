@@ -39,41 +39,42 @@ import {options, question} from "../../shared/model/types/surveys";
     LineLightGrayComponent
   ],
   template: `
-    <section >
+    <section>
       <app-sub-header></app-sub-header>
       <div class="mb-4">
         <div class="flex  gap-2 mb-4 justify-start  items-start md:items-center">
-        <app-red-circle>
-          <app-title number-question>1.</app-title>
-        </app-red-circle>
-        <app-description class="text-white">{{questions().questionText}}</app-description>
-      </div>
+          <app-red-circle>
+            <app-title number-question>1.</app-title>
+          </app-red-circle>
+          <app-description class="text-white">{{ questions()?.questionText }}</app-description>
+        </div>
         <app-line-white class="w-full"></app-line-white>
       </div>
       <div class="h-scroll-y overflow-y-scroll  no-scrollbar">
-            <app-question-answer-option   [answers]="questions().options">
-              <ng-template #questionAnswerOption let-answer>
-                  <app-radio-button (valueChange)="onChange($event)" [radioButtonValue]="answer">
-                  <app-title  radio-value>{{answer.optionText}}</app-title>
-                    @if (answer === selectedAnswer()) {
-                      <div radio-value class="absolute -left-2 -top-4 -z-10">
-                       <img src="../../assets/images/eclipse_questions.svg" alt="eclipse">
-                      </div>
-                    }
-                </app-radio-button>
-                <br>
-                <app-line-light-gray class="block my-3"></app-line-light-gray>
-              </ng-template>
-            </app-question-answer-option>
+        <app-question-answer-option [answers]="questions().options">
+          <ng-template #questionAnswerOption let-answer>
+            <app-radio-button (valueChange)="onChange($event)"
+                              [radioButtonValue]="answer">
+              <app-title radio-value>{{ answer.optionText }}</app-title>
+              @if (answer.isSelected) {
+                <div radio-value class="absolute -left-2 -top-4 -z-10">
+                  <img src="../../assets/images/eclipse_questions.svg" alt="eclipse">
+                </div>
+              }
+            </app-radio-button>
+            <br>
+            <app-line-light-gray class="block my-3"></app-line-light-gray>
+          </ng-template>
+        </app-question-answer-option>
       </div>
-<!--      absolute block-->
+      <!--      absolute block-->
       <app-cta-card-wrapper class="fixed w-full left-0 right-0 bottom-0">
         <ng-template #ctaCard>
-          <app-button-event (event)="click1()" class="buttonEvent">
+          <app-button-event [disabled]="currentQuestionIndex() === 0 " (event)="previous()" class="buttonEvent">
             Назад
           </app-button-event>
-          <app-button-event (event)="click2()" class="buttonEvent">
-            Продолжить
+          <app-button-event [disabled]="isAnswerSelected()" (event)="next()" class="buttonEvent">
+            {{ currentQuestionIndex() === totalQuestionCount() - 1 ? "Завершить" : "Продолжить" }}
           </app-button-event>
         </ng-template>
       </app-cta-card-wrapper>
@@ -92,26 +93,35 @@ import {options, question} from "../../shared/model/types/surveys";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class QuestionComponent implements OnInit{
+
   private _slugService = inject(SlugService)
   private _questionService = inject(QuestionService)
+  public readonly currentQuestionIndex = this._questionService.currentQuestionIndex;
+  public readonly totalQuestionCount = this._questionService.totalCount;
   slug = input<string>('')
   public readonly selectedAnswer:WritableSignal<options> = signal({} as options)
   public readonly questions = this._questionService.currentQuestion
+  isAnswerSelected(): boolean {
+    const selectedOption = this.questions().options.find(option => option.isSelected);
+    return !selectedOption;
+  }
   ngOnInit(): void {
-    console.log(this.questions(), 'selected questions')
+
+    setTimeout(() => {
+      console.log(this.selectedAnswer(), 'selected questions')
+    },3000)
     this._slugService.set(this.slug())
     this._questionService.getSurveySlug(this.slug())
   }
   onChange(event:any) {
     console.log(event, 'this event')
+    this._questionService.selectOption(event.id)
   this.selectedAnswer.set(event)
     }
-
-
-  click1() {
+  previous() {
   this._questionService.previous()
   }
-  click2() {
+  next () {
     this._questionService.next()
   }
 }
