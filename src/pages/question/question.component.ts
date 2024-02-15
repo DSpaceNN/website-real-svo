@@ -47,14 +47,14 @@ import {RedirectToPageService} from "../../shared/model/services/redirect-to-pag
           <app-red-circle>
             <app-title number-question>{{currentPage()}}</app-title>
           </app-red-circle>
-          <app-description class="text-white">{{ questions()?.questionText }}</app-description>
+          <app-description class="text-white">{{ questions()?.questionText}}</app-description>
         </div>
         <app-line-white class="w-full"></app-line-white>
       </div>
       <div class="h-scroll-y overflow-y-scroll  no-scrollbar">
         <app-question-answer-option [answers]="questions()?.options || []">
           <ng-template #questionAnswerOption let-answer>
-            <app-radio-button (valueChange)="onChange($event)"
+            <app-radio-button (valueChange)="changeRadioButton($event)"
                               [radioButtonValue]="answer">
               <app-title radio-value>{{ answer.optionText }}</app-title>
               @if (answer.isSelected) {
@@ -116,7 +116,7 @@ export default class QuestionComponent implements OnInit{
   }
    this._redirectToPageService.redirectToCartNotFoundPage()
   }
-  onChange(event:any) {
+  changeRadioButton(event:any) {
     this._questionService.selectOption(event.id)
     this.selectedAnswer.set(event)
     }

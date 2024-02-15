@@ -15,5 +15,8 @@ redirectToWinPage () {
 redirectToCartNotFoundPage () {
     this._router.navigate(["/cart-not-found"])
 }
+redirectToErrorPage () {
+    this._router.navigate(['/error'])
+}
   constructor() { }
 }

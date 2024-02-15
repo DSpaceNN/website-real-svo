@@ -13,12 +13,14 @@ import {RouterLink} from "@angular/router";
   ],
   template: `
     <div class="fixed-bottom-container">
-    <app-button-event  routerLink="/" >
+    <app-button-event >
+      <a href="https://muzey-podvigov.tilda.ws/">
       <div class="my-3 flex flex- gap-1 justify-center items-center">
         <app-description class="block">Вернуться на главную
         </app-description>
         <img src="../../assets/images/arrow_outward.svg" alt="arrow">
       </div>
+      </a>
     </app-button-event>
     </div>
   `,

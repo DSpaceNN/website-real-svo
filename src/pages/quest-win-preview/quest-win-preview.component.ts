@@ -64,7 +64,6 @@ export default class QuestWinPreviewComponent {
     hasBackdrop: false
   })
   openRememberDialog() {
-  this._router.navigate(['questions/result'])
   }
 
 }

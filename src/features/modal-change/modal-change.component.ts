@@ -45,7 +45,6 @@ editingForm = new FormGroup({
   'slug': new FormControl('',)
 })
 click() {
-  console.log('click')
   this.editingForm.reset()
 }
 

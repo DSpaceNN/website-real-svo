@@ -38,6 +38,9 @@ export const routes: Route[] = [
     path: 'cart-not-found', loadComponent: () => import("../pages/cart-not-found/cart-not-found.component")
   },
   {
+    path: 'error', loadComponent: () => import('../pages/error-page/error-page.component')
+  },
+  {
     path: '**', loadComponent: () => import("../pages/not-found/not-found.component")
   }
 ];

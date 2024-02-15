@@ -2,7 +2,9 @@
  <ng-template #ctaCard>
    <div  class="flex gap-4 justify-around w-full">
      <app-button-event  class="event_btn ">
-       <ng-content select="[back]"></ng-content>
+       <a href="https://muzey-podvigov.tilda.ws/">
+         <ng-content select="[back]"></ng-content>
+       </a>
      </app-button-event>
      <app-button-event (event)="goToRepeatPassingQuest()"  class="event_btn">
        <ng-content select="[forward]"></ng-content>

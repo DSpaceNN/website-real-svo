@@ -42,13 +42,7 @@ export default class QuestionResultComponent implements OnInit{
   private _router = inject(Router)
   public readonly surveyFeedback = this._resultQuestionsService.surveyFeedback
   ngOnInit(): void {
+    console.log('hell', this._loseOrWinQuestionsService.idCompletedQuestId())
     this._resultQuestionsService.getSurveyFeedback(this._loseOrWinQuestionsService.idCompletedQuestId())
-  }
-  goToRepeatQuest() {
-    this._router.navigate(["/questions"],{
-      queryParams: {
-        slug: 1
-      }
-    })
   }
 }

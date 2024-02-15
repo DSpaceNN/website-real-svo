@@ -1,4 +1,4 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import {computed, inject, Injectable, Signal, signal} from '@angular/core';
 import { AbstractApiService } from '../../../../shared/model/services/abstract-http.service';
 import { API } from '../../../../shared/model/utils/api.endpoints';
 import {
@@ -23,7 +23,7 @@ export class QuestionService {
   readonly #questions = signal<question[]>([]);
   readonly #currentQuestionIndex = signal<number>(0);
   public readonly  currentQuestionIndex = computed(() => this.#currentQuestionIndex())
-  public readonly currentQuestion = computed(() => this.#questions()[this.#currentQuestionIndex()]);
+  public readonly currentQuestion:Signal<question | null> = computed(() => this.#questions()[this.#currentQuestionIndex()]);
   public readonly totalCount = computed(() => this.#questions().length)
   readonly #currentQuestionPage = signal<number>(1)
   public readonly currentQuestionPage = computed(() => this.#currentQuestionPage())
@@ -35,6 +35,9 @@ export class QuestionService {
         this.#questions.set(response.result?.questions);
         this.#activeSlugId.set(response.result?.id)
         this.#currentQuestionIndex.set(0);
+        if(!response.result) {
+          this._redirectService.redirectToCartNotFoundPage()
+        }
       });
   }
 sendResultQuestion (postData:SendResultSurvey) {
