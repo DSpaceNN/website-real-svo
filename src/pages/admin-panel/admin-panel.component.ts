@@ -21,7 +21,7 @@ import {RedirectToPageService} from "../../shared/model/services/redirect-to-pag
   template: `
     <app-header-admin-panel></app-header-admin-panel>
    <section class="mt-8 -mx-4 flex">
-     <div class="flex  flex-col gap-4 min-w-[300px] border-r-[1px] border-black ">
+     <div class="flex  flex-col  gap-4 min-w-[300px] border-r-[1px] border-gray-admin h-[92vh] ">
        <app-left-sidebar-admin [sidebarItems]="adminDashboardLeftSide()">
          <ng-template #dashboardLeft let-subItems>
         <div  (click)="changeTab(subItems.id)" [routerLink]='subItems.route'
