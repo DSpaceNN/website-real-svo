@@ -18,5 +18,8 @@ redirectToCartNotFoundPage () {
 redirectToErrorPage () {
     this._router.navigate(['/error'])
 }
+redirectToSurveyAdminPanelPage() {
+    this._router.navigate(['/admin-panel/survey'])
+}
   constructor() { }
 }

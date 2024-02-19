@@ -20,7 +20,7 @@ interface Test {
   ],
   template: `
 <div>
-        <div class="flex justify-start gap-4 flex-wrap">
+        <div class="flex justify-start gap-4 flex-wrap ">
           @for (item of surveys(); track item?.id) {
             <app-card>
               <div text>

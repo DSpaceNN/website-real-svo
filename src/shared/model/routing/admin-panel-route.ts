@@ -6,12 +6,14 @@ const adminPanelRoute: Routes = [
     loadComponent: () => import('../../../pages/admin-panel/admin-panel.component'),
     children: [
       {
-        path: 'create-survey',
-        loadComponent: () => import('../../../widgets/create-survey/create-survey.component')
+        path: 'survey',
+        loadComponent: () => import('../../../pages/survey/survey.component'),
+
       },
       {
         path: 'change-survey',
-        loadComponent: () => import("../../../widgets/change-survey/change-survey.component")
+        loadComponent: () => import("../../../widgets/change-survey/change-survey.component"),
+
       },
       {
         path: '**',

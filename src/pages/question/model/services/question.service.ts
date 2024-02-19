@@ -60,6 +60,20 @@ sendResultQuestion (postData:SendResultSurvey) {
       selectedOption.isSelected = true;
     }
   }
+  sendResultPassingSurvey () {
+    const postData:sendResultAnswer[] = this.#questions().map(question => {
+      return {
+        questionId: question.id,
+        selectedOptions: question.options.filter(option => option.isSelected).map(option => option.id)
+      }
+    });
+    const finalPostData: SendResultSurvey = {
+      surveyId: this.#activeSlugId(),
+      answers: postData
+    };
+    this.sendResultQuestion(finalPostData);
+  }
+
   next() {
     this.#currentQuestionPage.update((v) => {
       return v < this.totalCount() ? v + 1 : v
@@ -69,18 +83,7 @@ sendResultQuestion (postData:SendResultSurvey) {
     if (currentQuestionIndex < questions.length - 1) {
       this.#currentQuestionIndex.set(currentQuestionIndex + 1);
     } else {
-      const postData:sendResultAnswer[] = questions.map(question => {
-        return {
-          questionId: question.id,
-          selectedOptions: question.options.filter(option => option.isSelected).map(option => option.id)
-        }
-      });
-
-      const finalPostData: SendResultSurvey = {
-        surveyId: this.#activeSlugId(),
-        answers: postData
-      };
-      this.sendResultQuestion(finalPostData);
+     this.sendResultPassingSurvey()
     }
   }
   previous() {

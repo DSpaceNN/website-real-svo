@@ -32,7 +32,7 @@ export const routes: Route[] = [
   },
   {
     path: 'admin-panel',
-    loadChildren: () => import("../shared/model/routing/admin-panel-route")
+    loadChildren: () => import("../shared/model/routing/admin-panel-route"),
   },
   {
     path: 'cart-not-found', loadComponent: () => import("../pages/cart-not-found/cart-not-found.component")

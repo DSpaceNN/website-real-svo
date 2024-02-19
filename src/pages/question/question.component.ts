@@ -1,17 +1,14 @@
 import {
   ChangeDetectionStrategy,
-  Component,
-  effect,
+  Component, effect,
   inject,
   input,
-  Input,
   OnInit,
   signal,
   WritableSignal
 } from '@angular/core';
 import SubHeaderComponent from "../../widgets/sub-header/sub-header.component";
 import {RedCircleComponent} from "../../shared/ui/red-circle/red-circle.component";
-import {TitleComponent} from "../../shared/ui/title/title.component";
 import {DescriptionComponent} from "../../shared/ui/description/description.component";
 import {LineWhiteComponent} from "../../shared/ui/line-white/line-white.component";
 import {CtaCardWrapperComponent} from "../../features/cta-card-wrapper/cta-card-wrapper.component";
@@ -23,6 +20,7 @@ import {SlugService} from "../../shared/model/services/slug.service";
 import {QuestionService} from "./model/services/question.service";
 import {options,} from "../../shared/model/types/surveys";
 import {RedirectToPageService} from "../../shared/model/services/redirect-to-page.service";
+import {TitleComponent} from "../../shared/ui/title/title.component";
 
 @Component({
   selector: 'app-question',
@@ -37,7 +35,8 @@ import {RedirectToPageService} from "../../shared/model/services/redirect-to-pag
     ButtonEventComponent,
     QuestionAnswerOptionComponent,
     RadioButtonComponent,
-    LineLightGrayComponent
+    LineLightGrayComponent,
+    TitleComponent
   ],
   template: `
     <section>
@@ -94,11 +93,18 @@ import {RedirectToPageService} from "../../shared/model/services/redirect-to-pag
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class QuestionComponent implements OnInit{
+  constructor() {
+    effect(() => {
+     if(!this.slug()) {
+       this._redirectToPageService.redirectToCartNotFoundPage()
+     }
+  });
+  }
   private _slugService = inject(SlugService)
   private _questionService = inject(QuestionService)
   private _redirectToPageService = inject(RedirectToPageService)
   // _______________________________________________________________________________________________
-  slug = input<string>('')
+  public slug = input<string>('')
   public readonly currentPage = this._questionService.currentQuestionPage
   public readonly currentQuestionIndex = this._questionService.currentQuestionIndex;
   public readonly totalQuestionCount = this._questionService.totalCount;
@@ -112,13 +118,12 @@ export default class QuestionComponent implements OnInit{
   if(this.slug()) {
     this._slugService.set(this.slug())
     this._questionService.getSurveySlug(this.slug())
-    return
   }
-   this._redirectToPageService.redirectToCartNotFoundPage()
   }
   changeRadioButton(event:any) {
     this._questionService.selectOption(event.id)
     this.selectedAnswer.set(event)
+    console.log(event.isSelected)
     }
   previous() {
   this._questionService.previous()
