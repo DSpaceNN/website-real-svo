@@ -6,7 +6,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   imports: [
   ],
   template: `
-   <div class="my-6 w-full flex">
+   <div class="my-6 w-full ">
    <ng-content></ng-content>
    </div>
   `,

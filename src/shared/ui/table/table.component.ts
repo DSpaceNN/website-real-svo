@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, input, OnInit, ViewChild} from '@angular/core';
 import {
   MatCell, MatCellDef,
   MatColumnDef,
@@ -8,6 +8,16 @@ import {
   MatRow, MatRowDef,
   MatTable
 } from "@angular/material/table";
+import {MatSort, MatSortHeader} from "@angular/material/sort";
+import {SurveyService} from "../../../widgets/create-survey/model/service/survey.service";
+import {DatePipe} from "@angular/common";
+import { DateOnlyPipe, TimeOnlyPipe} from "../../model/utils/date-format.pipe";
+import {DeleteIconComponent} from "../../icons/delete-icon/delete-icon.component";
+import {EditIconComponent} from "../../icons/edit-icon/edit-icon.component";
+import {ConfirmDialog} from "../../model/decorators/confirm-dialog.decorator";
+import {
+  AdminDeleteSurveyModalComponent
+} from "../../../features/admin-delete-survey/admin-delete-survey-modal.component";
 
 
 export interface PeriodicElement {
@@ -43,36 +53,60 @@ const ELEMENT_DATA: PeriodicElement[] = [
     MatRow,
     MatRowDef,
     MatHeaderRowDef,
-    MatCellDef
+    MatCellDef,
+    MatSort,
+    MatSortHeader,
+    DatePipe,
+    DateOnlyPipe,
+    TimeOnlyPipe,
+    DeleteIconComponent,
+    EditIconComponent
   ],
   template: `
-    <table mat-table [dataSource]="dataSource" >
-
-      <!--- Note that these columns can be defined in any order.
-            The actual rendered columns are set as a property on the row definition" -->
-
-      <!-- Position Column -->
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td  *matCellDef="let element"> {{element.position}} </td>
+    <table  matSort mat-table [dataSource]="surveys()">
+      <ng-container  matColumnDef="creationTime">
+        <th mat-sort-header mat-header-cell *matHeaderCellDef> Дата и время</th>
+        <td mat-cell  *matCellDef="let element" >
+          {{ element.creationTime | dateOnly }}
+          <br>
+         <span class="text-gray-admin"> {{ element.creationTime | timeOnly }}</span>
+        </td>
       </ng-container>
 
       <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td *matCellDef="let element"> {{element.name}} </td>
+      <ng-container matColumnDef="slug">
+        <th mat-header-cell *matHeaderCellDef> Slug/QR-код/Ссылка</th>
+        <td mat-cell *matCellDef="let element"> {{ element.slug }}</td>
       </ng-container>
 
       <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
-        <th mat-header-cell *matHeaderCellDef> Weight </th>
-        <td *matCellDef="let element"> {{element.weight}} </td>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Название анкеты</th>
+        <td mat-cell *matCellDef="let element"> {{ element.name }}</td>
       </ng-container>
 
       <!-- Symbol Column -->
-      <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef> Symbol </th>
-        <td *matCellDef="let element"> {{element.symbol}} </td>
+      <ng-container matColumnDef="questionCount">
+        <th mat-header-cell *matHeaderCellDef> Количество вопросов</th>
+        <td mat-cell *matCellDef="let element"> {{ element.questionCount }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef> Редактировать</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="w-10 bg-light-gray-admin h-10 flex items-center justify-center  rounded-[8px] cursor-pointer hover:opacity-40 transition-all">
+            <app-edit-icon></app-edit-icon>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef> Удалить</th>
+         <td mat-cell (click)="delete(element.id)" *matCellDef="let element" >
+           <div class="w-10 bg-light-gray-admin h-10 flex items-center justify-center rounded-[8px] cursor-pointer hover:opacity-40 transition-all">
+             <app-delete-icon></app-delete-icon>
+           </div>
+         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -81,11 +115,38 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 
   `,
-  styles: ``,
+  styles: `
+    .mdc-data-table__cell, .mdc-data-table__header-cell {
+     padding: 12px 0;
+      color:  #8B8B8B;
+      font-weight: 400;
+      font-size: 18px;
+    }
+
+    td {
+      color: #161616;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 135%;
+    }
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class TableComponent {
- public displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
- public dataSource = ELEMENT_DATA;
+export class TableComponent implements OnInit{
+  private _surveyService = inject(SurveyService)
+
+  ngOnInit(): void {
+    this._surveyService.getSurvey()
+  }
+  @ConfirmDialog(AdminDeleteSurveyModalComponent, )
+  delete(id:string) {
+  this._surveyService.deleteSurvey(id)
+  }
+  public readonly surveys = this._surveyService.surveys
+
+  @ViewChild(MatSort) sort!: MatSort; // Add this
+  // displayedColumns = input.required<string[]>()
+  public displayedColumns: string[] = ['creationTime', 'slug', 'name', 'questionCount', 'edit', 'delete' ];
 }

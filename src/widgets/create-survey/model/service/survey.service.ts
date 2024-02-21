@@ -1,7 +1,7 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
 import {AbstractApiService} from "../../../../shared/model/services/abstract-http.service";
 import {API} from "../../../../shared/model/utils/api.endpoints";
-import {ISurvey, ISurveyDto} from "../../../../shared/model/types/surveys";
+import {IDeleteSurveyDto, ISurvey, ISurveyDto} from "../../../../shared/model/types/surveys";
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +20,9 @@ apiService = inject(AbstractApiService)
       this.#surveys.set(survey.result.items)
   })
   }
-  deleteSurvey(id:number) {
-  this.apiService.request(API.DELETE_SURVEY,id).subscribe((survey) => {
-    console.log(survey)
-  })
+  deleteSurvey(id: string) {
+    this.apiService.request(API.DELETE_SURVEY, { id }).subscribe((survey) => {
+      this.#surveys.update((survey) => survey.filter((v) => v.id !== id ))
+    })
   }
 }

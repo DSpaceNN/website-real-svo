@@ -16,6 +16,15 @@
     .fixed-bottom-container {
       @apply absolute left-0 right-0 bottom-4 mx-4 text-center
     }
+    .main_btn_admin {
+      @apply py-2 pl-6 pr-5 bg-black-btn hover:opacity-80 disabled:opacity-40 rounded-[8px] text-white
+    }
+    .second_btn_admin {
+      @apply py-2 pl-6 pr-5 bg-white hover:opacity-80 disabled:opacity-40 rounded-[8px] border border-black
+    }
+    .low_priority_btn_admin {
+      @apply py-2 pl-6 pr-5 bg-light-gray-admin hover:opacity-80 disabled:opacity-40 rounded-[8px] text-black font-[600] text-[16px]
+    }
   }
 }
 html {

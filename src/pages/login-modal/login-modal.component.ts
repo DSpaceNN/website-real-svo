@@ -1,9 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {TitleComponent} from "../../shared/ui/title/title.component";
 import {DescriptionComponent} from "../../shared/ui/description/description.component";
 import {LineLightGrayComponent} from "../../shared/ui/line-light-gray/line-light-gray.component";
 import {ButtonEventComponent} from "../../shared/ui/button-event/button-event.component";
 import {CircleAnimationComponent} from "../../shared/ui/circle-animation/circle-animation.component";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {SignInService} from "../../shared/model/services/sign-in.service";
+import {ISignIn} from "../../shared/model/types/sign-in";
 
 @Component({
   selector: 'app-login-modal',
@@ -13,7 +16,8 @@ import {CircleAnimationComponent} from "../../shared/ui/circle-animation/circle-
     DescriptionComponent,
     LineLightGrayComponent,
     ButtonEventComponent,
-    CircleAnimationComponent
+    CircleAnimationComponent,
+    ReactiveFormsModule
   ],
   template: `
     <div class="container mx-auto">
@@ -26,22 +30,22 @@ import {CircleAnimationComponent} from "../../shared/ui/circle-animation/circle-
           <app-line-light-gray></app-line-light-gray>
         </div>
         <div>
-          <form action="">
+          <form [formGroup]="formLogin" action="">
             <div class="mb-5">
               <label for="email" class="block mb-1 text-sm text-gray-custom-opacity-700">E-mail</label>
-              <input required type="email" name="email" id="email" placeholder="you@company.com" class="text-white w-full px-4 py-2.5 placeholder-gray-custom-opacity-800 border-2 border-white-400 bg-transparent  focus:outline-none  " />
+              <input formControlName="userName" required type="email" name="email" id="email" placeholder="you@company.com" class="text-white w-full px-4 py-2.5 placeholder-gray-custom-opacity-800 border-2 border-white-400 bg-transparent  focus:outline-none  " />
             </div>
             <div class="mb-5">
               <div class="flex justify-between mb-1">
                 <label  for="password" class="text-sm text-gray-600 text-gray-custom-opacity-700">Пароль</label>
               </div>
-              <input required type="password" name="password" id="password" placeholder="Пароль" class="text-white w-full px-4 py-2.5 placeholder-placeholder-gray-custom-opacity-800 border-2  focus:outline-none bg-transparent  " />
+              <input formControlName="password" required type="password" name="password" id="password" placeholder="Пароль" class="text-white w-full px-4 py-2.5 placeholder-placeholder-gray-custom-opacity-800 border-2  focus:outline-none bg-transparent  " />
             </div>
             <div class="md:mb-5">
               <app-line-light-gray></app-line-light-gray>
             </div>
             <div class="max-md:fixed-bottom-container">
-              <app-button-event >
+              <app-button-event [disabled]="!this.formLogin.valid" (click)="signIn()" >
                 <div class="py-2.5">
                   <app-description>Войти</app-description>
                 </div>
@@ -58,5 +62,12 @@ import {CircleAnimationComponent} from "../../shared/ui/circle-animation/circle-
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class LoginModalComponent {
-
+  private signInService = inject(SignInService)
+ public formLogin = new FormGroup({
+    "userName": new FormControl('', [Validators.required]),
+    "password": new FormControl('', [Validators.required])
+  })
+  signIn() {
+   this.signInService.signIn(this.formLogin.value as ISignIn)
+  }
 }

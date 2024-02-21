@@ -21,5 +21,8 @@ redirectToErrorPage () {
 redirectToSurveyAdminPanelPage() {
     this._router.navigate(['/admin-panel/survey'])
 }
+redirectToAdminPanel () {
+    this._router.navigate(['/admin-panel'])
+}
   constructor() { }
 }

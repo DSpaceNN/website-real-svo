@@ -7,7 +7,6 @@ import {
 } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import {Router} from "@angular/router";
 import {RedirectToPageService} from "./redirect-to-page.service";
 
 @Injectable()
@@ -19,8 +18,9 @@ private _redirectService = inject(RedirectToPageService)
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((error: any) => {
-        console.error('HTTP Error1111:', error);
+        if(error.status === 500) {
         this._redirectService.redirectToErrorPage()
+        }
         return of(error);
       })
     );

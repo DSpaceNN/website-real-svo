@@ -1,7 +1,16 @@
 export interface ISurvey {
   name:string,
   slug:string
-  id:string
+  id:string,
+  creationTime:string,
+  questionCount:number,
+}
+export interface ISurveyTable {
+  name:string,
+  slug:string
+  id:string,
+  creationTime:string,
+  questionCount:number,
 }
 export interface ISurveyDto {
 result: {
@@ -62,18 +71,6 @@ export interface SurveyFeedbackDto {
   errors:any
 
 }
-//{
-//   "result": {
-//     "code": "000007",
-//     "answers": [
-//       {
-//         "questionText": "Вопрос 1",
-//         "isCorrect": false,
-//         "sequence": 1,
-//         "id": "6779bbcd-1567-42d5-9dac-834ebbc8e93b"
-//       }
-//     ],
-//     "id": "2f639ce4-d6b1-4c8c-a72c-b0237301c6d6"
-//   },
-//   "errors": null
-// }
+export interface IDeleteSurveyDto {
+  id:string
+}

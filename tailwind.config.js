@@ -11,7 +11,10 @@ module.exports = {
           800: 'rgba(255, 255, 255, 0.30)',
           400: 'rgba(245, 245, 245, 1)'
         },
-        'gray-admin': '#8B8B8B'
+        'gray-admin': '#8B8B8B',
+        'black-btn': '#161616',
+        'light-gray-admin':'#F5F5F5',
+        'light-green-admin':'#E2F7D8'
       },
       backgroundImage: {
         'header-cat-profile': "url('../src/assets/images/cat-profile.png')",
