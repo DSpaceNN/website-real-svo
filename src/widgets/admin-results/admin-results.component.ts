@@ -53,9 +53,11 @@ import {ToggleButtonComponent} from "../../shared/ui/toggle-button/toggle-button
       <div class="min-w-[400px]">
         <app-input-admin-panel (inputValue)="updateFilterValue($event)"></app-input-admin-panel>
       </div>
-      <app-toggle-button>
-        <h2 text-toggle>Ожидающие получения</h2>
-      </app-toggle-button>
+        <div class="flex">
+          <app-toggle-button>
+          </app-toggle-button>
+          <h2>Ожидающие получения</h2>
+        </div>
     </div>
 
       </app-admin-panel-sub-card>
