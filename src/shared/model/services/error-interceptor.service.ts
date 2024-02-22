@@ -18,10 +18,15 @@ private _redirectService = inject(RedirectToPageService)
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((error: any) => {
-        if(error.status === 500) {
-        this._redirectService.redirectToErrorPage()
+        switch (error.status) {
+          case 500:
+            this._redirectService.redirectToErrorPage();
+            break;
+          case 401:
+            this._redirectService.redirectToLoginPage();
+            break;
         }
-        return of(error);
+        return of(error)
       })
     );
   }

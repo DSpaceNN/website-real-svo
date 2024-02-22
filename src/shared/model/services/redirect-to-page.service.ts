@@ -24,5 +24,8 @@ redirectToSurveyAdminPanelPage() {
 redirectToAdminPanel () {
     this._router.navigate(['/admin-panel'])
 }
+redirectToLoginPage () {
+    this._router.navigate(['/login'])
+}
   constructor() { }
 }

@@ -10,6 +10,7 @@ import {SearchIconComponent} from "../../shared/icons/search-icon/search-icon.co
 import {AdminDashboardsService} from "../admin-panel/model/services/admin-dashboards.service";
 import {AdminAddSurveyComponent} from "../../features/admin-add-survey/admin-add-survey.component";
 import {SubHeaderTitleComponent} from "../../features/sub-header-title/sub-header-title.component";
+import {SurveyService} from "../../widgets/create-survey/model/service/survey.service";
 
 @Component({
   selector: 'app-survey',
@@ -47,7 +48,7 @@ import {SubHeaderTitleComponent} from "../../features/sub-header-title/sub-heade
        <app-admin-panel-sub-card>
          <div class="flex justify-between w-full">
            <div class="w-[400px]">
-             <app-input-admin-panel>
+             <app-input-admin-panel (inputValue)="filterItems($event)">
                <div icon class="pr-1">
                  <app-search-icon></app-search-icon>
                </div>
@@ -69,10 +70,14 @@ import {SubHeaderTitleComponent} from "../../features/sub-header-title/sub-heade
 })
 export default class SurveyComponent {
 private _adminDashboardService = inject(AdminDashboardsService)
+  private _surveyService = inject(SurveyService)
+
   public readonly statusAddSurvey = this._adminDashboardService.statusAddedSurvey
   addSurveyStatus() {
   this._adminDashboardService.changeStatusAddSurvey()
   }
-  valueSearch() {}
+filterItems(name:string) {
+  this._surveyService.filterSurvey(name)
+}
 
 }

@@ -5,8 +5,7 @@ export interface ITabs {
 export enum AdminRoutes {
   SURVEY = 'survey',
   CREATE_SURVEY = 'create-survey',
-  CREATE_SURVEY2 = 'change-survey',
-  CREATE_SURVEY3 = 'create-survey3',
+  SURVEY_RESULTS = 'results'
 }
 export interface AdminLestSidePanelSubMenu {
   title:string,

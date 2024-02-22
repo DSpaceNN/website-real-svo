@@ -1,4 +1,13 @@
-import {ChangeDetectionStrategy, Component, ElementRef, inject, input, OnInit, Renderer2} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  input,
+  OnDestroy,
+  OnInit,
+  Renderer2
+} from '@angular/core';
 import {Router, RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 import {AdminPanelTabsComponent} from "../../features/admin-panel-tabs/admin-panel-tabs.component";
 import {HeaderAdminPanelComponent} from "../header-admin-panel/header-admin-panel.component";
@@ -48,15 +57,25 @@ import {RedirectToPageService} from "../../shared/model/services/redirect-to-pag
 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class AdminPanelComponent implements OnInit{
+export default class AdminPanelComponent implements OnInit,OnDestroy{
   private _adminDashboardService = inject(AdminDashboardsService)
   private _redirectToPageService = inject(RedirectToPageService)
+  private originalBackground: string | null = null;
+
   ngOnInit(): void {
     this._redirectToPageService.redirectToSurveyAdminPanelPage()
   }
 
+  ngOnDestroy(): void {
+    this.renderer.setStyle(
+      this.el.nativeElement.ownerDocument.body,
+      'backgroundImage',
+      this.originalBackground
+    );
+  }
   public readonly  adminDashboardLeftSide = this._adminDashboardService.dashboardLeftItems
   constructor(private renderer: Renderer2, private el: ElementRef) {
+    this.originalBackground = this.el.nativeElement.ownerDocument.body.style.backgroundImage;
     this.renderer.setStyle(
       this.el.nativeElement.ownerDocument.body,
       'background',

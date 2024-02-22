@@ -7,8 +7,15 @@ import {IDeleteSurveyDto, ISurvey, ISurveyDto} from "../../../../shared/model/ty
   providedIn: 'root'
 })
 export class SurveyService {
+//   _________________________________________________________________________________________
+
    readonly #surveys = signal<ISurvey[]>([])
   public readonly surveys = computed(() => this.#surveys())
+//   _________________________________________________________________________________________
+  readonly #totalCountSurveys = signal<number>(0);
+   public readonly totalCountSurveys = computed(() => this.#totalCountSurveys())
+//   _________________________________________________________________________________________
+
 apiService = inject(AbstractApiService)
   setSurvey (requestBody:ISurvey) {
     this.apiService.request(API.CREATE_SURVEY,requestBody).subscribe(() => {
@@ -18,11 +25,17 @@ apiService = inject(AbstractApiService)
   getSurvey() {
     this.apiService.request<ISurveyDto>(API.GET_SURVEY).subscribe((survey) => {
       this.#surveys.set(survey.result.items)
+      this.#totalCountSurveys.set(survey.result.totalCount)
   })
   }
-  deleteSurvey(id: string) {
-    this.apiService.request(API.DELETE_SURVEY, { id }).subscribe((survey) => {
-      this.#surveys.update((survey) => survey.filter((v) => v.id !== id ))
+  deleteSurvey(userId: IDeleteSurveyDto) {
+    this.apiService.request(API.DELETE_SURVEY, userId).subscribe((survey) => {
+      this.#surveys.update((survey) => survey.filter((v) => v.id !== userId.id ))
     })
+  }
+  filterSurvey(value:string) {
+     this.#surveys.update((survey) => {
+     return   survey.filter((v) => v.name.toLowerCase().includes(value.toLowerCase()))
+     })
   }
 }

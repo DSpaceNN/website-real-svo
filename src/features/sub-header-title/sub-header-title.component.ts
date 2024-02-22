@@ -1,4 +1,5 @@
-import {ChangeDetectionStrategy, Component, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, input} from '@angular/core';
+import {SurveyService} from "../../widgets/create-survey/model/service/survey.service";
 
 @Component({
   selector: 'app-sub-header-title',
@@ -28,5 +29,7 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SubHeaderTitleComponent {
+  private _surveyService = inject(SurveyService)
+  public readonly totalCountSurveys = this._surveyService.totalCountSurveys
 status = input.required<boolean>()
-}
+}``

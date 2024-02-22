@@ -16,6 +16,10 @@ const adminPanelRoute: Routes = [
 
       },
       {
+        path: 'results',
+        loadComponent: () => import("../../../widgets/admin-results/admin-results.component")
+      },
+      {
         path: '**',
         loadComponent: () => import('../../../pages/not-found/not-found.component')
       },

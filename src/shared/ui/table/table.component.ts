@@ -117,7 +117,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
   `,
   styles: `
     .mdc-data-table__cell, .mdc-data-table__header-cell {
-     padding: 12px 0;
+      padding: 12px 0;
+    }
+    .mdc-data-table__header-cell {
+      padding: 12px 0;
       color:  #8B8B8B;
       font-weight: 400;
       font-size: 18px;
@@ -140,9 +143,10 @@ export class TableComponent implements OnInit{
   ngOnInit(): void {
     this._surveyService.getSurvey()
   }
-  @ConfirmDialog(AdminDeleteSurveyModalComponent, )
+  @ConfirmDialog(AdminDeleteSurveyModalComponent)
   delete(id:string) {
-  this._surveyService.deleteSurvey(id)
+    console.log({id: id})
+  this._surveyService.deleteSurvey({id: id})
   }
   public readonly surveys = this._surveyService.surveys
 

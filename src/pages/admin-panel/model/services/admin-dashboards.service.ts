@@ -18,7 +18,7 @@ readonly #dashboardLeftItems = signal<AdminLeftSidePanel>({
       title:'Результаты',
       id: 2,
       active: false,
-      route:AdminRoutes.CREATE_SURVEY
+      route:AdminRoutes.SURVEY_RESULTS
     },
 
   ]

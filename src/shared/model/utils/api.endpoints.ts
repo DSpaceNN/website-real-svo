@@ -8,6 +8,7 @@ export const API = {
   CREATE_SEND_RESULT: {url:'/UserSurvey/SendResult',method: RequestMethods.POST},
   GET_SURVEY_FEEDBACK: {url: '/UserSurvey/GetSurveyFeedback', method: RequestMethods.GET},
   LOGIN: {url: '/TokenAuth/Login', method: RequestMethods.POST},
+  SURVEY_RESULT: {url:'/SurveyResults/GetSurveyResults',method: RequestMethods.GET}
 
 };
 
