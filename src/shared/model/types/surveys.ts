@@ -74,3 +74,8 @@ export interface SurveyFeedbackDto {
 export interface IDeleteSurveyDto {
   id:string
 }
+export interface filteredDto {
+  filter:string,
+  skip:number,
+  take:number
+}

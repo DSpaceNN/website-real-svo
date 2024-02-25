@@ -18,6 +18,7 @@ import {ConfirmDialog} from "../../model/decorators/confirm-dialog.decorator";
 import {
   AdminDeleteSurveyModalComponent
 } from "../../../features/admin-delete-survey/admin-delete-survey-modal.component";
+import {PaginatorModule} from "primeng/paginator";
 
 
 export interface PeriodicElement {
@@ -60,7 +61,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     DateOnlyPipe,
     TimeOnlyPipe,
     DeleteIconComponent,
-    EditIconComponent
+    EditIconComponent,
+    PaginatorModule
   ],
   template: `
     <table  matSort mat-table [dataSource]="surveys()">
@@ -112,9 +114,12 @@ const ELEMENT_DATA: PeriodicElement[] = [
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-
-
+        <div class="absolute bottom-4 left-1/2">
+          <p-paginator  (onPageChange)="onPageChange($event)" [first]="currentPage" [rows]="6" [totalRecords]="totalCountSurveys()"></p-paginator>
+            <h2 class="text-center text-gray-admin">Всего результатов:{{totalCountSurveys()}}</h2>
+        </div>
   `,
+
   styles: `
     .mdc-data-table__cell, .mdc-data-table__header-cell {
       padding: 12px 0;
@@ -133,24 +138,34 @@ const ELEMENT_DATA: PeriodicElement[] = [
       font-weight: 400;
       line-height: 135%;
     }
+    ::ng-deep.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    background-color: #161616;
+      color: white;
+    }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class TableComponent implements OnInit{
   private _surveyService = inject(SurveyService)
+  public readonly surveys = this._surveyService.surveys
+  public readonly totalCountSurveys = this._surveyService.totalCountSurveys
+  public currentPage = 0; // <------ добавьте это
 
+  onPageChange(event: any){
+    this.currentPage = event.first
+    const skipCount = event.first;
+    const takeCount = event.rows;
+    this._surveyService.getSurvey(skipCount, takeCount);
+    console.log(event,this.totalCountSurveys())
+  }
   ngOnInit(): void {
     this._surveyService.getSurvey()
   }
   @ConfirmDialog(AdminDeleteSurveyModalComponent)
   delete(id:string) {
-    console.log({id: id})
-  this._surveyService.deleteSurvey({id: id})
+  this._surveyService.deleteSurvey(id)
   }
-  public readonly surveys = this._surveyService.surveys
 
-  @ViewChild(MatSort) sort!: MatSort; // Add this
-  // displayedColumns = input.required<string[]>()
+  @ViewChild(MatSort) sort!: MatSort;
   public displayedColumns: string[] = ['creationTime', 'slug', 'name', 'questionCount', 'edit', 'delete' ];
 }

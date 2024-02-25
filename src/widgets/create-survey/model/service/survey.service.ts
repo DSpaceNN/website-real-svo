@@ -22,20 +22,24 @@ apiService = inject(AbstractApiService)
       console.log('done')
     })
   }
-  getSurvey() {
-    this.apiService.request<ISurveyDto>(API.GET_SURVEY).subscribe((survey) => {
+  getSurvey(skipCount = 0, takeCount = 6, filter = "") {
+    const params = new URLSearchParams({
+      ...{ Take: String(takeCount) },
+      ...{ Skip: String(skipCount) },
+      ...(filter !== undefined && { Filter: String(filter) }),
+    });
+
+    this.apiService.request<ISurveyDto>(API.GET_SURVEY, undefined, { queryParams: params.toString() }).subscribe((survey) => {
       this.#surveys.set(survey.result.items)
       this.#totalCountSurveys.set(survey.result.totalCount)
-  })
+    })
   }
-  deleteSurvey(userId: IDeleteSurveyDto) {
-    this.apiService.request(API.DELETE_SURVEY, userId).subscribe((survey) => {
-      this.#surveys.update((survey) => survey.filter((v) => v.id !== userId.id ))
+  deleteSurvey(userId: string) {
+    this.apiService.request(API.DELETE_SURVEY, undefined,{urlParams: userId}).subscribe((survey) => {
+      this.#surveys.update((survey) => survey.filter((v) => v.id !== userId ))
     })
   }
   filterSurvey(value:string) {
-     this.#surveys.update((survey) => {
-     return   survey.filter((v) => v.name.toLowerCase().includes(value.toLowerCase()))
-     })
+   this.getSurvey(undefined,undefined,value)
   }
 }
