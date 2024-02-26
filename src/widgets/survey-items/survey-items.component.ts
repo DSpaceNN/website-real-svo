@@ -8,6 +8,7 @@ import {InputAdminPanelComponent} from "../../shared/ui/input-admin-panel/input-
 import {SearchIconComponent} from "../../shared/icons/search-icon/search-icon.component";
 import {TableComponent} from "../../shared/ui/table/table.component";
 import {RedirectToPageService} from "../../shared/model/services/redirect-to-page.service";
+import {SurveyService} from "../create-survey/model/service/survey.service";
 
 @Component({
   selector: 'app-survey-items',
@@ -36,13 +37,12 @@ import {RedirectToPageService} from "../../shared/model/services/redirect-to-pag
         <app-admin-panel-sub-card>
           <div class="flex justify-between w-full">
             <div class="w-[400px]">
-              <app-input-admin-panel>
+              <app-input-admin-panel (inputValue)="updateFilterValue($event)">
                 <div icon class="pr-1">
                   <app-search-icon></app-search-icon>
                 </div>
               </app-input-admin-panel>
             </div>
-
           </div>
         </app-admin-panel-sub-card>
         <app-table ></app-table>
@@ -55,7 +55,13 @@ import {RedirectToPageService} from "../../shared/model/services/redirect-to-pag
 })
 export default class SurveyItemsComponent {
   private _redirectService = inject(RedirectToPageService)
+  private _surveyService = inject(SurveyService)
   redirectToCreateSurvey () {
     this._redirectService.redirectToCreateSurveyAdminPanelPage()
+  }
+  updateFilterValue(filter:string) {
+    console.log(filter)
+    this._surveyService.setFiler(filter)
+    this._surveyService.getSurvey()
   }
 }

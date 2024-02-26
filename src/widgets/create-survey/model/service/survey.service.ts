@@ -48,6 +48,7 @@ apiService = inject(AbstractApiService)
   deleteSurvey(userId: string) {
     this.apiService.request(API.DELETE_SURVEY, undefined,{urlParams: userId}).subscribe((survey) => {
       this.#surveys.update((survey) => survey.filter((v) => v.id !== userId ))
+      this.#totalCountSurveys.update((v) => v - 1)
     })
   }
   setFiler (val:string) {
