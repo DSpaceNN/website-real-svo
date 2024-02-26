@@ -1,5 +1,6 @@
 import {computed, Injectable, signal} from '@angular/core';
 import {AdminLeftSidePanel, AdminRoutes} from "../types/admin-panel";
+import {AdminDashboardLeftSideId} from "../types/admin-dashboard";
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +11,13 @@ readonly #dashboardLeftItems = signal<AdminLeftSidePanel>({
   subMenu: [
     {
       title:'Анкеты',
-      id: 1,
+      id: AdminDashboardLeftSideId.SURVEYS,
       active: true,
       route:AdminRoutes.SURVEY,
     },
     {
       title:'Результаты',
-      id: 2,
+      id: AdminDashboardLeftSideId.RESULTS,
       active: false,
       route:AdminRoutes.SURVEY_RESULTS
     },

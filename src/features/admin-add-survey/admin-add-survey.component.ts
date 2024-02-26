@@ -1,11 +1,12 @@
-import {ChangeDetectionStrategy, Component, computed, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, ViewChild} from '@angular/core';
 import {NgClass} from "@angular/common";
 import {AdminDashboardsService} from "../../pages/admin-panel/model/services/admin-dashboards.service";
 import {CreateSurveyFormComponent} from "../create-survey-form/create-survey-form.component";
 import {TextAreaComponent} from "../../shared/ui/text-area/text-area.component";
 import {DragAndDropWrapperComponent} from "../../shared/ui/drag-and-drop-wrapper/drag-and-drop-wrapper.component";
-import {AddedSurveyStepTwoComponent} from "../../widgets/added-survey-step-two/added-survey-step-two.component";
 import {CurrentStepQuestionComponent} from "../../shared/ui/current-step-question/current-step-question.component";
+import AddedSurveyStepTwoComponent from "../../widgets/added-survey-step-two/added-survey-step-two.component";
+import {RedirectToPageService} from "../../shared/model/services/redirect-to-page.service";
 
 @Component({
   selector: 'app-admin-add-survey',
@@ -49,14 +50,18 @@ import {CurrentStepQuestionComponent} from "../../shared/ui/current-step-questio
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdminAddSurveyComponent {
+  @ViewChild(CreateSurveyFormComponent) createSurveyFormComponent!: CreateSurveyFormComponent;
   private _adminDashboardService = inject(AdminDashboardsService)
+  private _redirectService = inject(RedirectToPageService)
   public readonly firstStep = computed(() => {
    return this._adminDashboardService.stepCreateSurvey() < 2;
 
   })
   public readonly currentStep = this._adminDashboardService.stepCreateSurvey
   nextStep() {
+    console.log(this.createSurveyFormComponent.createSurveyForm.valid)
     this._adminDashboardService.nextStepCreateSurvey()
+    this._redirectService.redirectToCreateQuestionsAndAnswersAdminPanelPage()
   }
   previousStep() {
     this._adminDashboardService.previousStepCreateSurvey()

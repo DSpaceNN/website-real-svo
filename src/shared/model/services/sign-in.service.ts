@@ -14,7 +14,7 @@ export class SignInService {
   this.httpService.request<ISignInDto>(API.LOGIN,currentUser).subscribe((status) => {
     if(status.result) {
       localStorage.setItem('authToken', status.result.accessToken);
-      this.redirectService.redirectToAdminPanel()
+      this.redirectService.redirectToSurveyAdminPanelPage()
     }
   })
  }

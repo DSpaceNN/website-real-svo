@@ -54,7 +54,7 @@ import {
   `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddedSurveyStepTwoComponent {
+export default class AddedSurveyStepTwoComponent {
   items = Array.from({length: 5}, (_, i) => ({
     id: i + 1,
     value: '',

@@ -15,6 +15,7 @@ import {LeftSidebarAdminComponent} from "../../widgets/left-sidebar-admin/left-s
 import {AdminDashboardsService} from "./model/services/admin-dashboards.service";
 import {routes} from "../../app/app.routes";
 import {RedirectToPageService} from "../../shared/model/services/redirect-to-page.service";
+import {AdminDashboardLeftSideId} from "./model/types/admin-dashboard";
 
 @Component({
   selector: 'app-admin-panel',
@@ -84,5 +85,8 @@ export default class AdminPanelComponent implements OnInit,OnDestroy{
   }
   changeTab(id:number) {
     this._adminDashboardService.changeActiveTab(id)
+    if(id === AdminDashboardLeftSideId.SURVEYS) {
+      this._redirectToPageService.redirectToSurveyAdminPanelPage()
+    }
   }
 }
