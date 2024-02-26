@@ -1,4 +1,4 @@
-import {computed, inject, Injectable, signal} from '@angular/core';
+import {computed, inject, Injectable, Signal, signal} from '@angular/core';
 import {AbstractApiService} from "../../../../shared/model/services/abstract-http.service";
 import {API} from "../../../../shared/model/utils/api.endpoints";
 import {IDeleteSurveyDto, ISurvey, ISurveyDto} from "../../../../shared/model/types/surveys";
@@ -7,13 +7,24 @@ import {IDeleteSurveyDto, ISurvey, ISurveyDto} from "../../../../shared/model/ty
   providedIn: 'root'
 })
 export class SurveyService {
+
+  readonly #filterSurveyValue = signal<string>('')
+  public readonly filterSurveyValue = computed(() => this.#filterSurveyValue())
 //   _________________________________________________________________________________________
 
-   readonly #surveys = signal<ISurvey[]>([])
+  readonly #skipCount = signal<number>(0)
+  public readonly skipCount = computed(() => this.#filterSurveyValue())
+//   _________________________________________________________________________________________
+
+  readonly #takeCount = signal<number>(6)
+  public readonly takeCount = computed(() => this.#filterSurveyValue())
+//   _________________________________________________________________________________________
+
+  readonly #surveys = signal<ISurvey[]>([])
   public readonly surveys = computed(() => this.#surveys())
 //   _________________________________________________________________________________________
   readonly #totalCountSurveys = signal<number>(0);
-   public readonly totalCountSurveys = computed(() => this.#totalCountSurveys())
+  public readonly totalCountSurveys = computed(() => this.#totalCountSurveys())
 //   _________________________________________________________________________________________
 
 apiService = inject(AbstractApiService)
@@ -22,11 +33,11 @@ apiService = inject(AbstractApiService)
       console.log('done')
     })
   }
-  getSurvey(skipCount = 0, takeCount = 6, filter = "") {
+  getSurvey() {
     const params = new URLSearchParams({
-      ...{ Take: String(takeCount) },
-      ...{ Skip: String(skipCount) },
-      ...(filter !== undefined && { Filter: String(filter) }),
+      ...{ Take: String(this.#takeCount()) },
+      ...{ Skip: String(this.#skipCount()) },
+      ...(this.filterSurveyValue().length && { Filter: String(this.filterSurveyValue())}),
     });
 
     this.apiService.request<ISurveyDto>(API.GET_SURVEY, undefined, { queryParams: params.toString() }).subscribe((survey) => {
@@ -39,7 +50,14 @@ apiService = inject(AbstractApiService)
       this.#surveys.update((survey) => survey.filter((v) => v.id !== userId ))
     })
   }
-  filterSurvey(value:string) {
-   this.getSurvey(undefined,undefined,value)
+  setFiler (val:string) {
+    this.#filterSurveyValue.set(val)
+  }
+
+  setSkipCount (skipCount:number) {
+    this.#skipCount.set(skipCount)
+  }
+  setTakeCount(takeCount:number) {
+    this.#takeCount.set(takeCount)
   }
 }

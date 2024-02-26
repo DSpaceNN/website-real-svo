@@ -76,8 +76,8 @@ private _adminDashboardService = inject(AdminDashboardsService)
   addSurveyStatus() {
   this._adminDashboardService.changeStatusAddSurvey()
   }
-filterItems(name:string) {
-  this._surveyService.filterSurvey(name)
+filterItems(filterValue:string) {
+  this._surveyService.setFiler(filterValue)
+  this._surveyService.getSurvey()
 }
-
 }

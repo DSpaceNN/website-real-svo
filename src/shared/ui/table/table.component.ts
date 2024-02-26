@@ -153,9 +153,9 @@ export class TableComponent implements OnInit{
 
   onPageChange(event: any){
     this.currentPage = event.first
-    const skipCount = event.first;
-    const takeCount = event.rows;
-    this._surveyService.getSurvey(skipCount, takeCount);
+    this._surveyService.setSkipCount(event.first)
+    this._surveyService.setTakeCount(event.rows)
+    this._surveyService.getSurvey();
     console.log(event,this.totalCountSurveys())
   }
   ngOnInit(): void {
