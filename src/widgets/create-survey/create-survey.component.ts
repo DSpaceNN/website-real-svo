@@ -16,6 +16,8 @@ import {RedirectToPageService} from "../../shared/model/services/redirect-to-pag
 import {AdminPanelSubHeaderComponent} from "../../shared/ui/admin-panel-sub-header/admin-panel-sub-header.component";
 import {SubHeaderTitleComponent} from "../../features/sub-header-title/sub-header-title.component";
 import {PlusIconComponent} from "../../shared/icons/plus-icon/plus-icon.component";
+import {CreateSurveyService} from "../../pages/admin-panel/model/services/create-survey.service";
+import {ICreateSurvey} from "../../features/create-survey-form/model/types/create-survey-form.type";
 
 @Component({
   selector: 'app-create-survey',
@@ -58,7 +60,7 @@ import {PlusIconComponent} from "../../shared/icons/plus-icon/plus-icon.componen
           </button>
         </div>
       </div>
-      <app-create-survey-form></app-create-survey-form>
+      <app-create-survey-form ></app-create-survey-form>
     </div>
   `,
   styles: ``,
@@ -68,14 +70,20 @@ import {PlusIconComponent} from "../../shared/icons/plus-icon/plus-icon.componen
 })
 export default class CreateSurveyComponent {
   @ViewChild(CreateSurveyFormComponent) createSurveyFormComponent!: CreateSurveyFormComponent;
+  // _________________________________________________________________________________
+  private _createSurveyService = inject(CreateSurveyService)
   private _redirectService = inject(RedirectToPageService)
   private _adminDashboardService = inject(AdminDashboardsService)
+  // _________________________________________________________________________________
   redirectToCreateSurvey() {
-    console.log(1)
     this._redirectService.redirectToSurveyAdminPanelPage()
   }
+  // _________________________________________________________________________________
   nextStep() {
     this._redirectService.redirectToCreateQuestionsAndAnswersAdminPanelPage()
     this._adminDashboardService.nextStepCreateSurvey()
+    this._createSurveyService.setSurvey(this.createSurveyFormComponent.createSurveyForm.value as ICreateSurvey)
   }
+  // _________________________________________________________________________________
+
 }

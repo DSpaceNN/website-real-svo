@@ -33,7 +33,7 @@ readonly #dashboardLeftItems = signal<AdminLeftSidePanel>({
   // ______________________________________________________
   readonly #stepCreateSurvey = signal<number>(1)
   public readonly stepCreateSurvey = computed(() => this.#stepCreateSurvey())
-  // ______________________________________________________
+  // ____________________ __________________________________
 
   readonly #totalCountStepCreateSurvey = signal(2)
   public readonly totalCountStepCreateSurvey = computed(() => this.#totalCountStepCreateSurvey())

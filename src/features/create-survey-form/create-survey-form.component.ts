@@ -1,4 +1,4 @@
-  import { ChangeDetectionStrategy, Component } from '@angular/core';
+  import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
   import {CREATE_SURVEY_FORM_CONTROL, ICreateSurveyForm} from "./model/types/create-survey-form.type";
   import {CurrentStepQuestionComponent} from "../../shared/ui/current-step-question/current-step-question.component";
   import {InputAdminPanelComponent} from "../../shared/ui/input-admin-panel/input-admin-panel.component";
@@ -6,6 +6,7 @@
   import {LineLightGrayComponent} from "../../shared/ui/line-light-gray/line-light-gray.component";
   import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
   import {CloseIconComponent} from "../../shared/icons/close-icon/close-icon.component";
+  import {CreateSurveyService} from "../../pages/admin-panel/model/services/create-survey.service";
 
 @Component({
   selector: 'app-create-survey-form',
@@ -53,8 +54,13 @@
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreateSurveyFormComponent {
-  readonly createSurveyForm = new FormGroup<ICreateSurveyForm>({
+export class CreateSurveyFormComponent implements OnInit{
+  private _createSurveyService = inject(CreateSurveyService)
+  ngOnInit(): void {
+    this.createSurveyForm.setValue(this._createSurveyService.surveyStorage())
+  }
+
+  readonly createSurveyForm:FormGroup<ICreateSurveyForm>  = new FormGroup<ICreateSurveyForm>({
     name: new FormControl('', {
       validators: Validators.compose([
         Validators.required,
