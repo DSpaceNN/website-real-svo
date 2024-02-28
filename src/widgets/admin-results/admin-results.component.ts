@@ -126,7 +126,7 @@ import {SortingIconComponent} from "../../shared/icons/sorting-icon/sorting-icon
            @if(element.resultStatus !== ResultStatus.AwaitingReceipt) {
              <app-admin-status-prize [statusPrize]="element.resultStatus" ></app-admin-status-prize>
            } @else {
-           <app-admin-dropdown [currentSurveyResultId]="element.id"></app-admin-dropdown>
+           <app-admin-dropdown class="pl-1 block" [currentSurveyResultId]="element.id"></app-admin-dropdown>
            }
         </td>
       </ng-container>

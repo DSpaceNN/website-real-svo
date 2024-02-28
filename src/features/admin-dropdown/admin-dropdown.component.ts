@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, inject, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, input, ViewChild} from '@angular/core';
 import {LineLightGrayComponent} from "../../shared/ui/line-light-gray/line-light-gray.component";
-import {DropdownModule} from "primeng/dropdown";
+import {Dropdown, DropdownModule} from "primeng/dropdown";
 import {SharedModule} from "primeng/api";
 import {FormsModule} from "@angular/forms";
 import {
@@ -9,6 +9,9 @@ import {
   UpdateProcessedStatusDto
 } from "../../widgets/admin-results/model/types/survey-result";
 import {SurveyResultService} from "../../widgets/admin-results/model/services/survey-result.service";
+import {ConfirmDialog} from "../../shared/model/decorators/confirm-dialog.decorator";
+import {AdminModalStatusComponent} from "../admin-modal/admin-modal-status.component";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-admin-dropdown',
@@ -17,14 +20,15 @@ import {SurveyResultService} from "../../widgets/admin-results/model/services/su
     LineLightGrayComponent,
     DropdownModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    NgClass
   ],
   template: `
         <div class=" max-w-[205px] ">
-          <p-dropdown appendTo="body" (ngModelChange)="click($event)"  [options]="options" [(ngModel)]="selectedOption" optionLabel="name"  placeholder="Ожидает получение">
+          <p-dropdown appendTo="body" (ngModelChange)="setStatusSurvey($event)"  [options]="options" [(ngModel)]="selectedOption" optionLabel="name"  placeholder="Ожидает получение">
             <ng-template  pTemplate="selectedItem" let-selected>
               <div class="flex gap-1">
-                <h2 >{{selected.title}}</h2>
+                <h2>{{ selected.title }}</h2>
               </div>
 
             </ng-template>
@@ -34,8 +38,8 @@ import {SurveyResultService} from "../../widgets/admin-results/model/services/su
               </div>
             </ng-template>
           </p-dropdown>
-
         </div>
+
   `,
   styles: `
   ::ng-deep.p-dropdown {
@@ -52,9 +56,10 @@ import {SurveyResultService} from "../../widgets/admin-results/model/services/su
 })
 
 export class AdminDropdownComponent {
+  @ViewChild(Dropdown, { static: false }) dropdown!: Dropdown;
   private _surveyResultService = inject(SurveyResultService)
   currentSurveyResultId = input.required<string>()
-  selectedOption!: OptionsDropdownStatus
+  selectedOption!: OptionsDropdownStatus | null
   options: OptionsDropdownStatus[] = [
     {
       title: 'Получен',
@@ -66,8 +71,10 @@ export class AdminDropdownComponent {
 
     }
   ]
-
-  click(event: OptionsDropdownStatus) {
+@ConfirmDialog(AdminModalStatusComponent, {
+  maxWidth: '420px'
+})
+  setStatusSurvey(event: OptionsDropdownStatus) {
     const sendStatusDto: UpdateProcessedStatusDto = {
       resultStatus: event.resultStatus,
       surveyResultId: this.currentSurveyResultId()

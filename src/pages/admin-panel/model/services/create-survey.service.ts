@@ -1,6 +1,7 @@
 import {computed, Injectable, signal} from '@angular/core';
 import {ICreateSurvey} from "../../../../features/create-survey-form/model/types/create-survey-form.type";
 import {question, questionStorage} from "../../../../shared/model/types/surveys";
+import {randQuestion} from "../utils/factory-questions-answers";
 
 @Injectable({
   providedIn: 'root'
@@ -11,140 +12,11 @@ export class CreateSurveyService {
   public readonly surveyStorage = computed(() => this.#surveyStorage())
   // ________________________________________________________________________________________________________
   readonly #questionsOrAnswersStorage = signal<questionStorage[]>([
-    {
-      questionText: '',
-      questionType: 0,
-      options: [
-        {
-          id:1,
-          optionText: '',
-          isCorrect: false
-
-        },
-        {
-          id:2,
-          optionText: '',
-          isCorrect: false
-
-        },
-        {
-          id:3,
-          optionText: '',
-          isCorrect: false
-
-        }
-      ],
-      sequence:1,
-      showAnswers:true
-
-    },
-    {
-      questionText: '',
-      questionType: 0,
-      options: [
-        {
-          id:4,
-          optionText: '',
-          isCorrect: false
-
-        },
-        {
-          id:5,
-          optionText: '',
-          isCorrect: false
-
-        },
-        {
-          id:6,
-          optionText: '',
-          isCorrect: false
-
-        }
-      ],
-      sequence:2,
-      showAnswers:false
-
-    },
-    {
-      questionText: '',
-      questionType: 0,
-      options: [
-        {
-          id:7,
-          optionText: '',
-          isCorrect: false
-
-        },
-        {
-          id:8,
-          optionText: '',
-          isCorrect: false
-
-        },
-        {
-          id:9,
-          optionText: '',
-          isCorrect: false
-
-        }
-      ],
-      sequence:3,
-      showAnswers:false
-
-    },
-    {
-      questionText: '',
-      questionType: 0,
-      options: [
-        {
-          id:10,
-          optionText: '',
-          isCorrect: false
-
-        },
-        {
-          id:11,
-          optionText: '',
-          isCorrect: false
-
-        },
-        {
-          id:12,
-          optionText: '',
-          isCorrect: false
-
-        }
-      ],
-      sequence:4,
-      showAnswers:false
-
-    },
-    {
-      questionText: '',
-      questionType: 0,
-      options: [
-        {
-          id:13,
-          optionText: '',
-          isCorrect: false
-
-        },
-        {
-          id:14,
-          optionText: '',
-          isCorrect: false
-
-        },
-        {
-          id:15,
-          optionText: '',
-          isCorrect: false
-
-        }
-      ],
-      sequence:5,
-      showAnswers:false
-    }
+    randQuestion(),
+    randQuestion(),
+    randQuestion(),
+    randQuestion(),
+    randQuestion(),
   ])
   public readonly questionsOrAnswersStorage = computed(() => this.#questionsOrAnswersStorage())
 
