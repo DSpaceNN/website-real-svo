@@ -1,18 +1,46 @@
 export interface ISurveyResultDto {
 result: {
-  items: [],
+  items: SurveyResult[],
   totalCount:number
 }
 errors:any
 }
 
 export interface SurveyResult {
- id:string,
+  id:string,
   code:string,
   isSuccess:boolean,
   isProcessed:boolean,
-  creationTime:string
+  surveyName:string
+  resultStatus:number,
+  creationTime:string,
+  answers: SurveyResultAnswers[]
 }
-
-export interface SurveyResultQueryParams {filter?:string,isSuccess?: boolean, skip?: number, take?: number}
-
+export interface SurveyResultAnswers {
+  sequence: number,
+  isCorrect: boolean,
+  id: string
+}
+export interface SurveyResultQueryParams {filter?:string,sorting?: string,isAwaitingReceipt?:boolean, skip?: number, take?: number}
+export interface SurveyResultDropdownSlug {
+  title:string,
+  answers:SurveyResultAnswers[]
+}
+export enum ResultStatus {
+  Received,
+  NotReceived,
+  AwaitingReceipt,
+  NotAvailable
+}
+export interface UpdateProcessedStatusDto {
+  surveyResultId:string
+  resultStatus:number
+}
+export interface OptionsDropdownStatus {
+  title:string,
+  resultStatus:ResultStatus
+}
+export interface Sorting {active: string, direction: string}
+export enum SortingNameTime {
+  SORTING_TIME = 'creationTime'
+}

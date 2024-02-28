@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, input, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, input, OnInit, signal, ViewChild} from '@angular/core';
 import {
   MatCell, MatCellDef,
   MatColumnDef,
@@ -19,6 +19,8 @@ import {
   AdminDeleteSurveyModalComponent
 } from "../../../features/admin-delete-survey/admin-delete-survey-modal.component";
 import {PaginatorModule} from "primeng/paginator";
+import {Sorting} from "../../../widgets/admin-results/model/types/survey-result";
+import {SortingIconComponent} from "../../icons/sorting-icon/sorting-icon.component";
 
 
 export interface PeriodicElement {
@@ -62,12 +64,15 @@ const ELEMENT_DATA: PeriodicElement[] = [
     TimeOnlyPipe,
     DeleteIconComponent,
     EditIconComponent,
-    PaginatorModule
+    PaginatorModule,
+    SortingIconComponent
   ],
   template: `
-    <table  matSort mat-table [dataSource]="surveys()">
+    <table  matSortActive="creationTime" matSortDisableClear    matSortDirection='desc' (matSortChange)="onSortChange($event)"  matSort   mat-table [dataSource]="surveys()">
       <ng-container  matColumnDef="creationTime">
-        <th mat-sort-header mat-header-cell *matHeaderCellDef> Дата и время</th>
+        <th mat-sort-header mat-header-cell *matHeaderCellDef> Дата и время
+        <app-sorting-icon [sortingStatus]="sortingStatus()"></app-sorting-icon>
+        </th>
         <td mat-cell  *matCellDef="let element" >
           {{ element.creationTime | dateOnly }}
           <br>
@@ -138,6 +143,9 @@ const ELEMENT_DATA: PeriodicElement[] = [
       font-weight: 400;
       line-height: 135%;
     }
+    ::ng-deep.mat-sort-header-arrow {
+      display: none !important;
+    }
     ::ng-deep.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
     background-color: #161616;
       color: white;
@@ -150,6 +158,14 @@ export class TableComponent implements OnInit{
   public readonly surveys = this._surveyService.surveys
   public readonly totalCountSurveys = this._surveyService.totalCountSurveys
   public currentPage = 0; // <------ добавьте это
+  public sortingStatus = signal<boolean>(false)
+
+
+  onSortChange(event:Sorting) {
+    this.sortingStatus.update((v) => !v)
+    this._surveyService.setSortingValue(event)
+    this._surveyService.getSurvey()
+  }
 
   onPageChange(event: any){
     this.currentPage = event.first
@@ -159,6 +175,8 @@ export class TableComponent implements OnInit{
     console.log(event,this.totalCountSurveys())
   }
   ngOnInit(): void {
+    this._surveyService.setSkipCount(0)
+    this._surveyService.setFiler('')
     this._surveyService.getSurvey()
   }
   @ConfirmDialog(AdminDeleteSurveyModalComponent)

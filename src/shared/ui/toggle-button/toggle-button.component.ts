@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, inject, input, OnInit, Output} from '@angular/core';
 import {InputSwitchModule} from "primeng/inputswitch";
 import {FormsModule} from "@angular/forms";
+import {SurveyResultService} from "../../../widgets/admin-results/model/services/survey-result.service";
 
 @Component({
   selector: 'app-toggle-button',
@@ -10,7 +11,7 @@ import {FormsModule} from "@angular/forms";
     FormsModule
   ],
   template: `
-    <p-inputSwitch styleClass="switch" (ngModelChange)="log()" [(ngModel)]="checked"></p-inputSwitch>
+    <p-inputSwitch styleClass="switch" (ngModelChange)="changeStatus($event)" [(ngModel)]="statusInputSwitch" ></p-inputSwitch>
   `,
   styles: `
 
@@ -30,9 +31,23 @@ import {FormsModule} from "@angular/forms";
 
   `
 })
-export class ToggleButtonComponent {
-checked:boolean = false
-  log () {
-    console.log(this.checked)
+export class ToggleButtonComponent{
+
+
+  private _surveyResultService = inject(SurveyResultService)
+  public readonly IsAwaitingReceipt = this._surveyResultService.IsAwaitingReceipt
+  // __________________________________________________________________________
+
+  @Output() changedInputSwitch = new EventEmitter<void>()
+  public statusInputSwitch = true
+  // __________________________________________________________________________
+
+  changeStatus (event:boolean) {
+    this._surveyResultService.setSkipCount(0)
+    this._surveyResultService.setIsAwaitingReceipt(event)
+    this._surveyResultService.getSurveyResults({})
+    this.changedInputSwitch.emit()
   }
+  // __________________________________________________________________________
+
 }

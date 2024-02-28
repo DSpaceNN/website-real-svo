@@ -2,6 +2,7 @@ import {computed, inject, Injectable, Signal, signal} from '@angular/core';
 import {AbstractApiService} from "../../../../shared/model/services/abstract-http.service";
 import {API} from "../../../../shared/model/utils/api.endpoints";
 import {IDeleteSurveyDto, ISurvey, ISurveyDto} from "../../../../shared/model/types/surveys";
+import {Sorting} from "../../../admin-results/model/types/survey-result";
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,11 @@ export class SurveyService {
 //   _________________________________________________________________________________________
 
   readonly #skipCount = signal<number>(0)
-  public readonly skipCount = computed(() => this.#filterSurveyValue())
+  public readonly skipCount = computed(() => this.#skipCount())
 //   _________________________________________________________________________________________
 
   readonly #takeCount = signal<number>(6)
-  public readonly takeCount = computed(() => this.#filterSurveyValue())
+  public readonly takeCount = computed(() => this.#takeCount())
 //   _________________________________________________________________________________________
 
   readonly #surveys = signal<ISurvey[]>([])
@@ -26,6 +27,12 @@ export class SurveyService {
   readonly #totalCountSurveys = signal<number>(0);
   public readonly totalCountSurveys = computed(() => this.#totalCountSurveys())
 //   _________________________________________________________________________________________
+  readonly #sortingSurveyResult = signal<Sorting>({active: '',direction: ''})
+  public readonly sortingSurveyResult = computed(() => this.#sortingSurveyResult())
+//   _________________________________________________________________________________________
+  setSortingValue(sortingValue:Sorting) {
+    this.#sortingSurveyResult.set(sortingValue)
+  }
 
 apiService = inject(AbstractApiService)
   setSurvey (requestBody:ISurvey) {
@@ -37,6 +44,7 @@ apiService = inject(AbstractApiService)
     const params = new URLSearchParams({
       ...{ Take: String(this.#takeCount()) },
       ...{ Skip: String(this.#skipCount()) },
+      ...(this.#sortingSurveyResult().direction && { Sorting: String(`${this.#sortingSurveyResult().active} ${this.#sortingSurveyResult().direction}`)}),
       ...(this.filterSurveyValue().length && { Filter: String(this.filterSurveyValue())}),
     });
 

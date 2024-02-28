@@ -25,12 +25,26 @@ export type options = {
   isSelected:boolean
 
 }
+export type optionsStorage = {
+  optionText: string,
+  isCorrect: boolean,
+  id?:number
+
+
+}
 export type question  = {
   questionText: string,
   sequence:number,
   questionType:number
   options:options[],
   id:string
+}
+export type questionStorage  = {
+  questionText: string,
+  sequence:number,
+  questionType:number
+  options:optionsStorage[],
+  showAnswers:boolean
 }
 export interface SendResultSurvey  {
   surveyId: string,
