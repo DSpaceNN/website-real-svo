@@ -2,9 +2,10 @@ import {ChangeDetectionStrategy, Component, Inject, inject, ViewChild} from '@an
 import {MAT_DIALOG_DATA, MatDialogClose} from "@angular/material/dialog";
 import {SurveyResultService} from "../../widgets/admin-results/model/services/survey-result.service";
 import {Dropdown} from "primeng/dropdown";
+import {UpdateProcessedStatusDto} from "../../widgets/admin-results/model/types/survey-result";
 export type DialogData = {
-  data: string;
-  text: string;
+  sendStatusDto:UpdateProcessedStatusDto,
+  dropdown:Dropdown
 };
 @Component({
   selector: 'app-admin-modal-status',
@@ -21,10 +22,10 @@ export type DialogData = {
         </div>
     <p class="text-[16px] text-gray-admin">После изменения статуса приза, действие нельзя будет отменить. Пожалуйста, учтите это при выборе.</p>
     <div class="flex gap-2 justify-center">
-      <button [mat-dialog-close]="true" class="main_btn_admin flex gap-1 w-1/2 text-center justify-center btn">
+      <button (click)="submit()" [mat-dialog-close]="true" class="main_btn_admin flex gap-1 w-1/2 text-center justify-center btn">
         Да
       </button>
-      <button (click)="resetDropdownValue()" [mat-dialog-close]="false" class=" second_btn_admin flex gap-1 w-1/2 text-center justify-center btn">
+      <button (click)="resetDropdown()" [mat-dialog-close]="false" class=" second_btn_admin flex gap-1 w-1/2 text-center justify-center btn">
         Отмена
       </button>
     </div>
@@ -45,8 +46,13 @@ export type DialogData = {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdminModalStatusComponent {
+  private _surveyResultService = inject(SurveyResultService)
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-  resetDropdownValue() {
-    console.log('вывзыв1',this.data)
+  resetDropdown() {
+    this.data.dropdown.clear()
+  }
+  submit() {
+      this._surveyResultService.updateStatus(this.data.sendStatusDto)
   }
 }

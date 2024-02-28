@@ -12,6 +12,7 @@ import {SurveyResultService} from "../../widgets/admin-results/model/services/su
 import {ConfirmDialog} from "../../shared/model/decorators/confirm-dialog.decorator";
 import {AdminModalStatusComponent} from "../admin-modal/admin-modal-status.component";
 import {NgClass} from "@angular/common";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-admin-dropdown',
@@ -57,7 +58,7 @@ import {NgClass} from "@angular/common";
 
 export class AdminDropdownComponent {
   @ViewChild(Dropdown, { static: false }) dropdown!: Dropdown;
-  private _surveyResultService = inject(SurveyResultService)
+  dialog = inject(MatDialog);
   currentSurveyResultId = input.required<string>()
   selectedOption!: OptionsDropdownStatus | null
   options: OptionsDropdownStatus[] = [
@@ -71,14 +72,21 @@ export class AdminDropdownComponent {
 
     }
   ]
-@ConfirmDialog(AdminModalStatusComponent, {
-  maxWidth: '420px'
-})
-  setStatusSurvey(event: OptionsDropdownStatus) {
-    const sendStatusDto: UpdateProcessedStatusDto = {
-      resultStatus: event.resultStatus,
-      surveyResultId: this.currentSurveyResultId()
-    }
-    this._surveyResultService.updateStatus(sendStatusDto)
+public setStatusSurvey(event: OptionsDropdownStatus) {
+    if(event?.title) {
+        const sendStatusDto: UpdateProcessedStatusDto = {
+        resultStatus: event.resultStatus,
+        surveyResultId: this.currentSurveyResultId()
+     }
+   this.dialog.open(AdminModalStatusComponent, {
+     data:  {
+       sendStatusDto:sendStatusDto,
+       dropdown:this.dropdown
+     },
+     maxWidth:'420px',
+     hasBackdrop: true,
+     disableClose: true,
+   })
+ }
   }
 }
