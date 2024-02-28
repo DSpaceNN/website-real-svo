@@ -4,6 +4,8 @@ import {AdminPanelSubHeaderComponent} from "../../shared/ui/admin-panel-sub-head
 import {PlusIconComponent} from "../../shared/icons/plus-icon/plus-icon.component";
 import {SubHeaderTitleComponent} from "../../features/sub-header-title/sub-header-title.component";
 import {RedirectToPageService} from "../../shared/model/services/redirect-to-page.service";
+import {ConfirmDialog} from "../../shared/model/decorators/confirm-dialog.decorator";
+import {ConfirmationExitComponent} from "../../features/confirmation-exit/confirmation-exit.component";
 
 @Component({
   selector: 'app-create-questions',
@@ -50,6 +52,10 @@ import {RedirectToPageService} from "../../shared/model/services/redirect-to-pag
 })
 export default class CreateQuestionsComponent {
 private _redirectService = inject(RedirectToPageService)
+  @ConfirmDialog(ConfirmationExitComponent, {
+    minWidth: '400px',
+
+  })
   redirectToCreateSurvey() {
   this._redirectService.redirectToCreateSurveyAdminPanelPage()
   }
