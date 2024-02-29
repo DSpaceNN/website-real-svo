@@ -33,7 +33,8 @@ private _apiService = inject(AbstractApiService)
       ],)
   }
   addedNewQuestionOrAnswerItem () {
-    this.#questionsOrAnswersStorage.update((s) => [...s,randQuestion()])
+    const currentLength = this.questionsOrAnswersStorage().length;
+    this.#questionsOrAnswersStorage.update((s) => [...s, randQuestion(currentLength + 1)]);
   }
   // ________________________________________________________________________________________________________
 
@@ -80,5 +81,14 @@ private _apiService = inject(AbstractApiService)
     }
   }
   // ________________________________________________________________________________________________________
+  deleteQuestionAndAnswerSequence(sequence: number) {
+    const questions = this.questionsOrAnswersStorage().slice()
+    const newQuestions = questions.filter(item => item.sequence !== sequence);
 
+    newQuestions.forEach((item, index) => {
+      item.sequence = index + 1;
+    });
+
+    this.#questionsOrAnswersStorage.set(newQuestions);
+  }
 }

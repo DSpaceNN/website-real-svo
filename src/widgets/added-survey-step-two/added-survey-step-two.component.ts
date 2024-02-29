@@ -9,6 +9,8 @@ import {
 import {CreateSurveyService} from "../../pages/admin-panel/model/services/create-survey.service";
 import {RadioButtonComponent} from "../../shared/ui/radio-button/radio-button.component";
 import {FormsModule} from "@angular/forms";
+import {DeleteIconComponent} from "../../shared/icons/delete-icon/delete-icon.component";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-added-survey-step-two',
@@ -21,7 +23,9 @@ import {FormsModule} from "@angular/forms";
     DragTwoIconComponent,
     AddedSurveyQuestionsBlockComponent,
     RadioButtonComponent,
-    FormsModule
+    FormsModule,
+    DeleteIconComponent,
+    NgClass
   ],
   template: `
     <div class="scrollbar max-h-[700px] overflow-auto max-w-[830px]">
@@ -41,8 +45,8 @@ import {FormsModule} from "@angular/forms";
                   </g>
                 </svg>
               </div>
-              <div   text-area-btn class="h-20 w-10 bg-light-gray-admin rounded-[8px] hover:opacity-40 transition-all flex justify-center items-center">
-                <app-drag-two-icon></app-drag-two-icon>
+              <div [ngClass]="{'opacity-40 pointer-events-none': questionsOrAnswersItems().length <=5}" (click)="deleteQuestion(item.sequence)" text-area-btn class="  h-20 w-10 bg-light-gray-admin rounded-[8px] hover:opacity-40 transition-all flex justify-center items-center">
+                <app-delete-icon></app-delete-icon>
               </div>
             </app-text-area>
           </div>
@@ -54,6 +58,7 @@ import {FormsModule} from "@angular/forms";
                 <app-text-area [inputValue]="answers.optionText" [positionCloseIcon]="{top:'1.9rem', right:'3rem'}" (value)="changeAnswers($event,item.sequence,answers.id)">
                   <div text-area-btn class="h-20 w-10 bg-light-gray-admin rounded-[8px] hover:opacity-40 transition-all flex justify-center items-center">
                     <input class="w-6 h-6 accent-[#161616]" type="radio"
+                           [checked]="answers.isCorrect"
                            [attr.name]="'answers-group-' + item.sequence"
                            [value]="answers.id"
                            (change)="onRadioButtonChange(item.sequence, answers.id)">
@@ -79,7 +84,9 @@ export default class AddedSurveyStepTwoComponent {
   private _createSurveyService = inject(CreateSurveyService)
   public questionsOrAnswersItems = this._createSurveyService.questionsOrAnswersStorage
   public selectedAnswer!:number
-
+deleteQuestion(sequence:number) {
+    this._createSurveyService.deleteQuestionAndAnswerSequence(sequence)
+}
   // _______________________________________________________________________________
   checkStatus(textQuestion:string,numberQuestion:number) {
    this._createSurveyService.updateQuestionText(numberQuestion,textQuestion)

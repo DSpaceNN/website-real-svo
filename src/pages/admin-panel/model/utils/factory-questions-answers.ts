@@ -9,7 +9,7 @@ const randOption = (): optionsStorage => ({
   isCorrect: false
 });
 
-export const randQuestion = (): questionStorage => ({
+export const randQuestion = (sequence?: number): questionStorage => ({
   questionText: '',
   questionType: 0,
   options: [
@@ -17,7 +17,7 @@ export const randQuestion = (): questionStorage => ({
     randOption(),
     randOption()
   ],
-  sequence: factoryQuestionSequence(),
+  sequence: sequence ?? factoryQuestionSequence(),
   showAnswers: false
 });
 
