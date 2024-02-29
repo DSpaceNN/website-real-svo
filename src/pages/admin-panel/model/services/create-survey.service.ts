@@ -2,7 +2,6 @@ import {computed, inject, Injectable, signal} from '@angular/core';
 import {ICreateSurvey} from "../../../../features/create-survey-form/model/types/create-survey-form.type";
 import {question, questionStorage} from "../../../../shared/model/types/surveys";
 import {randQuestion} from "../utils/factory-questions-answers";
-import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 import {AbstractApiService} from "../../../../shared/model/services/abstract-http.service";
 
 @Injectable({
@@ -22,7 +21,20 @@ export class CreateSurveyService {
   ])
   // ________________________________________________________________________________________________________
 private _apiService = inject(AbstractApiService)
+  // ________________________________________________________________________________________________________
 
+  resetQuestionsValue () {
+    this.#questionsOrAnswersStorage.set([
+      randQuestion(),
+      randQuestion(),
+      randQuestion(),
+      randQuestion(),
+      randQuestion()
+      ],)
+  }
+  addedNewQuestionOrAnswerItem () {
+    this.#questionsOrAnswersStorage.update((s) => [...s,randQuestion()])
+  }
   // ________________________________________________________________________________________________________
 
   public readonly questionsOrAnswersStorage = computed(() => this.#questionsOrAnswersStorage())

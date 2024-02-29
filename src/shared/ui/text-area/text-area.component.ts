@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, EventEmitter, input, Output} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {CloseIconComponent} from "../../icons/close-icon/close-icon.component";
 import {NgClass} from "@angular/common";
@@ -29,6 +29,12 @@ export class TextAreaComponent {
   inputValue = input<string>('')
   positionCloseIcon = input<{right:string, top:string}>({right: '5.5rem', top: '32px'})
 @Output() value = new EventEmitter<string>()
+
+  constructor() {
+    effect(() => {
+      this.valueTextArea = this.inputValue()
+    });
+  }
   valueTextArea:string = ''
   clearTextArea() {
     this.valueTextArea = ''

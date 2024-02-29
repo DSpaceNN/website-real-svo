@@ -30,7 +30,7 @@ import {FormsModule} from "@angular/forms";
         <div class="flex gap-1 flex-col" >
           <div class="flex w-full items-start gap-6">
             <app-current-step-question [step]="$index + 1"></app-current-step-question>
-            <app-text-area [inputValue]="'hhh'"  (value)="checkStatus($event, item.sequence)" class="w-[760px]" valueLabel="Введите вопрос" >
+            <app-text-area [inputValue]="item.questionText"  (value)="checkStatus($event, item.sequence)" class="w-[760px]" valueLabel="Введите вопрос" >
               <div (click)="toggleShowAnswers(item.sequence)" text-area-btn class="h-20 w-10 bg-light-gray-admin rounded-[8px] hover:opacity-40 transition-all flex justify-center items-center">
                 <svg [style.transform]="item.showAnswers ? 'rotate(180deg)' : 'rotate(0)'"  xmlns="http://www.w3.org/2000/svg" cursor="pointer" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <mask id="mask0_302_183" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
@@ -51,7 +51,7 @@ import {FormsModule} from "@angular/forms";
       <h2 class="text-[18px] font-[400] mt-6 mb-2">Введите варианты ответа и укажите правильный вариант</h2>
             <app-added-survey-questions-block [answers]="item.options" class="">
               <ng-template #input let-answers>
-                <app-text-area [positionCloseIcon]="{top:'1.9rem', right:'3rem'}" (value)="changeAnswers($event,item.sequence,answers.id)">
+                <app-text-area [inputValue]="answers.optionText" [positionCloseIcon]="{top:'1.9rem', right:'3rem'}" (value)="changeAnswers($event,item.sequence,answers.id)">
                   <div text-area-btn class="h-20 w-10 bg-light-gray-admin rounded-[8px] hover:opacity-40 transition-all flex justify-center items-center">
                     <input class="w-6 h-6 accent-[#161616]" type="radio"
                            [attr.name]="'answers-group-' + item.sequence"
