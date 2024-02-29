@@ -9,7 +9,8 @@ export const API = {
   GET_SURVEY_FEEDBACK: {url: '/UserSurvey/GetSurveyFeedback', method: RequestMethods.GET},
   LOGIN: {url: '/TokenAuth/Login', method: RequestMethods.POST},
   SURVEY_RESULT: {url:'/SurveyResults/GetSurveyResults',method: RequestMethods.GET},
-  UPDATE_PROCESSED_STATUS: {url:'/SurveyResults/UpdateProcessedStatus',method: RequestMethods.PUT}
+  UPDATE_PROCESSED_STATUS: {url:'/SurveyResults/UpdateProcessedStatus',method: RequestMethods.PUT},
+  CREATE_OR_EDIT_QUESTIONS: {url: '/Surveys/CreateOrEditQuestion', method: RequestMethods.POST}
 
 };
 

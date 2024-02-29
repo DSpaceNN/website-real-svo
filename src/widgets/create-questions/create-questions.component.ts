@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject} from '@angular/core';
 import AddedSurveyStepTwoComponent from "../added-survey-step-two/added-survey-step-two.component";
 import {AdminPanelSubHeaderComponent} from "../../shared/ui/admin-panel-sub-header/admin-panel-sub-header.component";
 import {PlusIconComponent} from "../../shared/icons/plus-icon/plus-icon.component";
@@ -6,6 +6,10 @@ import {SubHeaderTitleComponent} from "../../features/sub-header-title/sub-heade
 import {RedirectToPageService} from "../../shared/model/services/redirect-to-page.service";
 import {ConfirmDialog} from "../../shared/model/decorators/confirm-dialog.decorator";
 import {ConfirmationExitComponent} from "../../features/confirmation-exit/confirmation-exit.component";
+import {SurveyService} from "../create-survey/model/service/survey.service";
+import {CreateSurveyService} from "../../pages/admin-panel/model/services/create-survey.service";
+import {NgClass} from "@angular/common";
+import {question, questionStorage} from "../../shared/model/types/surveys";
 
 @Component({
   selector: 'app-create-questions',
@@ -14,7 +18,8 @@ import {ConfirmationExitComponent} from "../../features/confirmation-exit/confir
     AddedSurveyStepTwoComponent,
     AdminPanelSubHeaderComponent,
     PlusIconComponent,
-    SubHeaderTitleComponent
+    SubHeaderTitleComponent,
+    NgClass
   ],
   template: `
     <app-admin-panel-sub-header>
@@ -35,7 +40,7 @@ import {ConfirmationExitComponent} from "../../features/confirmation-exit/confir
          <button (click)="redirectToCreateSurvey()" class="second_btn_admin font-medium px-5 py-2">
            Назад
          </button>
-         <button class="main_btn_admin font-medium px-5 py-2">
+         <button (click)="createSurveyOrQuestionOrAnswers()" class="main_btn_admin font-medium px-5 py-2">
            Сохранить
          </button>
        </div>
@@ -52,11 +57,15 @@ import {ConfirmationExitComponent} from "../../features/confirmation-exit/confir
 })
 export default class CreateQuestionsComponent {
 private _redirectService = inject(RedirectToPageService)
+  private _createSurveyService = inject(CreateSurveyService)
+  private _surveyService = inject(SurveyService)
   @ConfirmDialog(ConfirmationExitComponent, {
     minWidth: '400px',
-
   })
   redirectToCreateSurvey() {
   this._redirectService.redirectToCreateSurveyAdminPanelPage()
+  }
+  createSurveyOrQuestionOrAnswers() {
+    this._surveyService.setSurvey(this._createSurveyService.surveyStorage())
   }
 }

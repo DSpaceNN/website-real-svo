@@ -59,6 +59,9 @@ import {MatDialog} from "@angular/material/dialog";
 export class AdminDropdownComponent {
   @ViewChild(Dropdown, { static: false }) dropdown!: Dropdown;
   dialog = inject(MatDialog);
+  slug = input.required<string>({
+    alias: 'surveyId'
+  })
   currentSurveyResultId = input.required<string>()
   selectedOption!: OptionsDropdownStatus | null
   options: OptionsDropdownStatus[] = [
@@ -81,7 +84,8 @@ public setStatusSurvey(event: OptionsDropdownStatus) {
    this.dialog.open(AdminModalStatusComponent, {
      data:  {
        sendStatusDto:sendStatusDto,
-       dropdown:this.dropdown
+       dropdown:this.dropdown,
+       slug:this.slug()
      },
      maxWidth:'420px',
      hasBackdrop: true,

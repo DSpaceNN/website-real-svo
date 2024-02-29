@@ -5,7 +5,8 @@ import {Dropdown} from "primeng/dropdown";
 import {UpdateProcessedStatusDto} from "../../widgets/admin-results/model/types/survey-result";
 export type DialogData = {
   sendStatusDto:UpdateProcessedStatusDto,
-  dropdown:Dropdown
+  dropdown:Dropdown,
+  slug:string
 };
 @Component({
   selector: 'app-admin-modal-status',
@@ -18,7 +19,7 @@ export type DialogData = {
   <div class="flex flex-col gap-4 p-6 ">
         <h2 class="text-[18px]">Вы уверены, что хотите изменить статус приза?</h2>
         <div class="bg-light-gray-admin text-center py-1.5 rounded-[8px]">
-          <h2 class="text-[16px]">Уникальный код 123-789 </h2>
+          <h2 class="text-[16px]">Уникальный код {{data.slug}} </h2>
         </div>
     <p class="text-[16px] text-gray-admin">После изменения статуса приза, действие нельзя будет отменить. Пожалуйста, учтите это при выборе.</p>
     <div class="flex gap-2 justify-center">

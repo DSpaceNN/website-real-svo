@@ -1,4 +1,14 @@
-import {ChangeDetectionStrategy, Component, inject, input, OnInit, signal, ViewChild} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  input,
+  OnInit,
+  Signal,
+  signal,
+  ViewChild
+} from '@angular/core';
 import {
   MatCell, MatCellDef,
   MatColumnDef,
@@ -120,7 +130,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
         <div class="absolute bottom-4 left-1/2">
-          <p-paginator  (onPageChange)="onPageChange($event)" [first]="currentPage" [rows]="6" [totalRecords]="totalCountSurveys()"></p-paginator>
+          <p-paginator  (onPageChange)="onPageChange($event)" [first]="currentPage()" [rows]="6" [totalRecords]="totalCountSurveys()"></p-paginator>
             <h2 class="text-center text-gray-admin">Всего результатов:{{totalCountSurveys()}}</h2>
         </div>
   `,
@@ -157,10 +167,8 @@ export class TableComponent implements OnInit{
   private _surveyService = inject(SurveyService)
   public readonly surveys = this._surveyService.surveys
   public readonly totalCountSurveys = this._surveyService.totalCountSurveys
-  public currentPage = 0; // <------ добавьте это
   public sortingStatus = signal<boolean>(false)
-
-
+  public currentPage = this._surveyService.currentPage
   onSortChange(event:Sorting) {
     this.sortingStatus.update((v) => !v)
     this._surveyService.setSortingValue(event)
@@ -168,7 +176,7 @@ export class TableComponent implements OnInit{
   }
 
   onPageChange(event: any){
-    this.currentPage = event.first
+    this._surveyService.setCurrentPage(event.first)
     this._surveyService.setSkipCount(event.first)
     this._surveyService.setTakeCount(event.rows)
     this._surveyService.getSurvey();

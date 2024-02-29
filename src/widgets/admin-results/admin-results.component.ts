@@ -126,7 +126,7 @@ import {SortingIconComponent} from "../../shared/icons/sorting-icon/sorting-icon
            @if(element.resultStatus !== ResultStatus.AwaitingReceipt) {
              <app-admin-status-prize [statusPrize]="element.resultStatus" ></app-admin-status-prize>
            } @else {
-           <app-admin-dropdown class="pl-1 block" [currentSurveyResultId]="element.id"></app-admin-dropdown>
+           <app-admin-dropdown [surveyId]="element.code" class="pl-1 block" [currentSurveyResultId]="element.id"></app-admin-dropdown>
            }
         </td>
       </ng-container>
@@ -202,6 +202,8 @@ export default class AdminResultsComponent implements OnInit{
 
   updateFilterValue(value:string) {
     this.surveyResultService.setFilter(value)
+    this.surveyResultService.setSkipCount(0)
+    this.resetCurrentPage()
     this.surveyResultService.getSurveyResults({})
   }
   // __________________________________________________________________________

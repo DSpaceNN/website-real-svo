@@ -40,11 +40,12 @@ export type question  = {
   id:string
 }
 export type questionStorage  = {
+  surveyId?:string
   questionText: string,
   sequence:number,
   questionType:number
   options:optionsStorage[],
-  showAnswers:boolean
+  showAnswers?:boolean
 }
 export interface SendResultSurvey  {
   surveyId: string,
@@ -92,4 +93,8 @@ export interface filteredDto {
   filter:string,
   skip:number,
   take:number
+}
+export interface CreateOrEditQuestionDto {
+  result:string,
+  errors:any
 }

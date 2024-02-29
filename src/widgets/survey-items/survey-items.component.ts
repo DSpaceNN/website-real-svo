@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
 import {AdminPanelSubHeaderComponent} from "../../shared/ui/admin-panel-sub-header/admin-panel-sub-header.component";
 import {PlusIconComponent} from "../../shared/icons/plus-icon/plus-icon.component";
 import {SubHeaderTitleComponent} from "../../features/sub-header-title/sub-header-title.component";
@@ -53,15 +53,24 @@ import {SurveyService} from "../create-survey/model/service/survey.service";
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class SurveyItemsComponent {
+export default class SurveyItemsComponent implements OnInit{
+  ngOnInit(): void {
+    this._surveyService.setCurrentPage(0)
+
+  }
+
   private _redirectService = inject(RedirectToPageService)
   private _surveyService = inject(SurveyService)
+  currentCount = signal<number>(0)
   redirectToCreateSurvey () {
     this._redirectService.redirectToCreateSurveyAdminPanelPage()
   }
   updateFilterValue(filter:string) {
     console.log(filter)
+    this._surveyService.setCurrentPage(0)
     this._surveyService.setFiler(filter)
+    this._surveyService.setSkipCount(0)
     this._surveyService.getSurvey()
+    this.currentCount.set(0)
   }
 }
