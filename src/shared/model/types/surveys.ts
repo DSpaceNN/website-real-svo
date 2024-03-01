@@ -63,6 +63,17 @@ export type sendResultAnswer = {
   questionId:string,
   selectedOptions: string[]
 }
+
+export interface GetSurveyForEditDto {
+  result: {
+    name:string,
+    slug:string,
+    id:string,
+    questions:question[],
+  },
+  errors:any
+}
+
 export interface ISurveySlugDto {
   result: {
     slug:string,

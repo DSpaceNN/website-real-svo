@@ -11,12 +11,17 @@ import {
 import {Sorting} from "../../../admin-results/model/types/survey-result";
 import {ICreateSurvey} from "../../../../features/create-survey-form/model/types/create-survey-form.type";
 import {CreateSurveyService} from "../../../../pages/admin-panel/model/services/create-survey.service";
+import {HttpHeaders} from "@angular/common/http";
+import {SurveyModalsService} from "../../../../pages/admin-panel/model/services/survey-modals.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SurveyService {
   private _createSurveyService = inject(CreateSurveyService)
+  private _surveyModalService = inject(SurveyModalsService)
+//   _________________________________________________________________________________________
+
   readonly #filterSurveyValue = signal<string>('')
   public readonly filterSurveyValue = computed(() => this.#filterSurveyValue())
 //   _________________________________________________________________________________________
@@ -49,13 +54,14 @@ readonly #currentSurveyId = signal<string>('')
  public setCurrentPage(val:number) {
     this.#currentPage.set(val)
   }
-
   setSortingValue(sortingValue:Sorting) {
     this.#sortingSurveyResult.set(sortingValue)
   }
   setSurvey (requestBody:ICreateSurvey) {
-    this.apiService.request<CreateOrEditQuestionDto>(API.CREATE_SURVEY,requestBody).subscribe((res) => {
+    const headers = new HttpHeaders({'X-Interceptor-Create-Survey': 'true'});
+    this.apiService.request<CreateOrEditQuestionDto>(API.CREATE_SURVEY,requestBody,undefined,headers).subscribe((res) => {
       this.#currentSurveyId.set(res.result)
+      console.log(res,'hello2222')
       const questionsToSend = this._createSurveyService.questionsOrAnswersStorage().map(storedQuestion => {
         const question: questionStorage = {
           surveyId:this.currentSurveyId(),
@@ -72,7 +78,7 @@ readonly #currentSurveyId = signal<string>('')
       for (let item of questionsToSend) {
         this.createOrEditQuestion(item)
       }
-
+      this._surveyModalService.openSuccessModal(this._createSurveyService.surveyStorage())
     })
   }
   createOrEditQuestion(questions:questionStorage) {

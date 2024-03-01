@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {APIEndpoint} from "../types/variables";
 import {Observable} from "rxjs";
@@ -13,9 +13,11 @@ export  class AbstractApiService<T> {
   request<T>(
     endpoint: APIEndpoint,
     body: unknown = undefined,
-    params?: { urlParams?: string; queryParams?: string }
+    params?: { urlParams?: string; queryParams?: string },
+    headers?: HttpHeaders
   ):Observable<T> {
     const requestOptions = {
+      headers: headers,
       withCredentials: true,
       origin: environment.apiURL,
     };

@@ -2,6 +2,7 @@ import {computed, inject, Injectable, signal} from '@angular/core';
 import {ICreateSurvey} from "../../../../features/create-survey-form/model/types/create-survey-form.type";
 import {question, questionStorage} from "../../../../shared/model/types/surveys";
 import {randQuestion} from "../utils/factory-questions-answers";
+import {randOption} from "../utils/factory-questions-answers"
 import {AbstractApiService} from "../../../../shared/model/services/abstract-http.service";
 
 @Injectable({
@@ -73,6 +74,12 @@ private _apiService = inject(AbstractApiService)
     this.#surveyStorage.set(survey)
   }
   // ________________________________________________________________________________________________________
+  public resetSurvey () {
+    this.#surveyStorage.set({name: '',slug: ''})
+
+  }
+
+  // ________________________________________________________________________________________________________
 
   toggleShowAnswers(sequence: number): void {
     const question = this.#questionsOrAnswersStorage().find(q => q.sequence === sequence);
@@ -90,5 +97,21 @@ private _apiService = inject(AbstractApiService)
     });
 
     this.#questionsOrAnswersStorage.set(newQuestions);
+  }
+  deleteAnswer(questionSequence: number, answerId: number) {
+    const questions = this.questionsOrAnswersStorage().slice();
+    const question = questions.find(q => q.sequence === questionSequence);
+    if (question) {
+      question.options = question.options.filter(option => option.id !== answerId);
+      this.#questionsOrAnswersStorage.set(questions);
+    }
+  }
+  addedAnswer(questionSequence: number) {
+    const questions = this.questionsOrAnswersStorage().slice();
+    const question = questions.find((q) => q.sequence === questionSequence);
+    if(question) {
+      question.options = [...question.options, randOption()];
+      this.#questionsOrAnswersStorage.set(questions);
+    }
   }
 }

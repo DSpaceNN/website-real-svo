@@ -2,6 +2,7 @@ import {computed, inject, Injectable, Signal, signal} from '@angular/core';
 import { AbstractApiService } from '../../../../shared/model/services/abstract-http.service';
 import { API } from '../../../../shared/model/utils/api.endpoints';
 import {
+  GetSurveyForEditDto,
   ISurveySlugDto,
   question,
   sendResultAnswer,
@@ -21,13 +22,19 @@ export class QuestionService {
   private _redirectService = inject(RedirectToPageService)
   // ______________________________________________________________________________________________________
   readonly #questions = signal<question[]>([]);
+  public readonly currentQuestion:Signal<question | null> = computed(() => this.#questions()[this.#currentQuestionIndex()]);
+  // ______________________________________________________________________________________________________
+
   readonly #currentQuestionIndex = signal<number>(0);
   public readonly  currentQuestionIndex = computed(() => this.#currentQuestionIndex())
-  public readonly currentQuestion:Signal<question | null> = computed(() => this.#questions()[this.#currentQuestionIndex()]);
+  // ______________________________________________________________________________________________________
   public readonly totalCount = computed(() => this.#questions().length)
+  // ______________________________________________________________________________________________________
   readonly #currentQuestionPage = signal<number>(1)
   public readonly currentQuestionPage = computed(() => this.#currentQuestionPage())
+  // ______________________________________________________________________________________________________
   readonly #activeSlugId = signal<string>('')
+  // ______________________________________________________________________________________________________
   getSurveySlug(slug: string) {
     this.apiService
       .request<ISurveySlugDto>(API.GET_SURVEY_BY_SLUG, undefined, { urlParams: slug })
@@ -39,6 +46,11 @@ export class QuestionService {
           this._redirectService.redirectToCartNotFoundPage()
         }
       });
+  }
+  getSurveyForEdit(id:string) {
+    this.apiService.request<GetSurveyForEditDto>(API.GET_SURVEY_FOR_EDIT,undefined,{urlParams: id}).subscribe((r) => {
+      console.log(r, 'hey')
+    })
   }
 sendResultQuestion (postData:SendResultSurvey) {
       this.apiService.request<SendResultSurveyDto>(API.CREATE_SEND_RESULT, postData).subscribe((r) => {

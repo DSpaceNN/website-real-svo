@@ -55,17 +55,23 @@ import {NgClass} from "@angular/common";
       <h2 class="text-[18px] font-[400] mt-6 mb-2">Введите варианты ответа и укажите правильный вариант</h2>
             <app-added-survey-questions-block [answers]="item.options" class="">
               <ng-template #input let-answers>
-                <app-text-area [inputValue]="answers.optionText" [positionCloseIcon]="{top:'1.9rem', right:'3rem'}" (value)="changeAnswers($event,item.sequence,answers.id)">
-                  <div text-area-btn class="h-20 w-10 bg-light-gray-admin rounded-[8px] hover:opacity-40 transition-all flex justify-center items-center">
+                <app-text-area [inputValue]="answers.optionText" [positionCloseIcon]="{top:'1.9rem', right:'5rem'}" (value)="changeAnswers($event,item.sequence,answers.id)">
+                  <div  text-area-btn class="h-20 w-10 bg-light-gray-admin rounded-[8px] hover:opacity-40 transition-all flex justify-center items-center">
                     <input class="w-6 h-6 accent-[#161616]" type="radio"
                            [checked]="answers.isCorrect"
                            [attr.name]="'answers-group-' + item.sequence"
                            [value]="answers.id"
                            (change)="onRadioButtonChange(item.sequence, answers.id)">
                   </div>
+                  <div [ngClass]="{'opacity-40 pointer-events-none': item.options.length <=3}"  (click)="deleteAnswer(item.sequence,answers.id)" text-area-btn class="h-20 w-10 bg-light-gray-admin rounded-[8px] hover:opacity-40 transition-all flex justify-center items-center">
+                    <app-delete-icon></app-delete-icon>
+                  </div>
                 </app-text-area>
               </ng-template>
             </app-added-survey-questions-block>
+      <div (click)="addedNewAnswer(item.sequence)" class="w-full rounded-[8px] text-center bg-light-gray-admin mt-2 mb-6 py-2.5 cursor-pointer hover:opacity-40 transition-all">
+        <h2 class="text-[16px] font-600">Добавить вариант ответа</h2>
+      </div>
     </div>
           }
         </div>
@@ -99,12 +105,22 @@ deleteQuestion(sequence:number) {
   }
   // _______________________________________________________________________________
   onRadioButtonChange(sequence:number,optionId:number): void {
- this._createSurveyService.selectAnswer(sequence,optionId)
+    this._createSurveyService.selectAnswer(sequence,optionId)
     console.log(this._createSurveyService.questionsOrAnswersStorage())
-
   }
+  // _______________________________________________________________________________
+
   toggleShowAnswers(sequence:number) {
     this._createSurveyService.toggleShowAnswers(sequence)
   }
+  // _______________________________________________________________________________
 
+  deleteAnswer(questionSequence:number, idAnswer:number) {
+    this._createSurveyService.deleteAnswer(questionSequence,idAnswer)
+  }
+
+  addedNewAnswer(questionSequence:number) {
+    console.log('work')
+    this._createSurveyService.addedAnswer(questionSequence)
+  }
 }

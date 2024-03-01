@@ -31,6 +31,7 @@ import {
 import {PaginatorModule} from "primeng/paginator";
 import {Sorting} from "../../../widgets/admin-results/model/types/survey-result";
 import {SortingIconComponent} from "../../icons/sorting-icon/sorting-icon.component";
+import {QuestionService} from "../../../pages/question/model/services/question.service";
 
 
 export interface PeriodicElement {
@@ -111,7 +112,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
       <ng-container matColumnDef="edit">
         <th mat-header-cell *matHeaderCellDef> Редактировать</th>
         <td mat-cell *matCellDef="let element">
-          <div class="w-10 bg-light-gray-admin h-10 flex items-center justify-center  rounded-[8px] cursor-pointer hover:opacity-40 transition-all">
+          <div (click)="goToEditSurvey(element.id)" class="w-10 bg-light-gray-admin h-10 flex items-center justify-center  rounded-[8px] cursor-pointer hover:opacity-40 transition-all">
             <app-edit-icon></app-edit-icon>
           </div>
         </td>
@@ -165,6 +166,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 export class TableComponent implements OnInit{
   private _surveyService = inject(SurveyService)
+  private _questionService = inject(QuestionService)
   public readonly surveys = this._surveyService.surveys
   public readonly totalCountSurveys = this._surveyService.totalCountSurveys
   public sortingStatus = signal<boolean>(false)
@@ -190,6 +192,9 @@ export class TableComponent implements OnInit{
   @ConfirmDialog(AdminDeleteSurveyModalComponent)
   delete(id:string) {
   this._surveyService.deleteSurvey(id)
+  }
+  goToEditSurvey(id:string) {
+    this._questionService.getSurveyForEdit(id)
   }
 
   @ViewChild(MatSort) sort!: MatSort;

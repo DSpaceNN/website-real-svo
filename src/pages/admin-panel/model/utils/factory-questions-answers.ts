@@ -3,7 +3,7 @@ import {optionsStorage, questionStorage} from "../../../../shared/model/types/su
 const factoryOptionId = createIncrementalNumber();
 const factoryQuestionSequence = createIncrementalNumber();
 
-const randOption = (): optionsStorage => ({
+export const randOption = (): optionsStorage => ({
   id: factoryOptionId(),
   optionText: '',
   isCorrect: false

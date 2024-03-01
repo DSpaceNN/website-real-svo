@@ -10,7 +10,8 @@ export const API = {
   LOGIN: {url: '/TokenAuth/Login', method: RequestMethods.POST},
   SURVEY_RESULT: {url:'/SurveyResults/GetSurveyResults',method: RequestMethods.GET},
   UPDATE_PROCESSED_STATUS: {url:'/SurveyResults/UpdateProcessedStatus',method: RequestMethods.PUT},
-  CREATE_OR_EDIT_QUESTIONS: {url: '/Surveys/CreateOrEditQuestion', method: RequestMethods.POST}
+  CREATE_OR_EDIT_QUESTIONS: {url: '/Surveys/CreateOrEditQuestion', method: RequestMethods.POST},
+  GET_SURVEY_FOR_EDIT: {url: '/Surveys/GetSurveyForEdit', method:RequestMethods.GET}
 
 };
 
