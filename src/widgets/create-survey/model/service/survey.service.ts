@@ -69,6 +69,7 @@ readonly #currentSurveyId = signal<string>('')
   }
 //   _________________________________________________________________________________________
   sendQuestions() {
+    const id = this.currentSurveyId()
     const questionsToSend = this._createSurveyService.questionsOrAnswersStorage().map(storedQuestion => {
       const question: questionStorage = {
         surveyId:this.currentSurveyId(),
@@ -78,21 +79,25 @@ readonly #currentSurveyId = signal<string>('')
         options: storedQuestion.options.map(storedOption => ({
           optionText: storedOption.optionText,
           isCorrect: storedOption.isCorrect,
-          id: storedOption.id
+          ...id && { id }
         })),
       };
       return question;
     });
     for (let item of questionsToSend) {
+      console.log(item,'item iiiii', this.currentSurveyId())
       this.createOrEditQuestion(item)
-      console.log(item)
     }
+    this._surveyModalService.openSuccessModal(this._createSurveyService.surveyStorage())
+    this._createSurveyService.resetQuestionsValue()
+
+
   }
 //   _________________________________________________________________________________________
   createOrEditQuestion(questions:questionStorage) {
-    this.apiService.request<CreateOrEditQuestionDto>(API.CREATE_OR_EDIT_QUESTIONS,questions ).subscribe((res) => {
+    const headers = new HttpHeaders({'X-Interceptor-Create-Survey': 'true'});
+    this.apiService.request<CreateOrEditQuestionDto>(API.CREATE_OR_EDIT_QUESTIONS,questions,undefined,headers ).subscribe((res) => {
       console.log('done createOrEditQuestion', res.result)
-      this._surveyModalService.openSuccessModal(this._createSurveyService.surveyStorage())
 
     })
   }

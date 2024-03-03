@@ -90,14 +90,8 @@ private _redirectService = inject(RedirectToPageService)
     );
   }
   createSurveyOrQuestionOrAnswers() {
-    // Подписываться на $editMode здесь безопасно, потому что вы вызываете этот метод после того, как editMode уже был установлен
-    this.$editMode.subscribe(editMode => {
-      if(editMode === this.QueryParamsQuestionOrAnswers.CREATE_STEP_FIRST) {
         this._surveyService.setSurvey(this._createSurveyService.surveyStorage());
-      } else {
-        this._surveyService.sendQuestions();
-      }
-    });
+
   }
   createNewQuestion() {
   this._createSurveyService.addedNewQuestionOrAnswerItem()

@@ -1,7 +1,7 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
 import {ICreateSurvey} from "../../../../features/create-survey-form/model/types/create-survey-form.type";
 import {question, questionStorage} from "../../../../shared/model/types/surveys";
-import {randQuestion} from "../utils/factory-questions-answers";
+import {createIncrementalNumber, randQuestion} from "../utils/factory-questions-answers";
 import {randOption} from "../utils/factory-questions-answers"
 import {AbstractApiService} from "../../../../shared/model/services/abstract-http.service";
 
@@ -27,13 +27,14 @@ setQuestionsOrAnswersStorage (arg:questionStorage[]) {
     this.#questionsOrAnswersStorage.set(arg)
 }
   resetQuestionsValue () {
+    const newQuestionSequence = createIncrementalNumber(0);
     this.#questionsOrAnswersStorage.set([
-      randQuestion(),
-      randQuestion(),
-      randQuestion(),
-      randQuestion(),
-      randQuestion()
-      ],)
+      randQuestion(newQuestionSequence()),
+      randQuestion(newQuestionSequence()),
+      randQuestion(newQuestionSequence()),
+      randQuestion(newQuestionSequence()),
+      randQuestion(newQuestionSequence())
+    ])
   }
   addedNewQuestionOrAnswerItem () {
     const currentLength = this.questionsOrAnswersStorage().length;

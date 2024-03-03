@@ -81,6 +81,7 @@ export default class CreateSurveyComponent {
   // _________________________________________________________________________________
   private _createSurveyService = inject(CreateSurveyService)
   private _redirectService = inject(RedirectToPageService)
+  private _surveyService = inject(SurveyService)
   private _adminDashboardService = inject(AdminDashboardsService)
   // _________________________________________________________________________________
   redirectToCreateSurvey() {
@@ -90,9 +91,15 @@ export default class CreateSurveyComponent {
   }
   // _________________________________________________________________________________
   nextStep() {
+    const { name, slug } = this.createSurveyFormComponent.createSurveyForm.value;
+    const id = this._surveyService.currentSurveyId();
     this._redirectService.redirectToCreateQuestionsAndAnswersAdminPanelPage()
     this._adminDashboardService.nextStepCreateSurvey()
-    this._createSurveyService.setSurvey(this.createSurveyFormComponent.createSurveyForm.value as ICreateSurvey)
+    this._createSurveyService.setSurvey({
+      name: name ?? '',
+      slug: slug ?? '',
+      ...(id && { id }),
+    })
   }
   // _________________________________________________________________________________
 

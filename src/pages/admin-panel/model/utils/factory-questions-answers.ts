@@ -21,8 +21,8 @@ export const randQuestion = (sequence?: number): questionStorage => ({
   showAnswers: false
 });
 
-function createIncrementalNumber() {
-  let number = 0;
+export function createIncrementalNumber(start?:number) {
+  let number = start ??  0;
   return function(): number {
     number++;
     return number;

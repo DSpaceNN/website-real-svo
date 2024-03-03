@@ -69,6 +69,10 @@ export default class SurveyItemsComponent implements OnInit{
   currentCount = signal<number>(0)
   redirectToCreateSurvey () {
     this._redirectService.redirectToCreateSurveyAdminPanelPage()
+    this._surveyService.setCurrentIdSurvey('')
+    setTimeout(() => {
+      console.log(this._surveyService.currentSurveyId())
+    }, 3000)
   }
   updateFilterValue(filter:string) {
     console.log(filter)
