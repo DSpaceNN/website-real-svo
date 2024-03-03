@@ -89,7 +89,6 @@ import {NgClass} from "@angular/common";
 export default class AddedSurveyStepTwoComponent {
   private _createSurveyService = inject(CreateSurveyService)
   public questionsOrAnswersItems = this._createSurveyService.questionsOrAnswersStorage
-  public selectedAnswer!:number
 deleteQuestion(sequence:number) {
     this._createSurveyService.deleteQuestionAndAnswerSequence(sequence)
 }
@@ -99,12 +98,12 @@ deleteQuestion(sequence:number) {
     console.log(this._createSurveyService.questionsOrAnswersStorage())
   }
   // _______________________________________________________________________________
-  changeAnswers(answerText: string,sequence: number,optionId: number,) {
+  changeAnswers(answerText: string,sequence: number,optionId: string,) {
     this._createSurveyService.updateAnswerText(sequence,optionId,answerText)
     console.log(this._createSurveyService.questionsOrAnswersStorage())
   }
   // _______________________________________________________________________________
-  onRadioButtonChange(sequence:number,optionId:number): void {
+  onRadioButtonChange(sequence:number,optionId:string): void {
     this._createSurveyService.selectAnswer(sequence,optionId)
     console.log(this._createSurveyService.questionsOrAnswersStorage())
   }
@@ -115,7 +114,7 @@ deleteQuestion(sequence:number) {
   }
   // _______________________________________________________________________________
 
-  deleteAnswer(questionSequence:number, idAnswer:number) {
+  deleteAnswer(questionSequence:number, idAnswer:string) {
     this._createSurveyService.deleteAnswer(questionSequence,idAnswer)
   }
 

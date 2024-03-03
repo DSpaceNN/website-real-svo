@@ -9,6 +9,8 @@ import {SearchIconComponent} from "../../shared/icons/search-icon/search-icon.co
 import {TableComponent} from "../../shared/ui/table/table.component";
 import {RedirectToPageService} from "../../shared/model/services/redirect-to-page.service";
 import {SurveyService} from "../create-survey/model/service/survey.service";
+import {createParams} from "../../shared/model/types/query-params";
+import {CreateSurveyService} from "../../pages/admin-panel/model/services/create-survey.service";
 
 @Component({
   selector: 'app-survey-items',
@@ -26,7 +28,9 @@ import {SurveyService} from "../create-survey/model/service/survey.service";
   template: `
     <app-admin-panel-sub-header>
       <div class="flex items-center gap-2" title>
-        <app-sub-header-title [status]="true"></app-sub-header-title>
+        <h2 class="text-[24px] font-bold">
+          Анкеты
+        </h2>
       </div>
         <button (click)="redirectToCreateSurvey()" btn class="main_btn_admin flex gap-1">
           Добавить
@@ -54,13 +58,14 @@ import {SurveyService} from "../create-survey/model/service/survey.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class SurveyItemsComponent implements OnInit{
-  ngOnInit(): void {
-    this._surveyService.setCurrentPage(0)
-
-  }
-
   private _redirectService = inject(RedirectToPageService)
   private _surveyService = inject(SurveyService)
+  private _createSurveyService = inject(CreateSurveyService)
+  ngOnInit(): void {
+    this._createSurveyService.resetSurvey()
+    this._surveyService.setCurrentPage(0)
+    this._redirectService.setQueryParams(createParams)
+  }
   currentCount = signal<number>(0)
   redirectToCreateSurvey () {
     this._redirectService.redirectToCreateSurveyAdminPanelPage()

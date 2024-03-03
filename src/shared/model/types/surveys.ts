@@ -23,12 +23,13 @@ export type options = {
   optionText:string,
   id:string
   isSelected:boolean
+  isCorrect?:boolean
 
 }
 export type optionsStorage = {
   optionText: string,
   isCorrect: boolean,
-  id?:number
+  id?:string
 
 
 }

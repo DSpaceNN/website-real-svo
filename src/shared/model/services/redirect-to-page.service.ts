@@ -1,11 +1,18 @@
-import {inject, Injectable} from '@angular/core';
+import {inject, Injectable, signal} from '@angular/core';
 import {Router} from "@angular/router";
+import {createParams, IQueryParamsQuestionOrAnswers, QueryParamsQuestionOrAnswers} from "../types/query-params";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RedirectToPageService {
   private _router = inject(Router)
+ readonly #queryParams = signal<IQueryParamsQuestionOrAnswers>(createParams)
+
+
+ public setQueryParams(params:IQueryParamsQuestionOrAnswers) {
+    this.#queryParams.set(params)
+  }
 redirectToPageNotThisTime () {
   this._router.navigate(['/questions/failed'])
 }
@@ -21,14 +28,19 @@ redirectToErrorPage () {
 redirectToSurveyAdminPanelPage() {
   this._router.navigate(['/admin-panel/surveys/survey/', { outlets: { 'currentSurveyStatusStep': ['items'] } }]);
 }
-  redirectToCreateSurveyAdminPanelPage() {
-    this._router.navigate(['/admin-panel/surveys/survey/', { outlets: { 'currentSurveyStatusStep': ['create-survey'] } }]);
+  redirectToCreateSurveyAdminPanelPage(queryParams?:string) {
+    this._router.navigate(['/admin-panel/surveys/survey/', { outlets: { 'currentSurveyStatusStep': ['create-survey'] } }],{
+      queryParams: this.#queryParams()
+    });
   }
   redirectToCreateQuestionsAndAnswersAdminPanelPage() {
-    this._router.navigate(['/admin-panel/surveys/survey/', { outlets: { 'currentSurveyStatusStep': ['create-survey-questions-answers'] } }]);
+    this._router.navigate(['/admin-panel/surveys/survey/', { outlets: { 'currentSurveyStatusStep': ['create-survey-questions-answers'] } }],{
+      queryParams: this.#queryParams()
+    });
   }
 redirectToAdminPanel () {
-    this._router.navigate(['/admin-panel'])
+  this._router.navigate(['/admin-panel'],
+    { queryParams: { key: 'value' } });
 }
 redirectToLoginPage () {
     this._router.navigate(['/login'])

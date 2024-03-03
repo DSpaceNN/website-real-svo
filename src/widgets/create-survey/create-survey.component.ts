@@ -11,13 +11,16 @@ import {AdminAddSurveyComponent} from "../../features/admin-add-survey/admin-add
 import AddedSurveyStepTwoComponent from "../added-survey-step-two/added-survey-step-two.component";
 import {CreateSurveyFormComponent} from "../../features/create-survey-form/create-survey-form.component";
 import {AdminDashboardsService} from "../../pages/admin-panel/model/services/admin-dashboards.service";
-import {NgClass} from "@angular/common";
+import {AsyncPipe, NgClass} from "@angular/common";
 import {RedirectToPageService} from "../../shared/model/services/redirect-to-page.service";
 import {AdminPanelSubHeaderComponent} from "../../shared/ui/admin-panel-sub-header/admin-panel-sub-header.component";
 import {SubHeaderTitleComponent} from "../../features/sub-header-title/sub-header-title.component";
 import {PlusIconComponent} from "../../shared/icons/plus-icon/plus-icon.component";
 import {CreateSurveyService} from "../../pages/admin-panel/model/services/create-survey.service";
 import {ICreateSurvey} from "../../features/create-survey-form/model/types/create-survey-form.type";
+import {ActivatedRoute} from "@angular/router";
+import {map} from "rxjs";
+import {createParams} from "../../shared/model/types/query-params";
 
 @Component({
   selector: 'app-create-survey',
@@ -35,12 +38,13 @@ import {ICreateSurvey} from "../../features/create-survey-form/model/types/creat
     NgClass,
     AdminPanelSubHeaderComponent,
     SubHeaderTitleComponent,
-    PlusIconComponent
+    PlusIconComponent,
+    AsyncPipe
   ],
   template: `
     <app-admin-panel-sub-header>
       <div class="flex items-center gap-2" title>
-        <app-sub-header-title [status]="true"></app-sub-header-title>
+        <app-sub-header-title></app-sub-header-title>
       </div>
       <button (click)="redirectToCreateSurvey()" btn class="second_btn_admin flex gap-1">
         Отменить
@@ -52,11 +56,11 @@ import {ICreateSurvey} from "../../features/create-survey-form/model/types/creat
           <div class="rounded-[8px] bg-light-green-admin py-1 px-6 text-center font-medium text-[18px]">
             1/2 шаг
           </div>
-          <h2 class="font-medium text-[18px]">Добавьте вопросы и ответы, укажите правильные</h2>
+          <h2 class="font-medium text-[18px]">{{stepFirst$ | async}}</h2>
         </div>
         <div class="flex">
           <button  (click)="nextStep()" class="main_btn_admin font-medium px-5 py-2">
-            Далее
+            Далее1
           </button>
         </div>
       </div>
@@ -69,6 +73,10 @@ import {ICreateSurvey} from "../../features/create-survey-form/model/types/creat
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class CreateSurveyComponent {
+  private activatedRoute = inject(ActivatedRoute);
+  stepFirst$ = this.activatedRoute.queryParams.pipe(map((p) => p['step_first']));
+  // _________________________________________________________________________________
+
   @ViewChild(CreateSurveyFormComponent) createSurveyFormComponent!: CreateSurveyFormComponent;
   // _________________________________________________________________________________
   private _createSurveyService = inject(CreateSurveyService)
@@ -76,6 +84,8 @@ export default class CreateSurveyComponent {
   private _adminDashboardService = inject(AdminDashboardsService)
   // _________________________________________________________________________________
   redirectToCreateSurvey() {
+    this._createSurveyService.resetSurvey()
+    this._redirectService.setQueryParams(createParams)
     this._redirectService.redirectToSurveyAdminPanelPage()
   }
   // _________________________________________________________________________________

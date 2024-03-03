@@ -8,8 +8,11 @@ import {ConfirmDialog} from "../../shared/model/decorators/confirm-dialog.decora
 import {ConfirmationExitComponent} from "../../features/confirmation-exit/confirmation-exit.component";
 import {SurveyService} from "../create-survey/model/service/survey.service";
 import {CreateSurveyService} from "../../pages/admin-panel/model/services/create-survey.service";
-import {NgClass} from "@angular/common";
+import {AsyncPipe, NgClass} from "@angular/common";
 import {question, questionStorage} from "../../shared/model/types/surveys";
+import {ActivatedRoute} from "@angular/router";
+import {map} from "rxjs";
+import {QueryParamsQuestionOrAnswers} from "../../shared/model/types/query-params";
 
 @Component({
   selector: 'app-create-questions',
@@ -19,12 +22,13 @@ import {question, questionStorage} from "../../shared/model/types/surveys";
     AdminPanelSubHeaderComponent,
     PlusIconComponent,
     SubHeaderTitleComponent,
-    NgClass
+    NgClass,
+    AsyncPipe
   ],
   template: `
     <app-admin-panel-sub-header>
       <div class="flex items-center gap-2" title>
-        <app-sub-header-title [status]="false"></app-sub-header-title>
+        <app-sub-header-title ></app-sub-header-title>
       </div>
     </app-admin-panel-sub-header>
 
@@ -34,7 +38,7 @@ import {question, questionStorage} from "../../shared/model/types/surveys";
          <div class="rounded-[8px] bg-light-green-admin py-1 px-6 text-center font-medium text-[18px]">
            2/2 шаг
          </div>
-         <h2 class="font-medium text-[18px]">Добавьте вопросы и ответы, укажите правильные</h2>
+         <h2 class="font-medium text-[18px]">{{stepSecond$ | async}}</h2>
        </div>
        <div class="flex gap-1">
          <button (click)="redirectToCreateSurvey()" class="second_btn_admin font-medium px-5 py-2">
@@ -47,7 +51,9 @@ import {question, questionStorage} from "../../shared/model/types/surveys";
      </div>
      <app-added-survey-step-two>
      </app-added-survey-step-two>
+     @if(($editMode | async) === QueryParamsQuestionOrAnswers.CREATE_STEP_FIRST) {
      <button (click)="createNewQuestion()" class="main_btn_admin flex gap-1">Добавить вопрос <app-plus-icon></app-plus-icon></button>
+     }
    </div>
   `,
   styles: ``,
@@ -57,10 +63,15 @@ import {question, questionStorage} from "../../shared/model/types/surveys";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class CreateQuestionsComponent {
+  private activatedRouter = inject(ActivatedRoute)
+  $editMode = this.activatedRouter.queryParams.pipe(map(p => p['step_first']))
 private _redirectService = inject(RedirectToPageService)
   private _createSurveyService = inject(CreateSurveyService)
   private _surveyService = inject(SurveyService)
   public storageSurvey = this._createSurveyService.questionsOrAnswersStorage
+
+  private activatedRoute = inject(ActivatedRoute);
+  stepSecond$ = this.activatedRoute.queryParams.pipe(map((p) => p['step_second']));
   // ______________________________________________________________________________________
 
   @ConfirmDialog(ConfirmationExitComponent, {
@@ -79,9 +90,18 @@ private _redirectService = inject(RedirectToPageService)
     );
   }
   createSurveyOrQuestionOrAnswers() {
-    this._surveyService.setSurvey(this._createSurveyService.surveyStorage())
+    // Подписываться на $editMode здесь безопасно, потому что вы вызываете этот метод после того, как editMode уже был установлен
+    this.$editMode.subscribe(editMode => {
+      if(editMode === this.QueryParamsQuestionOrAnswers.CREATE_STEP_FIRST) {
+        this._surveyService.setSurvey(this._createSurveyService.surveyStorage());
+      } else {
+        this._surveyService.sendQuestions();
+      }
+    });
   }
   createNewQuestion() {
   this._createSurveyService.addedNewQuestionOrAnswerItem()
   }
+
+  protected readonly QueryParamsQuestionOrAnswers = QueryParamsQuestionOrAnswers;
 }

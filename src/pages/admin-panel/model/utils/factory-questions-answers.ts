@@ -4,7 +4,7 @@ const factoryOptionId = createIncrementalNumber();
 const factoryQuestionSequence = createIncrementalNumber();
 
 export const randOption = (): optionsStorage => ({
-  id: factoryOptionId(),
+  id: String(Math.random() * Math.random()),
   optionText: '',
   isCorrect: false
 });

@@ -23,7 +23,9 @@ export class CreateSurveyService {
   // ________________________________________________________________________________________________________
 private _apiService = inject(AbstractApiService)
   // ________________________________________________________________________________________________________
-
+setQuestionsOrAnswersStorage (arg:questionStorage[]) {
+    this.#questionsOrAnswersStorage.set(arg)
+}
   resetQuestionsValue () {
     this.#questionsOrAnswersStorage.set([
       randQuestion(),
@@ -49,7 +51,7 @@ private _apiService = inject(AbstractApiService)
     }
   }
   // ________________________________________________________________________________________________________
-  public updateAnswerText(sequence: number,optionId: number,answerText: string): void {
+  public updateAnswerText(sequence: number,optionId: string,answerText: string): void {
     const question = this.#questionsOrAnswersStorage().find(q => q.sequence === sequence);
     if (question) {
       const option = question.options.find(o => o.id === optionId);
@@ -60,7 +62,7 @@ private _apiService = inject(AbstractApiService)
   }
   // ________________________________________________________________________________________________________
 
-  public selectAnswer(sequence: number, optionId: number): void {
+  public selectAnswer(sequence: number, optionId: string): void {
     const question = this.#questionsOrAnswersStorage().find(q => q.sequence === sequence);
     if (question) {
       question.options.forEach(option => {
@@ -98,7 +100,7 @@ private _apiService = inject(AbstractApiService)
 
     this.#questionsOrAnswersStorage.set(newQuestions);
   }
-  deleteAnswer(questionSequence: number, answerId: number) {
+  deleteAnswer(questionSequence: number, answerId: string) {
     const questions = this.questionsOrAnswersStorage().slice();
     const question = questions.find(q => q.sequence === questionSequence);
     if (question) {

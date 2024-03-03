@@ -32,6 +32,9 @@ import {PaginatorModule} from "primeng/paginator";
 import {Sorting} from "../../../widgets/admin-results/model/types/survey-result";
 import {SortingIconComponent} from "../../icons/sorting-icon/sorting-icon.component";
 import {QuestionService} from "../../../pages/question/model/services/question.service";
+import {ActivatedRoute} from "@angular/router";
+import {RedirectToPageService} from "../../model/services/redirect-to-page.service";
+import {editParams} from "../../model/types/query-params";
 
 
 export interface PeriodicElement {
@@ -165,6 +168,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 
 export class TableComponent implements OnInit{
+private _redirectService = inject(RedirectToPageService)
   private _surveyService = inject(SurveyService)
   private _questionService = inject(QuestionService)
   public readonly surveys = this._surveyService.surveys
@@ -194,7 +198,11 @@ export class TableComponent implements OnInit{
   this._surveyService.deleteSurvey(id)
   }
   goToEditSurvey(id:string) {
+    console.log(id, 'id edit survey')
+    this._surveyService.setCurrentIdSurvey(id)
+    this._redirectService.setQueryParams(editParams)
     this._questionService.getSurveyForEdit(id)
+    this._redirectService.redirectToCreateSurveyAdminPanelPage()
   }
 
   @ViewChild(MatSort) sort!: MatSort;

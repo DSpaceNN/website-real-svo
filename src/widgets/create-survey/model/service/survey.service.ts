@@ -54,39 +54,49 @@ readonly #currentSurveyId = signal<string>('')
  public setCurrentPage(val:number) {
     this.#currentPage.set(val)
   }
+//   _________________________________________________________________________________________
   setSortingValue(sortingValue:Sorting) {
     this.#sortingSurveyResult.set(sortingValue)
   }
+//   _________________________________________________________________________________________
   setSurvey (requestBody:ICreateSurvey) {
     const headers = new HttpHeaders({'X-Interceptor-Create-Survey': 'true'});
     this.apiService.request<CreateOrEditQuestionDto>(API.CREATE_SURVEY,requestBody,undefined,headers).subscribe((res) => {
       this.#currentSurveyId.set(res.result)
       console.log(res,'hello2222')
-      const questionsToSend = this._createSurveyService.questionsOrAnswersStorage().map(storedQuestion => {
-        const question: questionStorage = {
-          surveyId:this.currentSurveyId(),
-          questionText: storedQuestion.questionText,
-          sequence: storedQuestion.sequence,
-          questionType: storedQuestion.questionType,
-          options: storedQuestion.options.map(storedOption => ({
-            optionText: storedOption.optionText,
-            isCorrect: storedOption.isCorrect,
-          })),
-        };
-        return question;
-      });
-      for (let item of questionsToSend) {
-        this.createOrEditQuestion(item)
-      }
-      this._surveyModalService.openSuccessModal(this._createSurveyService.surveyStorage())
+      this.sendQuestions()
     })
   }
+//   _________________________________________________________________________________________
+  sendQuestions() {
+    const questionsToSend = this._createSurveyService.questionsOrAnswersStorage().map(storedQuestion => {
+      const question: questionStorage = {
+        surveyId:this.currentSurveyId(),
+        questionText: storedQuestion.questionText,
+        sequence: storedQuestion.sequence,
+        questionType: storedQuestion.questionType,
+        options: storedQuestion.options.map(storedOption => ({
+          optionText: storedOption.optionText,
+          isCorrect: storedOption.isCorrect,
+          id: storedOption.id
+        })),
+      };
+      return question;
+    });
+    for (let item of questionsToSend) {
+      this.createOrEditQuestion(item)
+      console.log(item)
+    }
+  }
+//   _________________________________________________________________________________________
   createOrEditQuestion(questions:questionStorage) {
     this.apiService.request<CreateOrEditQuestionDto>(API.CREATE_OR_EDIT_QUESTIONS,questions ).subscribe((res) => {
       console.log('done createOrEditQuestion', res.result)
+      this._surveyModalService.openSuccessModal(this._createSurveyService.surveyStorage())
+
     })
   }
-
+//   _________________________________________________________________________________________
   getSurvey() {
     const params = new URLSearchParams({
       ...{ Take: String(this.#takeCount()) },
@@ -100,12 +110,14 @@ readonly #currentSurveyId = signal<string>('')
       this.#totalCountSurveys.set(survey.result.totalCount)
     })
   }
+//   _________________________________________________________________________________________
   deleteSurvey(userId: string) {
     this.apiService.request(API.DELETE_SURVEY, undefined,{urlParams: userId}).subscribe((survey) => {
       this.#surveys.update((survey) => survey.filter((v) => v.id !== userId ))
       this.#totalCountSurveys.update((v) => v - 1)
     })
   }
+//   _________________________________________________________________________________________
   setFiler (val:string) {
     this.#filterSurveyValue.set(val)
   }
@@ -115,5 +127,8 @@ readonly #currentSurveyId = signal<string>('')
   }
   setTakeCount(takeCount:number) {
     this.#takeCount.set(takeCount)
+  }
+  setCurrentIdSurvey(id:string) {
+    this.#currentSurveyId.set(id)
   }
 }

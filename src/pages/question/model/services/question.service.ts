@@ -3,8 +3,8 @@ import { AbstractApiService } from '../../../../shared/model/services/abstract-h
 import { API } from '../../../../shared/model/utils/api.endpoints';
 import {
   GetSurveyForEditDto,
-  ISurveySlugDto,
-  question,
+  ISurveySlugDto, optionsStorage,
+  question, questionStorage,
   sendResultAnswer,
   SendResultSurvey,
   SendResultSurveyDto
@@ -12,6 +12,7 @@ import {
 import {LoseOrWinQuestionsService} from "../../../../shared/model/services/lose-or-win-questions.service";
 import {HttpClient} from "@angular/common/http";
 import {RedirectToPageService} from "../../../../shared/model/services/redirect-to-page.service";
+import {CreateSurveyService} from "../../../admin-panel/model/services/create-survey.service";
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,8 @@ export class QuestionService {
   private readonly apiService = inject(AbstractApiService)
   private _loseOrWinQuestionsService = inject(LoseOrWinQuestionsService)
   private _redirectService = inject(RedirectToPageService)
+  private createSurveyService = inject(CreateSurveyService)
+
   // ______________________________________________________________________________________________________
   readonly #questions = signal<question[]>([]);
   public readonly currentQuestion:Signal<question | null> = computed(() => this.#questions()[this.#currentQuestionIndex()]);
@@ -49,7 +52,23 @@ export class QuestionService {
   }
   getSurveyForEdit(id:string) {
     this.apiService.request<GetSurveyForEditDto>(API.GET_SURVEY_FOR_EDIT,undefined,{urlParams: id}).subscribe((r) => {
-      console.log(r, 'hey')
+    this.createSurveyService.setSurvey({name: r.result.name, slug: r.result.slug})
+      console.log('work', r)
+      const questions: questionStorage[] = r.result.questions.map(q => ({
+        surveyId: r.result.id,
+        questionText: q.questionText,
+        sequence: q.sequence,
+        questionType: q.questionType,
+        options: q.options.map<optionsStorage>(option => ({
+          ...option,
+          isCorrect: !!option.isCorrect,
+          id: option.id
+        })),
+        showAnswers: true,
+      }));
+      console.log(r, 'qqqqq')
+      console.log(questions, 'vvvvv')
+      this.createSurveyService.setQuestionsOrAnswersStorage(questions)
     })
   }
 sendResultQuestion (postData:SendResultSurvey) {
