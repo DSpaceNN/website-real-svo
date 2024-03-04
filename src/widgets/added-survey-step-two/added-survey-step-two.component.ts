@@ -12,6 +12,7 @@ import {FormsModule} from "@angular/forms";
 import {DeleteIconComponent} from "../../shared/icons/delete-icon/delete-icon.component";
 import {NgClass} from "@angular/common";
 import {PlusIconComponent} from "../../shared/icons/plus-icon/plus-icon.component";
+import {SurveyService} from "../create-survey/model/service/survey.service";
 
 @Component({
   selector: 'app-added-survey-step-two',
@@ -94,9 +95,11 @@ import {PlusIconComponent} from "../../shared/icons/plus-icon/plus-icon.componen
 })
 export default class AddedSurveyStepTwoComponent {
   private _createSurveyService = inject(CreateSurveyService)
+  private _surveyService = inject(SurveyService)
+
   public questionsOrAnswersItems = this._createSurveyService.questionsOrAnswersStorage
 deleteQuestion(sequence:number) {
-    this._createSurveyService.deleteQuestionAndAnswerSequence(sequence)
+    this._createSurveyService.deleteQuestionAndAnswerSequence(sequence,!!this._surveyService.currentSurveyId())
 }
   // _______________________________________________________________________________
   checkStatus(textQuestion:string,numberQuestion:number) {

@@ -4,11 +4,14 @@ import {question, questionStorage} from "../../../../shared/model/types/surveys"
 import {createIncrementalNumber, randQuestion} from "../utils/factory-questions-answers";
 import {randOption} from "../utils/factory-questions-answers"
 import {AbstractApiService} from "../../../../shared/model/services/abstract-http.service";
+import {SurveyService} from "../../../../widgets/create-survey/model/service/survey.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CreateSurveyService {
+  readonly #questionsToDelete = signal<string[]>([])
+  public readonly questionsToDelete = computed(() => this.#questionsToDelete())
   // _________________________________________________________________________________________________________
   readonly #surveyStorage = signal<ICreateSurvey>({name: '', slug: ''})
   public readonly surveyStorage = computed(() => this.#surveyStorage())
@@ -91,13 +94,21 @@ setQuestionsOrAnswersStorage (arg:questionStorage[]) {
     }
   }
   // ________________________________________________________________________________________________________
-  deleteQuestionAndAnswerSequence(sequence: number) {
-    const questions = this.questionsOrAnswersStorage().slice()
+  deleteQuestionAndAnswerSequence(sequence: number, isEdit?:boolean) {
+    const questions = this.questionsOrAnswersStorage().slice();
     const newQuestions = questions.filter(item => item.sequence !== sequence);
-
-    newQuestions.forEach((item, index) => {
-      item.sequence = index + 1;
-    });
+    const deletedQuestion = questions.find(item => item.sequence === sequence);
+    if (isEdit && deletedQuestion && deletedQuestion.id) {
+      const currentQuestionsToDelete = this.questionsToDelete();
+      const idToDelete = deletedQuestion.id;
+      this.#questionsToDelete.update((v) => [...v, idToDelete]);
+    }
+    console.log(this.#questionsToDelete())
+    if (!isEdit) {
+      newQuestions.forEach((item, index) => {
+        item.sequence = index + 1;
+      });
+    }
 
     this.#questionsOrAnswersStorage.set(newQuestions);
   }
@@ -108,6 +119,7 @@ setQuestionsOrAnswersStorage (arg:questionStorage[]) {
       question.options = question.options.filter(option => option.id !== answerId);
       this.#questionsOrAnswersStorage.set(questions);
     }
+      console.log(questions, 'questions or delete')
   }
   addedAnswer(questionSequence: number) {
     const questions = this.questionsOrAnswersStorage().slice();

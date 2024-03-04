@@ -94,6 +94,12 @@ readonly #currentSurveyId = signal<string>('')
       console.log(item,'item iiiii', this.currentSurveyId())
       this.createOrEditQuestion(item)
     }
+    const deleteQuestionsId = this._createSurveyService.questionsToDelete()
+    if(deleteQuestionsId.length) {
+      for (let id of deleteQuestionsId) {
+        this.deleteQuestion(id);
+      }
+    }
     this._surveyModalService.openSuccessModal(this._createSurveyService.surveyStorage())
     this._createSurveyService.resetQuestionsValue()
   }
@@ -125,6 +131,11 @@ readonly #currentSurveyId = signal<string>('')
       this.#surveys.update((survey) => survey.filter((v) => v.id !== userId ))
       this.#totalCountSurveys.update((v) => v - 1)
     })
+  }
+  deleteQuestion(id:string) {
+      this.apiService.request<IDeleteSurveyDto>(API.DELETE_QUESTION, undefined, { urlParams: id }).subscribe((res) => {
+        console.log('done deleteQuestion', res);
+      });
   }
 //   _________________________________________________________________________________________
   setFiler (val:string) {
