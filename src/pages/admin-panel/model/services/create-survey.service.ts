@@ -112,6 +112,8 @@ setQuestionsOrAnswersStorage (arg:questionStorage[]) {
 
     this.#questionsOrAnswersStorage.set(newQuestions);
   }
+  // ________________________________________________________________________________________________________
+
   deleteAnswer(questionSequence: number, answerId: string) {
     const questions = this.questionsOrAnswersStorage().slice();
     const question = questions.find(q => q.sequence === questionSequence);
@@ -121,6 +123,8 @@ setQuestionsOrAnswersStorage (arg:questionStorage[]) {
     }
       console.log(questions, 'questions or delete')
   }
+  // ________________________________________________________________________________________________________
+
   addedAnswer(questionSequence: number) {
     const questions = this.questionsOrAnswersStorage().slice();
     const question = questions.find((q) => q.sequence === questionSequence);
@@ -128,5 +132,9 @@ setQuestionsOrAnswersStorage (arg:questionStorage[]) {
       question.options = [...question.options, randOption()];
       this.#questionsOrAnswersStorage.set(questions);
     }
+  }
+  // ________________________________________________________________________________________________________
+  resetDeletedQuestionId() {
+    this.#questionsToDelete.set([])
   }
 }

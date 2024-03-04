@@ -97,8 +97,10 @@ readonly #currentSurveyId = signal<string>('')
     const deleteQuestionsId = this._createSurveyService.questionsToDelete()
     if(deleteQuestionsId.length) {
       for (let id of deleteQuestionsId) {
+        console.log(deleteQuestionsId, 99999999999999999999999999999999999999)
         this.deleteQuestion(id);
       }
+      this._createSurveyService.resetDeletedQuestionId()
     }
     this._surveyModalService.openSuccessModal(this._createSurveyService.surveyStorage())
     this._createSurveyService.resetQuestionsValue()
