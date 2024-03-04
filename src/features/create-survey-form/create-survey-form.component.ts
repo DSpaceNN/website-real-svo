@@ -27,7 +27,7 @@
         <h2>Введите название анкеты</h2>
         <div class="flex flex-col gap-2 w-full">
           <div class="border border-gray-admin p-2 rounded-[8px] flex items-center ">
-            <input formControlName="name" placeholder="Например, Карточка 03..."  class="w-full focus:outline-0" type="text">
+            <input maxlength="40" formControlName="name" placeholder="Например, Карточка 03..."  class="w-full focus:outline-0" type="text">
             @if(this.createSurveyForm.get(CREATE_SURVEY_FORM_CONTROL.NAME)?.value) {
               <close-icon (click)="clearInput(CREATE_SURVEY_FORM_CONTROL.NAME)" ></close-icon>
             }
@@ -41,7 +41,7 @@
         <div class="flex flex-col gap-2 w-full">
           <h2>Введите номер анкеты</h2>
           <div class="border border-gray-admin p-2 rounded-[8px] flex items-center ">
-            <input formControlName="slug" placeholder="Например, 03..." class="w-full focus:outline-0" type="text">
+            <input maxlength="40" formControlName="slug" placeholder="Например, 03..." class="w-full focus:outline-0" type="text">
             @if(this.createSurveyForm.get(CREATE_SURVEY_FORM_CONTROL.SLUG)?.value) {
               <close-icon (click)="clearInput(CREATE_SURVEY_FORM_CONTROL.SLUG)" ></close-icon>
             }
