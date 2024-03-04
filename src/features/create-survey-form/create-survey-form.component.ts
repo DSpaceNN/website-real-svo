@@ -46,6 +46,9 @@
               <close-icon (click)="clearInput(CREATE_SURVEY_FORM_CONTROL.SLUG)" ></close-icon>
             }
           </div>
+          @if(createSurveyForm.controls.slug.hasError('pattern')) {
+            <h1 class="text-red-600"> Номер анкеты должен состоять только из латинских букв и цифр без пробелов и специальных символов.</h1>
+          }
         </div>
       </div>
     </form>
@@ -66,6 +69,7 @@ export class CreateSurveyFormComponent{
       validators: Validators.compose([
         Validators.required,
         Validators.minLength(2),
+
       ]),
       nonNullable: true,
     }),
@@ -73,6 +77,7 @@ export class CreateSurveyFormComponent{
       validators: Validators.compose([
         Validators.required,
         Validators.minLength(2),
+        Validators.pattern('^[a-zA-Z0-9]*$'),
       ]),
       nonNullable: true,
     }),

@@ -62,6 +62,7 @@ export default class SurveyItemsComponent implements OnInit{
   private _surveyService = inject(SurveyService)
   private _createSurveyService = inject(CreateSurveyService)
   ngOnInit(): void {
+  this._createSurveyService.resetQuestionsValue()
     this._createSurveyService.resetSurvey()
     this._surveyService.setCurrentPage(0)
     this._redirectService.setQueryParams(createParams)
@@ -70,9 +71,6 @@ export default class SurveyItemsComponent implements OnInit{
   redirectToCreateSurvey () {
     this._redirectService.redirectToCreateSurveyAdminPanelPage()
     this._surveyService.setCurrentIdSurvey('')
-    setTimeout(() => {
-      console.log(this._surveyService.currentSurveyId())
-    }, 3000)
   }
   updateFilterValue(filter:string) {
     console.log(filter)
