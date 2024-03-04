@@ -11,6 +11,7 @@ import {RadioButtonComponent} from "../../shared/ui/radio-button/radio-button.co
 import {FormsModule} from "@angular/forms";
 import {DeleteIconComponent} from "../../shared/icons/delete-icon/delete-icon.component";
 import {NgClass} from "@angular/common";
+import {PlusIconComponent} from "../../shared/icons/plus-icon/plus-icon.component";
 
 @Component({
   selector: 'app-added-survey-step-two',
@@ -25,7 +26,8 @@ import {NgClass} from "@angular/common";
     RadioButtonComponent,
     FormsModule,
     DeleteIconComponent,
-    NgClass
+    NgClass,
+    PlusIconComponent
   ],
   template: `
     <div class="scrollbar max-h-[700px] overflow-auto max-w-[830px]">
@@ -70,7 +72,11 @@ import {NgClass} from "@angular/common";
               </ng-template>
             </app-added-survey-questions-block>
       <div (click)="addedNewAnswer(item.sequence)" class="w-full rounded-[8px] text-center bg-light-gray-admin mt-2 mb-6 py-2.5 cursor-pointer hover:opacity-40 transition-all">
-        <h2 class="text-[16px] font-600">Добавить вариант ответа</h2>
+        <div class="flex gap-1 justify-center">
+        <h2 class="text-[16px] font-600 text-[#161616]">Добавить вариант ответа</h2>
+          <app-plus-icon [icon-color]="'#161616'"></app-plus-icon>
+        </div>
+
       </div>
     </div>
           }

@@ -46,7 +46,8 @@ export type questionStorage  = {
   sequence:number,
   questionType:number
   options:optionsStorage[],
-  showAnswers?:boolean
+  showAnswers?:boolean,
+  id?:string
 }
 export interface SendResultSurvey  {
   surveyId: string,

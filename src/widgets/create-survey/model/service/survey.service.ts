@@ -73,6 +73,7 @@ readonly #currentSurveyId = signal<string>('')
     const questionsToSend = this._createSurveyService.questionsOrAnswersStorage().map(storedQuestion => {
       const question: questionStorage = {
         surveyId:this.currentSurveyId(),
+        id:storedQuestion.id,
         questionText: storedQuestion.questionText,
         sequence: storedQuestion.sequence,
         questionType: storedQuestion.questionType,
@@ -90,8 +91,6 @@ readonly #currentSurveyId = signal<string>('')
     }
     this._surveyModalService.openSuccessModal(this._createSurveyService.surveyStorage())
     this._createSurveyService.resetQuestionsValue()
-
-
   }
 //   _________________________________________________________________________________________
   createOrEditQuestion(questions:questionStorage) {

@@ -166,7 +166,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
     }
   `,
 })
-
 export class TableComponent implements OnInit{
 private _redirectService = inject(RedirectToPageService)
   private _surveyService = inject(SurveyService)
@@ -180,7 +179,6 @@ private _redirectService = inject(RedirectToPageService)
     this._surveyService.setSortingValue(event)
     this._surveyService.getSurvey()
   }
-
   onPageChange(event: any){
     this._surveyService.setCurrentPage(event.first)
     this._surveyService.setSkipCount(event.first)
@@ -204,7 +202,6 @@ private _redirectService = inject(RedirectToPageService)
     this._questionService.getSurveyForEdit(id)
     this._redirectService.redirectToCreateSurveyAdminPanelPage()
   }
-
   @ViewChild(MatSort) sort!: MatSort;
   public displayedColumns: string[] = ['creationTime', 'slug', 'name', 'questionCount', 'edit', 'delete' ];
 }

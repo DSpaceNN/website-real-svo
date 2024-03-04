@@ -56,6 +56,7 @@ export class QuestionService {
       console.log('work', r)
       const questions: questionStorage[] = r.result.questions.map(q => ({
         surveyId: r.result.id,
+        id: q.id, // Изменено здесь
         questionText: q.questionText,
         sequence: q.sequence,
         questionType: q.questionType,

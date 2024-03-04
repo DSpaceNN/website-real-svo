@@ -60,7 +60,7 @@ import {createParams} from "../../shared/model/types/query-params";
         </div>
         <div class="flex">
           <button  (click)="nextStep()" class="main_btn_admin font-medium px-5 py-2">
-            Далее1
+            Далее
           </button>
         </div>
       </div>

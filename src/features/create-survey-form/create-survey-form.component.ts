@@ -1,4 +1,4 @@
-  import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
+  import {ChangeDetectionStrategy, Component, effect, inject, OnInit} from '@angular/core';
   import {CREATE_SURVEY_FORM_CONTROL, ICreateSurveyForm} from "./model/types/create-survey-form.type";
   import {CurrentStepQuestionComponent} from "../../shared/ui/current-step-question/current-step-question.component";
   import {InputAdminPanelComponent} from "../../shared/ui/input-admin-panel/input-admin-panel.component";
@@ -54,12 +54,13 @@
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreateSurveyFormComponent implements OnInit{
+export class CreateSurveyFormComponent{
   private _createSurveyService = inject(CreateSurveyService)
-  ngOnInit(): void {
-    this.createSurveyForm.setValue(this._createSurveyService.surveyStorage())
+  constructor() {
+    effect(() => {
+      this.createSurveyForm.setValue(this._createSurveyService.surveyStorage())
+    });
   }
-
   readonly createSurveyForm:FormGroup<ICreateSurveyForm>  = new FormGroup<ICreateSurveyForm>({
     name: new FormControl('', {
       validators: Validators.compose([
