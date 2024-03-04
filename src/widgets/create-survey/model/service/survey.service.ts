@@ -67,6 +67,11 @@ readonly #currentSurveyId = signal<string>('')
       this.sendQuestions()
     })
   }
+   isGuid(value: string): boolean {
+    const guidRegEx = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/i;
+    return guidRegEx.test(value);
+  }
+
 //   _________________________________________________________________________________________
   sendQuestions() {
     const id = this.currentSurveyId()
@@ -80,7 +85,7 @@ readonly #currentSurveyId = signal<string>('')
         options: storedQuestion.options.map(storedOption => ({
           optionText: storedOption.optionText,
           isCorrect: storedOption.isCorrect,
-          ...id && { id }
+          ...(storedOption.id && this.isGuid(storedOption.id) && { id: storedOption.id })
         })),
       };
       return question;
