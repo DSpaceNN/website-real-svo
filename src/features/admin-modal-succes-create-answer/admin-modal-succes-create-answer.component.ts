@@ -1,13 +1,16 @@
-import {Component, Inject} from '@angular/core';
+import {Component, inject, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogClose} from "@angular/material/dialog";
-import {UpdateProcessedStatusDto} from "../../widgets/admin-results/model/types/survey-result";
 import {ICreateSurvey} from "../create-survey-form/model/types/create-survey-form.type";
+import {ActivatedRoute} from "@angular/router";
+import {map} from "rxjs";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
   selector: 'app-admin-modal-succes-create-answer',
   standalone: true,
   imports: [
-    MatDialogClose
+    MatDialogClose,
+    AsyncPipe
   ],
   template: `
  <div class="flex flex-col p-6 gap-4">
@@ -15,7 +18,7 @@ import {ICreateSurvey} from "../create-survey-form/model/types/create-survey-for
    <div class="cart_container">
         <h3>{{data.name}}</h3>
    </div>
-   <p>Анкета была успешно добавлена. Вы можете редактировать или удалить анкету при необходимости</p>
+   <p>{{description$ | async}}</p>
    <button [mat-dialog-close]="true" class="main_btn_admin">Понятно</button>
 
  </div>
@@ -43,6 +46,7 @@ import {ICreateSurvey} from "../create-survey-form/model/types/create-survey-for
   `
 })
 export class AdminModalSuccesCreateAnswerComponent {
+  private _activatedRouter = inject(ActivatedRoute)
+  description$ = this._activatedRouter.queryParams.pipe(map((p) => p['modal_description']  ))
   constructor(@Inject(MAT_DIALOG_DATA) public data: ICreateSurvey) {}
-
 }
