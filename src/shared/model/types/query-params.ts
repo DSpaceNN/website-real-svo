@@ -6,26 +6,32 @@ export enum QueryParamsQuestionOrAnswers {
   EDIT_STEP_SECOND = 'Вопросы и ответы',
   EDIT_SUB_HEADER = 'Редактирование анкеты',
   CREATE_MODAL_DESCRIPTION = 'Анкета была успешно добавлена. Вы можете редактировать или удалить анкету при необходимости',
-  EDIT_MODAL_DESCRIPTION = 'Информация была успешно сохранена'
+  EDIT_MODAL_DESCRIPTION = 'Информация была успешно сохранена',
+  CREATE_MODAL_CLOSE_DESCRIPTION = 'Данные будут утеряны, вам придется начать <br> сначала',
+  EDIT_MODAL_CLOSE_DESCRIPTION = 'Изменения не будут сохранены'
 }
 export interface IQueryParamsQuestionOrAnswers {
   step_first:string,
   step_second:string,
   sub_header:string,
-  modal_description:string
+  modal_description:string,
+  modal_close_description:string
 }
 
 export const createParams:IQueryParamsQuestionOrAnswers = {
   step_first: QueryParamsQuestionOrAnswers.CREATE_STEP_FIRST,
   step_second: QueryParamsQuestionOrAnswers.CREATE_STEP_SECOND,
   sub_header: QueryParamsQuestionOrAnswers.CREATE_SUB_HEADER,
-  modal_description: QueryParamsQuestionOrAnswers.CREATE_MODAL_DESCRIPTION
+  modal_description: QueryParamsQuestionOrAnswers.CREATE_MODAL_DESCRIPTION,
+  modal_close_description: QueryParamsQuestionOrAnswers.CREATE_MODAL_CLOSE_DESCRIPTION
+
 }
 
 export const editParams:IQueryParamsQuestionOrAnswers = {
   step_first: QueryParamsQuestionOrAnswers.EDIT_STEP_FIRST,
   step_second: QueryParamsQuestionOrAnswers.EDIT_STEP_SECOND,
   sub_header: QueryParamsQuestionOrAnswers.EDIT_SUB_HEADER,
-  modal_description: QueryParamsQuestionOrAnswers.EDIT_MODAL_DESCRIPTION
+  modal_description: QueryParamsQuestionOrAnswers.EDIT_MODAL_DESCRIPTION,
+  modal_close_description: QueryParamsQuestionOrAnswers.EDIT_MODAL_CLOSE_DESCRIPTION
 
 }
