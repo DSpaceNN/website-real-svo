@@ -61,7 +61,9 @@ export class CreateSurveyFormComponent{
   private _createSurveyService = inject(CreateSurveyService)
   constructor() {
     effect(() => {
-      this.createSurveyForm.setValue(this._createSurveyService.surveyStorage())
+      const { name, slug } = this._createSurveyService.surveyStorage();
+      this.createSurveyForm.setValue({name,slug})
+      console.log(this._createSurveyService.surveyStorage(), 'я то что попадает назад')
     });
   }
   readonly createSurveyForm:FormGroup<ICreateSurveyForm>  = new FormGroup<ICreateSurveyForm>({

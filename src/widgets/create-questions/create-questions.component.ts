@@ -28,8 +28,11 @@ import {QueryParamsQuestionOrAnswers} from "../../shared/model/types/query-param
   template: `
     <app-admin-panel-sub-header>
       <div class="flex items-center gap-2" title>
-        <app-sub-header-title ></app-sub-header-title>
+        <app-sub-header-title></app-sub-header-title>
       </div>
+      <button (click)="redirectToAdminPanel()" btn class="second_btn_admin flex gap-1">
+        Отменить
+      </button>
     </app-admin-panel-sub-header>
 
    <div class="px-6 mt-6">
@@ -51,9 +54,7 @@ import {QueryParamsQuestionOrAnswers} from "../../shared/model/types/query-param
      </div>
      <app-added-survey-step-two>
      </app-added-survey-step-two>
-     @if(($editMode | async) === QueryParamsQuestionOrAnswers.CREATE_STEP_FIRST) {
      <button (click)="createNewQuestion()" class="main_btn_admin flex gap-1">Добавить вопрос <app-plus-icon></app-plus-icon></button>
-     }
    </div>
   `,
   styles: ``,
@@ -73,13 +74,15 @@ private _redirectService = inject(RedirectToPageService)
   private activatedRoute = inject(ActivatedRoute);
   stepSecond$ = this.activatedRoute.queryParams.pipe(map((p) => p['step_second']));
   // ______________________________________________________________________________________
-
   @ConfirmDialog(ConfirmationExitComponent, {
     minWidth: '400px',
   })
+  redirectToAdminPanel() {
+    this._redirectService.redirectToSurveyAdminPanelPage()
+  }
   redirectToCreateSurvey() {
   this._redirectService.redirectToCreateSurveyAdminPanelPage()
-    this._createSurveyService.resetQuestionsValue()
+    // this._createSurveyService.resetQuestionsValue()
   }
    areQuestionsValid(questions: questionStorage[]): boolean {
      return questions.every(question =>

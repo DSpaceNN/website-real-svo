@@ -21,6 +21,8 @@ import {ICreateSurvey} from "../../features/create-survey-form/model/types/creat
 import {ActivatedRoute} from "@angular/router";
 import {map} from "rxjs";
 import {createParams} from "../../shared/model/types/query-params";
+import {ConfirmDialog} from "../../shared/model/decorators/confirm-dialog.decorator";
+import {ConfirmationExitComponent} from "../../features/confirmation-exit/confirmation-exit.component";
 
 @Component({
   selector: 'app-create-survey',
@@ -46,7 +48,7 @@ import {createParams} from "../../shared/model/types/query-params";
       <div class="flex items-center gap-2" title>
         <app-sub-header-title></app-sub-header-title>
       </div>
-      <button (click)="redirectToCreateSurvey()" btn class="second_btn_admin flex gap-1">
+      <button (click)="redirectToAdminPanel()" btn class="second_btn_admin flex gap-1">
         Отменить
       </button>
     </app-admin-panel-sub-header>
@@ -72,7 +74,7 @@ import {createParams} from "../../shared/model/types/query-params";
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class CreateSurveyComponent {
+export default class CreateSurveyComponent implements OnInit{
   private activatedRoute = inject(ActivatedRoute);
   stepFirst$ = this.activatedRoute.queryParams.pipe(map((p) => p['step_first']));
   // _________________________________________________________________________________
@@ -84,22 +86,31 @@ export default class CreateSurveyComponent {
   private _surveyService = inject(SurveyService)
   private _adminDashboardService = inject(AdminDashboardsService)
   // _________________________________________________________________________________
-  redirectToCreateSurvey() {
+  @ConfirmDialog(ConfirmationExitComponent, {
+    minWidth: '400px',
+  })
+  redirectToAdminPanel() {
     this._createSurveyService.resetSurvey()
     this._redirectService.setQueryParams(createParams)
     this._redirectService.redirectToSurveyAdminPanelPage()
   }
   // _________________________________________________________________________________
   nextStep() {
-    const { name, slug } = this.createSurveyFormComponent.createSurveyForm.value;
+    const { name, slug } = this.createSurveyFormComponent.createSurveyForm.value
     const id = this._surveyService.currentSurveyId();
+    console.log(name,slug, 'params',)
+    console.log( this._createSurveyService.surveyStorage(), 'survey storage')
     this._redirectService.redirectToCreateQuestionsAndAnswersAdminPanelPage()
     this._adminDashboardService.nextStepCreateSurvey()
     this._createSurveyService.setSurvey({
-      name: name ?? '',
-      slug: slug ?? '',
+      name: name as string,
+      slug: slug as string,
       ...(id && { id }),
     })
+  }
+
+  ngOnInit(): void {
+    this._createSurveyService.surveyStorage()
   }
   // _________________________________________________________________________________
 
