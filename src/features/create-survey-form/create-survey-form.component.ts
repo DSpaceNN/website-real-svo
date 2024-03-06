@@ -57,14 +57,19 @@
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreateSurveyFormComponent{
+export class CreateSurveyFormComponent implements OnInit{
   private _createSurveyService = inject(CreateSurveyService)
+  ngOnInit(): void {
+    this.setSurveyData() ;
+  }
   constructor() {
     effect(() => {
-      const { name, slug } = this._createSurveyService.surveyStorage();
-      this.createSurveyForm.setValue({name,slug})
-      console.log(this._createSurveyService.surveyStorage(), 'я то что попадает назад')
+      this.setSurveyData();
     });
+  }
+  private setSurveyData() {
+    const { name, slug } = this._createSurveyService.surveyStorage();
+    this.createSurveyForm.setValue({name, slug});
   }
   readonly createSurveyForm:FormGroup<ICreateSurveyForm>  = new FormGroup<ICreateSurveyForm>({
     name: new FormControl('', {
