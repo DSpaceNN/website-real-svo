@@ -82,7 +82,6 @@ setQuestionsOrAnswersStorage (arg:questionStorage[]) {
   // ________________________________________________________________________________________________________
   public resetSurvey () {
     this.#surveyStorage.set({name: '',slug: ''})
-
   }
 
   // ________________________________________________________________________________________________________
@@ -104,11 +103,9 @@ setQuestionsOrAnswersStorage (arg:questionStorage[]) {
       this.#questionsToDelete.update((v) => [...v, idToDelete]);
     }
     console.log(this.#questionsToDelete())
-    if (!isEdit) {
       newQuestions.forEach((item, index) => {
         item.sequence = index + 1;
       });
-    }
 
     this.#questionsOrAnswersStorage.set(newQuestions);
   }

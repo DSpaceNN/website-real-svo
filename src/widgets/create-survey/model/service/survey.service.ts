@@ -61,11 +61,29 @@ readonly #currentSurveyId = signal<string>('')
 //   _________________________________________________________________________________________
   setSurvey (requestBody:ICreateSurvey) {
     const headers = new HttpHeaders({'X-Interceptor-Create-Survey': 'true'});
-    this.apiService.request<CreateOrEditQuestionDto>(API.CREATE_SURVEY,requestBody,undefined,headers).subscribe((res) => {
-      this.#currentSurveyId.set(res.result)
-      console.log(res,'hello2222')
-      this.sendQuestions()
-    })
+    const surveyObjectToSend = {
+      ...requestBody,
+      questions: this._createSurveyService.questionsOrAnswersStorage().map(storedQuestion => {
+        const question:  questionStorage = {
+          id: storedQuestion.id,
+          questionText: storedQuestion.questionText,
+          sequence: storedQuestion.sequence,
+          questionType: storedQuestion.questionType,
+          options: storedQuestion.options.map(storedOption => ({
+            optionText: storedOption.optionText,
+            isCorrect: storedOption.isCorrect,
+            ...(storedOption.id && this.isGuid(storedOption.id) && { id: storedOption.id })
+          })),
+        };
+        return question;
+      })}
+    this.apiService.request<CreateOrEditQuestionDto>(API.CREATE_SURVEY, surveyObjectToSend, undefined, headers)
+      .subscribe((res) => {
+        this.#currentSurveyId.set(res.result)
+        console.log(res,'hello2222')
+        this._surveyModalService.openSuccessModal(this._createSurveyService.surveyStorage())
+        this._createSurveyService.resetQuestionsValue()
+      })
   }
    isGuid(value: string): boolean {
     const guidRegEx = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/i;
