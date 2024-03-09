@@ -66,7 +66,9 @@ export class CreateSurveyFormComponent implements OnInit{
   ngOnInit(): void {
     this.setSurveyData();
     this.createSurveyForm.valueChanges.subscribe(values => {
-      this.formState.emit(!!values.name && !!values.slug);
+      const isNameValid = !!values.name && this.createSurveyForm.controls.name.valid;
+      const isSlugValid = !!values.slug && this.createSurveyForm.controls.slug.valid;
+      this.formState.emit(isNameValid && isSlugValid);
     });
   }
   constructor() {

@@ -80,7 +80,6 @@ readonly #currentSurveyId = signal<string>('')
     this.apiService.request<CreateOrEditQuestionDto>(API.CREATE_SURVEY, surveyObjectToSend, undefined, headers)
       .subscribe((res) => {
         this.#currentSurveyId.set(res.result)
-        console.log(res,'hello2222')
         this._surveyModalService.openSuccessModal(this._createSurveyService.surveyStorage())
         this._createSurveyService.resetQuestionsValue()
       })
@@ -115,7 +114,6 @@ readonly #currentSurveyId = signal<string>('')
     const deleteQuestionsId = this._createSurveyService.questionsToDelete()
     if(deleteQuestionsId.length) {
       for (let id of deleteQuestionsId) {
-        console.log(deleteQuestionsId, 99999999999999999999999999999999999999)
         this.deleteQuestion(id);
       }
       this._createSurveyService.resetDeletedQuestionId()

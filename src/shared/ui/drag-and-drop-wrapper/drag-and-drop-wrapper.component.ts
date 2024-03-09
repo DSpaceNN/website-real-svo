@@ -82,7 +82,6 @@ export class DragAndDropWrapperComponent {
   ];
 
   drop(event: CdkDragDrop<string[]>) {
-    console.log(event)
     moveItemInArray(this.movies, event.previousIndex, event.currentIndex);
   }
 }

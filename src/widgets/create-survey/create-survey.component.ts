@@ -103,7 +103,6 @@ export default class CreateSurveyComponent implements OnInit{
   nextStep() {
     const { name, slug } = this.createSurveyFormComponent.createSurveyForm.value
     const id = this._surveyService.currentSurveyId();
-    console.log(name,slug, 'params',)
     console.log( this._createSurveyService.surveyStorage(), 'survey storage')
     this._redirectService.redirectToCreateQuestionsAndAnswersAdminPanelPage()
     this._adminDashboardService.nextStepCreateSurvey()
