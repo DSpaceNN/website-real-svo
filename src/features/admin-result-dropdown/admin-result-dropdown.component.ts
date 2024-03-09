@@ -12,7 +12,7 @@ import {MenuCircleComponent} from "../../shared/icons/menu-circle/menu-circle.co
   <div class="flex flex-col gap-1">
     <div class="flex gap-1">
         <h2>{{answers().title}}</h2>
-      <svg [style.transform]="openAnswersStatus() ? 'rotate(180deg)' : 'rotate(0)'" (click)="changeStatus()" xmlns="http://www.w3.org/2000/svg" cursor="pointer" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <svg [style.transform]="openAnswersStatus() ? 'rotate(0)' : 'rotate(180deg)'" (click)="changeStatus()" xmlns="http://www.w3.org/2000/svg" cursor="pointer" width="24" height="24" viewBox="0 0 24 24" fill="none">
         <mask id="mask0_302_183" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
           <rect width="24" height="24" fill="#D9D9D9"/>
         </mask>
