@@ -61,12 +61,12 @@ import {ConfirmationExitComponent} from "../../features/confirmation-exit/confir
           <h2 class="font-medium text-[18px]">{{stepFirst$ | async}}</h2>
         </div>
         <div class="flex">
-          <button  (click)="nextStep()" class="main_btn_admin font-medium px-5 py-2">
+          <button [ngClass]="{'opacity-40 pointer-events-none': !formState}"  (click)="nextStep()" class="main_btn_admin font-medium px-5 py-2">
             Далее
           </button>
         </div>
       </div>
-      <app-create-survey-form ></app-create-survey-form>
+      <app-create-survey-form (formState)="handleFormStateChange($event)" ></app-create-survey-form>
     </div>
   `,
   styles: ``,
@@ -78,7 +78,12 @@ export default class CreateSurveyComponent implements OnInit{
   private activatedRoute = inject(ActivatedRoute);
   stepFirst$ = this.activatedRoute.queryParams.pipe(map((p) => p['step_first']));
   // _________________________________________________________________________________
+  formState!: boolean;
 
+  handleFormStateChange(state: boolean) {
+    console.log('state', state)
+    this.formState = state;
+  }
   @ViewChild(CreateSurveyFormComponent) createSurveyFormComponent!: CreateSurveyFormComponent;
   // _________________________________________________________________________________
   private _createSurveyService = inject(CreateSurveyService)

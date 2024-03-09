@@ -1,4 +1,4 @@
-  import {ChangeDetectionStrategy, Component, effect, inject, OnInit} from '@angular/core';
+  import {ChangeDetectionStrategy, Component, effect, EventEmitter, inject, OnInit, Output} from '@angular/core';
   import {CREATE_SURVEY_FORM_CONTROL, ICreateSurveyForm} from "./model/types/create-survey-form.type";
   import {CurrentStepQuestionComponent} from "../../shared/ui/current-step-question/current-step-question.component";
   import {InputAdminPanelComponent} from "../../shared/ui/input-admin-panel/input-admin-panel.component";
@@ -7,6 +7,8 @@
   import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
   import {CloseIconComponent} from "../../shared/icons/close-icon/close-icon.component";
   import {CreateSurveyService} from "../../pages/admin-panel/model/services/create-survey.service";
+  import {takeUntil} from "rxjs";
+  import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-create-survey-form',
@@ -58,9 +60,14 @@
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateSurveyFormComponent implements OnInit{
+  @Output() formState = new EventEmitter<boolean>();
+
   private _createSurveyService = inject(CreateSurveyService)
   ngOnInit(): void {
-    this.setSurveyData() ;
+    this.setSurveyData();
+    this.createSurveyForm.valueChanges.subscribe(values => {
+      this.formState.emit(!!values.name && !!values.slug);
+    });
   }
   constructor() {
     effect(() => {
